@@ -10,6 +10,7 @@ export default function Index() {
       }}
     >
       <Text>Edit app/index.tsx to edit this screen.</Text>
+      <View className="flex-1 border border-1 border-slate-400 w-[50px] bg-black h-[40px] rounded-full"></View>
     </View>
   );
 }
