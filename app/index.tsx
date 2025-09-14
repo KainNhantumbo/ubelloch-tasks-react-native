@@ -6,11 +6,10 @@ export default function Index() {
       style={{
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+        alignItems: "center"
+      }}>
       <Text>Edit app/index.tsx to edit this screen.</Text>
-      <View className="flex-1 border border-1 border-slate-400 w-[50px] bg-black h-[40px] rounded-full"></View>
+      <View className='border-1 h-[40px] w-[50px] flex-1 rounded-full border border-slate-400 bg-black'></View>
     </View>
   );
 }
