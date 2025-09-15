@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { View, Text, TextInput, TouchableOpacity, StatusBar } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { signUpSchema, type SignUpFormData } from "../../../schemas/auth";
 
 interface SignUpScreenProps {
   onNavigate: (screen: "verify-email" | "login") => void;
@@ -10,13 +12,22 @@ interface SignUpScreenProps {
 }
 
 export default function SignUpScreen({ onNavigate, onBack }: SignUpScreenProps) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<SignUpFormData>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: ""
+    }
+  });
 
-  const handleSignUp = () => {
-    console.log("Sign up pressed", { name, email, password });
+  const onSubmit = (data: SignUpFormData) => {
+    console.log("Sign up pressed", data);
     onNavigate("verify-email");
   };
 
@@ -55,56 +66,100 @@ export default function SignUpScreen({ onNavigate, onBack }: SignUpScreenProps) 
             <View className='animate-slide-up rounded-3xl bg-white/10 p-8 backdrop-blur-sm'>
               <View className='mb-4'>
                 <Text className='mb-2 text-sm font-medium text-white/90'>Full Name</Text>
-                <TextInput
-                  value={name}
-                  onChangeText={setName}
-                  placeholder='Enter your full name'
-                  placeholderTextColor='#ffffff80'
-                  className='rounded-xl bg-white/20 px-4 py-4 text-base text-white'
+                <Controller
+                  control={control}
+                  name='name'
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      value={value}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      placeholder='Enter your full name'
+                      placeholderTextColor='#ffffff80'
+                      className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.name ? "border border-red-400" : ""}`}
+                    />
+                  )}
                 />
+                {errors.name && (
+                  <Text className='mt-1 text-sm text-red-300'>{errors.name.message}</Text>
+                )}
               </View>
 
               <View className='mb-4'>
                 <Text className='mb-2 text-sm font-medium text-white/90'>Email</Text>
-                <TextInput
-                  value={email}
-                  onChangeText={setEmail}
-                  placeholder='Enter your email'
-                  placeholderTextColor='#ffffff80'
-                  className='rounded-xl bg-white/20 px-4 py-4 text-base text-white'
-                  keyboardType='email-address'
-                  autoCapitalize='none'
+                <Controller
+                  control={control}
+                  name='email'
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      value={value}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      placeholder='Enter your email'
+                      placeholderTextColor='#ffffff80'
+                      className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.email ? "border border-red-400" : ""}`}
+                      keyboardType='email-address'
+                      autoCapitalize='none'
+                    />
+                  )}
                 />
+                {errors.email && (
+                  <Text className='mt-1 text-sm text-red-300'>{errors.email.message}</Text>
+                )}
               </View>
 
               <View className='mb-4'>
                 <Text className='mb-2 text-sm font-medium text-white/90'>Password</Text>
-                <TextInput
-                  value={password}
-                  onChangeText={setPassword}
-                  placeholder='Create a password'
-                  placeholderTextColor='#ffffff80'
-                  className='rounded-xl bg-white/20 px-4 py-4 text-base text-white'
-                  secureTextEntry
+                <Controller
+                  control={control}
+                  name='password'
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      value={value}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      placeholder='Create a password'
+                      placeholderTextColor='#ffffff80'
+                      className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.password ? "border border-red-400" : ""}`}
+                      secureTextEntry
+                    />
+                  )}
                 />
+                {errors.password && (
+                  <Text className='mt-1 text-sm text-red-300'>
+                    {errors.password.message}
+                  </Text>
+                )}
               </View>
 
               <View className='mb-8'>
                 <Text className='mb-2 text-sm font-medium text-white/90'>
                   Confirm Password
                 </Text>
-                <TextInput
-                  value={confirmPassword}
-                  onChangeText={setConfirmPassword}
-                  placeholder='Confirm your password'
-                  placeholderTextColor='#ffffff80'
-                  className='rounded-xl bg-white/20 px-4 py-4 text-base text-white'
-                  secureTextEntry
+                <Controller
+                  control={control}
+                  name='confirmPassword'
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      value={value}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      placeholder='Confirm your password'
+                      placeholderTextColor='#ffffff80'
+                      className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.confirmPassword ? "border border-red-400" : ""}`}
+                      secureTextEntry
+                    />
+                  )}
                 />
+                {errors.confirmPassword && (
+                  <Text className='mt-1 text-sm text-red-300'>
+                    {errors.confirmPassword.message}
+                  </Text>
+                )}
               </View>
 
               <TouchableOpacity
-                onPress={handleSignUp}
+                onPress={handleSubmit(onSubmit)}
                 className='rounded-xl bg-gray-800 py-4 transition-transform active:scale-95'
                 activeOpacity={0.8}>
                 <Text className='text-center text-lg font-semibold text-white'>
