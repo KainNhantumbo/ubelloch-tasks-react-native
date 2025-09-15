@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { View, Text, TextInput, TouchableOpacity, StatusBar } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { verifyEmailSchema, type VerifyEmailFormData } from "../../../schemas/auth";
 
 interface VerifyEmailScreenProps {
   onNavigate: (screen: "login") => void;
@@ -10,10 +12,19 @@ interface VerifyEmailScreenProps {
 }
 
 export default function VerifyEmailScreen({ onNavigate, onBack }: VerifyEmailScreenProps) {
-  const [code, setCode] = useState("");
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<VerifyEmailFormData>({
+    resolver: zodResolver(verifyEmailSchema),
+    defaultValues: {
+      code: ""
+    }
+  });
 
-  const handleVerify = () => {
-    console.log("Verify pressed", { code });
+  const onSubmit = (data: VerifyEmailFormData) => {
+    console.log("Verify pressed", data);
     onNavigate("login");
   };
 
@@ -59,19 +70,31 @@ export default function VerifyEmailScreen({ onNavigate, onBack }: VerifyEmailScr
                 <Text className='mb-4 text-center text-sm font-medium text-white/90'>
                   Verification Code
                 </Text>
-                <TextInput
-                  value={code}
-                  onChangeText={setCode}
-                  placeholder='Enter 6-digit code'
-                  placeholderTextColor='#ffffff80'
-                  className='rounded-xl bg-white/20 px-4 py-4 text-center text-2xl tracking-widest text-white'
-                  keyboardType='number-pad'
-                  maxLength={6}
+                <Controller
+                  control={control}
+                  name='code'
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      value={value}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      placeholder='Enter 6-digit code'
+                      placeholderTextColor='#ffffff80'
+                      className={`rounded-xl bg-white/20 px-4 py-4 text-center text-2xl tracking-widest text-white ${errors.code ? "border border-red-400" : ""}`}
+                      keyboardType='number-pad'
+                      maxLength={6}
+                    />
+                  )}
                 />
+                {errors.code && (
+                  <Text className='mt-2 text-center text-sm text-red-300'>
+                    {errors.code.message}
+                  </Text>
+                )}
               </View>
 
               <TouchableOpacity
-                onPress={handleVerify}
+                onPress={handleSubmit(onSubmit)}
                 className='mb-4 rounded-xl bg-gray-800 py-4 transition-transform active:scale-95'
                 activeOpacity={0.8}>
                 <Text className='text-center text-lg font-semibold text-white'>
