@@ -1,8 +1,6 @@
-import { View, Text, TouchableOpacity, StatusBar, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, StatusBar } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Svg, { Path, Circle, Rect } from "react-native-svg";
-
-const { width, height } = Dimensions.get("window");
 
 const NotebookIllustration = () => (
   <View className='items-center justify-center'>
