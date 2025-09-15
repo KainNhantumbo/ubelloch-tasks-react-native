@@ -1,19 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { View, Text, TextInput, TouchableOpacity, StatusBar } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { loginSchema, type LoginFormData } from "../../../schemas/auth";
 
 interface LoginScreenProps {
   onNavigate: (screen: "signup" | "forgot-password") => void;
 }
 
 export default function LoginScreen({ onNavigate }: LoginScreenProps) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: ""
+    }
+  });
 
-  const handleLogin = () => {
-    console.log("Login pressed", { email, password });
+  const onSubmit = (data: LoginFormData) => {
+    console.log("Login pressed", data);
   };
 
   return (
@@ -42,27 +53,47 @@ export default function LoginScreen({ onNavigate }: LoginScreenProps) {
 
             <View className='mb-6'>
               <Text className='mb-2 text-sm font-medium text-white/90'>Email</Text>
-              <TextInput
-                value={email}
-                onChangeText={setEmail}
-                placeholder='Enter your email'
-                placeholderTextColor='#ffffff80'
-                className='rounded-xl bg-white/20 px-4 py-4 text-base text-white'
-                keyboardType='email-address'
-                autoCapitalize='none'
+              <Controller
+                control={control}
+                name='email'
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    placeholder='Enter your email'
+                    placeholderTextColor='#ffffff80'
+                    className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.email ? "border border-red-400" : ""}`}
+                    keyboardType='email-address'
+                    autoCapitalize='none'
+                  />
+                )}
               />
+              {errors.email && (
+                <Text className='mt-1 text-sm text-red-300'>{errors.email.message}</Text>
+              )}
             </View>
 
             <View className='mb-6'>
               <Text className='mb-2 text-sm font-medium text-white/90'>Password</Text>
-              <TextInput
-                value={password}
-                onChangeText={setPassword}
-                placeholder='Enter your password'
-                placeholderTextColor='#ffffff80'
-                className='rounded-xl bg-white/20 px-4 py-4 text-base text-white'
-                secureTextEntry
+              <Controller
+                control={control}
+                name='password'
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    placeholder='Enter your password'
+                    placeholderTextColor='#ffffff80'
+                    className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.password ? "border border-red-400" : ""}`}
+                    secureTextEntry
+                  />
+                )}
               />
+              {errors.password && (
+                <Text className='mt-1 text-sm text-red-300'>{errors.password.message}</Text>
+              )}
             </View>
 
             <TouchableOpacity
@@ -73,7 +104,7 @@ export default function LoginScreen({ onNavigate }: LoginScreenProps) {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={handleLogin}
+              onPress={handleSubmit(onSubmit)}
               className='mb-4 rounded-xl bg-gray-800 py-4 transition-transform active:scale-95'
               activeOpacity={0.8}>
               <Text className='text-center text-lg font-semibold text-white'>Sign In</Text>
