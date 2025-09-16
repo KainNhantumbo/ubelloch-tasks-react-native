@@ -44,14 +44,6 @@ interface SplashScreenProps {
 }
 
 export default function SplashScreen({ onGetStarted }: SplashScreenProps) {
-  const handleGetStarted = () => {
-    if (onGetStarted) {
-      onGetStarted();
-    } else {
-      console.log("Get Started pressed");
-    }
-  };
-
   return (
     <View className='flex-1'>
       <StatusBar barStyle='light-content' />
