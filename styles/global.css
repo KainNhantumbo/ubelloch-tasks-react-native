@@ -1,9 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer base {
-  * {
-    @apply selection:bg-primary selection:text-primary-content box-border;
-  }
-}

@@ -1,6 +1,7 @@
-import { View, Text, TouchableOpacity, StatusBar } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Svg, { Path, Circle, Rect } from "react-native-svg";
+import { Link } from "expo-router";
+import { StatusBar, Text, TouchableOpacity, View } from "react-native";
+import Svg, { Circle, Path, Rect } from "react-native-svg";
 
 const NotebookIllustration = () => (
   <View className='items-center justify-center'>
@@ -77,12 +78,13 @@ export default function SplashScreen({ onGetStarted }: SplashScreenProps) {
             </Text>
           </View>
 
-          <TouchableOpacity
-            onPress={handleGetStarted}
-            className='rounded-full bg-gray-800 px-12 py-4 shadow-lg'
-            activeOpacity={0.8}>
-            <Text className='text-lg font-medium text-white'>Get Started</Text>
-          </TouchableOpacity>
+          <Link asChild href={"/login"}>
+            <TouchableOpacity
+              className='rounded-full bg-gray-800 px-12 py-4 shadow-lg'
+              activeOpacity={0.8}>
+              <Text className='text-lg font-medium text-white'>Get Started</Text>
+            </TouchableOpacity>
+          </Link>
         </View>
       </LinearGradient>
     </View>

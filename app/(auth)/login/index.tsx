@@ -1,9 +1,7 @@
-"use client";
-
-import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { View, Text, TextInput, TouchableOpacity, StatusBar } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { Controller, useForm } from "react-hook-form";
+import { StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { loginSchema, type LoginFormData } from "../../../schemas/auth";
 
 interface LoginScreenProps {
@@ -39,7 +37,7 @@ export default function LoginScreen({ onNavigate }: LoginScreenProps) {
         <View className='animate-fade-in flex-1 justify-center px-8'>
           <View className='mb-12'>
             <Text className='mb-2 text-center text-4xl font-bold tracking-wide text-white'>
-              Wordsy
+              Words
             </Text>
             <Text className='text-center text-lg text-white/80'>
               Welcome back to your ideas

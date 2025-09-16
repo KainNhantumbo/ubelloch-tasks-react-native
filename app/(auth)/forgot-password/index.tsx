@@ -1,9 +1,7 @@
-"use client";
-
-import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { View, Text, TextInput, TouchableOpacity, StatusBar } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { Controller, useForm } from "react-hook-form";
+import { StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { forgotPasswordSchema, type ForgotPasswordFormData } from "../../../schemas/auth";
 
 interface ForgotPasswordScreenProps {
