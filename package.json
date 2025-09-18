@@ -11,6 +11,7 @@
     "lint": "npx prettier --write \"**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,json}\" && eslint . && tsc --noEmit -p ./tsconfig.json"
   },
   "dependencies": {
+    "@expo/html-elements": "^0.13.7",
     "@expo/vector-icons": "^15.0.2",
     "@gluestack-ui/core": "^3.0.10",
     "@gluestack-ui/utils": "^3.0.7",
@@ -52,6 +53,7 @@
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.43.0"

@@ -1,5 +1,6 @@
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import "../styles/global.css";
 
 export default function RootLayout() {
@@ -9,8 +10,9 @@ export default function RootLayout() {
         screenOptions={{
           headerShown: false
         }}>
-        <Stack.Screen name='/splash' />
+        <Stack.Screen name='splash' />
       </Stack>
+      <StatusBar style='auto' />
     </GluestackUIProvider>
   );
 }

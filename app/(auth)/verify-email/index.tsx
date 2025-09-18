@@ -1,15 +1,13 @@
+import { verifyEmailSchema, type VerifyEmailFormData } from "@/schemas/auth";
+import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link, useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { verifyEmailSchema, type VerifyEmailFormData } from "../../../schemas/auth";
 
-interface VerifyEmailScreenProps {
-  onNavigate: (screen: "login") => void;
-  onBack: () => void;
-}
-
-export default function VerifyEmailScreen({ onNavigate, onBack }: VerifyEmailScreenProps) {
+export default function VerifyEmailScreen() {
+  const router = useRouter();
   const {
     control,
     handleSubmit,
@@ -23,7 +21,6 @@ export default function VerifyEmailScreen({ onNavigate, onBack }: VerifyEmailScr
 
   const onSubmit = (data: VerifyEmailFormData) => {
     console.log("Verify pressed", data);
-    onNavigate("login");
   };
 
   const handleResend = () => {
@@ -42,14 +39,19 @@ export default function VerifyEmailScreen({ onNavigate, onBack }: VerifyEmailScr
         <View className='animate-fade-in flex-1 px-8 pt-16'>
           <View className='mb-8 flex-row items-center justify-between'>
             <TouchableOpacity
-              onPress={onBack}
+              onPress={() => router.back()}
               className='p-2 transition-transform active:scale-95'>
-              <Text className='text-2xl text-white'>←</Text>
+              <Ionicons name='arrow-back' size={24} color='white' />
+              <Text className='text-2xl text-white'>Back</Text>
             </TouchableOpacity>
+
             <Text className='text-xl font-semibold text-white'>Verify Email</Text>
-            <TouchableOpacity onPress={() => onNavigate("login")} className='p-2'>
-              <Text className='text-base text-cyan-300'>Skip</Text>
-            </TouchableOpacity>
+
+            <Link asChild href={"/login"}>
+              <TouchableOpacity className='p-2'>
+                <Text className='text-base text-cyan-300'>Skip</Text>
+              </TouchableOpacity>
+            </Link>
           </View>
 
           <View className='flex-1 justify-center'>

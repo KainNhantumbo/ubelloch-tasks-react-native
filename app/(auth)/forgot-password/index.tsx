@@ -1,18 +1,11 @@
+import { forgotPasswordSchema, type ForgotPasswordFormData } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { forgotPasswordSchema, type ForgotPasswordFormData } from "../../../schemas/auth";
 
-interface ForgotPasswordScreenProps {
-  onNavigate: (screen: "reset-password" | "login") => void;
-  onBack: () => void;
-}
-
-export default function ForgotPasswordScreen({
-  onNavigate,
-  onBack
-}: ForgotPasswordScreenProps) {
+export default function ForgotPasswordScreen() {
   const {
     control,
     handleSubmit,
@@ -26,7 +19,6 @@ export default function ForgotPasswordScreen({
 
   const onSubmit = (data: ForgotPasswordFormData) => {
     console.log("Send reset pressed", data);
-    onNavigate("reset-password");
   };
 
   return (
@@ -40,15 +32,18 @@ export default function ForgotPasswordScreen({
         end={{ x: 0, y: 1 }}>
         <View className='animate-fade-in flex-1 px-8 pt-16'>
           <View className='mb-8 flex-row items-center justify-between'>
-            <TouchableOpacity
-              onPress={onBack}
-              className='p-2 transition-transform active:scale-95'>
-              <Text className='text-2xl text-white'>←</Text>
-            </TouchableOpacity>
-            <Text className='text-xl font-semibold text-white'>Forgot Password</Text>
-            <TouchableOpacity onPress={() => onNavigate("login")} className='p-2'>
-              <Text className='text-base text-cyan-300'>Skip</Text>
-            </TouchableOpacity>
+            <Link asChild href={"/forgot-password"}>
+              <TouchableOpacity className='p-2 transition-transform active:scale-95'>
+                <Text className='text-2xl text-white'>←</Text>
+              </TouchableOpacity>
+              <Text className='text-xl font-semibold text-white'>Forgot Password</Text>
+            </Link>
+
+            <Link asChild href={"/login"}>
+              <TouchableOpacity className='p-2'>
+                <Text className='text-base text-cyan-300'>Skip</Text>
+              </TouchableOpacity>
+            </Link>
           </View>
 
           <View className='flex-1 justify-center'>
@@ -97,11 +92,13 @@ export default function ForgotPasswordScreen({
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity onPress={() => onNavigate("login")} activeOpacity={0.7}>
-              <Text className='text-center text-cyan-300'>
-                Remember your password? Sign In
-              </Text>
-            </TouchableOpacity>
+            <Link asChild href={"/login"}>
+              <TouchableOpacity activeOpacity={0.7}>
+                <Text className='text-center text-cyan-300'>
+                  Remember your password? Sign In
+                </Text>
+              </TouchableOpacity>
+            </Link>
           </View>
         </View>
       </LinearGradient>

@@ -1,18 +1,13 @@
+import { resetPasswordSchema, type ResetPasswordFormData } from "@/schemas/auth";
+import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link, useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { resetPasswordSchema, type ResetPasswordFormData } from "../../../schemas/auth";
 
-interface ResetPasswordScreenProps {
-  onNavigate: (screen: "login") => void;
-  onBack: () => void;
-}
-
-export default function ResetPasswordScreen({
-  onNavigate,
-  onBack
-}: ResetPasswordScreenProps) {
+export default function ResetPasswordScreen() {
+  const router = useRouter();
   const {
     control,
     handleSubmit,
@@ -28,7 +23,6 @@ export default function ResetPasswordScreen({
 
   const onSubmit = (data: ResetPasswordFormData) => {
     console.log("Reset password pressed", data);
-    onNavigate("login");
   };
 
   return (
@@ -43,14 +37,18 @@ export default function ResetPasswordScreen({
         <View className='animate-fade-in flex-1 px-8 pt-16'>
           <View className='mb-8 flex-row items-center justify-between'>
             <TouchableOpacity
-              onPress={onBack}
+              onPress={() => router.back()}
               className='p-2 transition-transform active:scale-95'>
-              <Text className='text-2xl text-white'>←</Text>
+              <Ionicons name='arrow-back' size={24} color='white' />
+              <Text className='text-2xl text-white'>Back</Text>
             </TouchableOpacity>
+
             <Text className='text-xl font-semibold text-white'>Reset Password</Text>
-            <TouchableOpacity onPress={() => onNavigate("login")} className='p-2'>
-              <Text className='text-base text-cyan-300'>Skip</Text>
-            </TouchableOpacity>
+            <Link asChild href={"/login"}>
+              <TouchableOpacity className='p-2'>
+                <Text className='text-base text-cyan-300'>Skip</Text>
+              </TouchableOpacity>
+            </Link>
           </View>
 
           <View className='flex-1 justify-center'>

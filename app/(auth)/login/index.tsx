@@ -1,15 +1,12 @@
-"use client";
+import { appBaseConfig } from "@/constants";
+import { loginSchema, type LoginFormData } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import { StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { loginSchema, type LoginFormData } from "../../../schemas/auth";
 
-interface LoginScreenProps {
-  onNavigate: (screen: "signup" | "forgot-password") => void;
-}
-
-export default function LoginScreen({ onNavigate }: LoginScreenProps) {
+export default function LoginScreen() {
   const {
     control,
     handleSubmit,
@@ -38,7 +35,7 @@ export default function LoginScreen({ onNavigate }: LoginScreenProps) {
         <View className='animate-fade-in flex-1 justify-center px-8'>
           <View className='mb-12'>
             <Text className='mb-2 text-center text-4xl font-bold tracking-wide text-white'>
-              Words
+              {appBaseConfig.title}
             </Text>
             <Text className='text-center text-lg text-white/80'>
               Welcome back to your ideas
@@ -95,12 +92,11 @@ export default function LoginScreen({ onNavigate }: LoginScreenProps) {
               )}
             </View>
 
-            <TouchableOpacity
-              onPress={() => onNavigate("forgot-password")}
-              activeOpacity={0.7}
-              className='mb-8'>
-              <Text className='text-right text-sm text-cyan-300'>Forgot Password?</Text>
-            </TouchableOpacity>
+            <Link asChild href={"/forgot-password"}>
+              <TouchableOpacity activeOpacity={0.7} className='mb-8'>
+                <Text className='text-right text-sm text-cyan-300'>Forgot Password?</Text>
+              </TouchableOpacity>
+            </Link>
 
             <TouchableOpacity
               onPress={handleSubmit(onSubmit)}
@@ -109,16 +105,20 @@ export default function LoginScreen({ onNavigate }: LoginScreenProps) {
               <Text className='text-center text-lg font-semibold text-white'>Sign In</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => onNavigate("signup")} activeOpacity={0.7}>
-              <Text className='text-center text-white/80'>
-                Don't have an account? <Text className='text-cyan-300'>Sign Up</Text>
-              </Text>
-            </TouchableOpacity>
+            <Link asChild href={"/signup"}>
+              <TouchableOpacity activeOpacity={0.7}>
+                <Text className='text-center text-white/80'>
+                  Don't have an account? <Text className='text-cyan-300'>Sign Up</Text>
+                </Text>
+              </TouchableOpacity>
+            </Link>
           </View>
 
-          <TouchableOpacity className='py-3' activeOpacity={0.7}>
-            <Text className='text-center text-base text-white/60'>Skip for now</Text>
-          </TouchableOpacity>
+          <Link asChild href={"/home"}>
+            <TouchableOpacity className='py-3' activeOpacity={0.7}>
+              <Text className='text-center text-base text-white/60'>Skip for now</Text>
+            </TouchableOpacity>
+          </Link>
         </View>
       </LinearGradient>
     </View>
