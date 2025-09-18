@@ -1,16 +1,16 @@
-import { ThemeProvider } from "@/theme/theme-provider";
+import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { Stack } from "expo-router";
 import "../styles/global.css";
 
 export default function RootLayout() {
   return (
-    <ThemeProvider>
+    <GluestackUIProvider mode='light'>
       <Stack
         screenOptions={{
           headerShown: false
         }}>
-        <Stack.Screen name='(tabs)/splash' />
+        <Stack.Screen name='/splash' />
       </Stack>
-    </ThemeProvider>
+    </GluestackUIProvider>
   );
 }
