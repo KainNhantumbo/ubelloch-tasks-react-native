@@ -1,5 +1,5 @@
-import React from "react";
 import type { VariantProps } from "@gluestack-ui/utils/nativewind-utils";
+import React from "react";
 import { textStyle } from "./styles";
 
 type ITextProps = React.ComponentProps<"span"> & VariantProps<typeof textStyle>;
@@ -26,7 +26,19 @@ const Text = React.forwardRef<React.ComponentRef<"span">, ITextProps>(function T
         bold: bold as boolean,
         underline: underline as boolean,
         strikeThrough: strikeThrough as boolean,
-        size,
+        size: size as
+          | "5xl"
+          | "4xl"
+          | "3xl"
+          | "2xl"
+          | "xl"
+          | "lg"
+          | "md"
+          | "sm"
+          | "xs"
+          | "2xs"
+          | "6xl"
+          | undefined,
         sub: sub as boolean,
         italic: italic as boolean,
         highlight: highlight as boolean,

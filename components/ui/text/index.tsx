@@ -28,7 +28,19 @@ const Text = React.forwardRef<React.ComponentRef<typeof RNText>, ITextProps>(fun
         bold: bold as boolean,
         underline: underline as boolean,
         strikeThrough: strikeThrough as boolean,
-        size,
+        size: size as
+          | "5xl"
+          | "4xl"
+          | "3xl"
+          | "2xl"
+          | "xl"
+          | "lg"
+          | "md"
+          | "sm"
+          | "xs"
+          | "2xs"
+          | "6xl"
+          | undefined,
         sub: sub as boolean,
         italic: italic as boolean,
         highlight: highlight as boolean,
