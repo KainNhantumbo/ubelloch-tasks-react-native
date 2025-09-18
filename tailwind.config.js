@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-module.exports = {
+const config = {
   darkMode: process.env.DARK_MODE ? process.env.DARK_MODE : "class",
   // NOTE: Update this to include the paths to all files that contain Nativewind classes.
   content: [
@@ -207,3 +207,5 @@ module.exports = {
   },
   plugins: []
 };
+
+module.exports = config;
