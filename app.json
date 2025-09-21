@@ -41,6 +41,16 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-asset",
+        {
+          "assets": [
+            "../assets/onboarding/images/pmagic-wand.png",
+            "../assets/onboarding/images/organization.png",
+            "../assets/onboarding/images/user-vision.png"
+          ]
+        }
       ]
     ],
     "experiments": {
