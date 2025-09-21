@@ -138,7 +138,17 @@ const MappedHeading = memo(
         return (
           <h4
             className={headingStyle({
-              size,
+              size: size as
+                | "5xl"
+                | "4xl"
+                | "3xl"
+                | "2xl"
+                | "xl"
+                | "lg"
+                | "md"
+                | "sm"
+                | "xs"
+                | undefined,
               isTruncated: isTruncated as boolean,
               bold: bold as boolean,
               underline: underline as boolean,
@@ -167,7 +177,17 @@ const Heading = memo(
       return (
         <AsComp
           className={headingStyle({
-            size,
+            size: size as
+              | "5xl"
+              | "4xl"
+              | "3xl"
+              | "2xl"
+              | "xl"
+              | "lg"
+              | "md"
+              | "sm"
+              | "xs"
+              | undefined,
             isTruncated: isTruncated as boolean,
             bold: bold as boolean,
             underline: underline as boolean,

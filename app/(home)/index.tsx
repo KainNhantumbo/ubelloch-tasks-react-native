@@ -1,9 +1,10 @@
 import { Text } from "@/components/ui/text";
+import { View } from "react-native";
 
-export default function Home() {
+export default function HomeScreen() {
   return (
-    <div>
+    <View>
       <Text>Welcome to the Home Page</Text>
-    </div>
+    </View>
   );
 }
