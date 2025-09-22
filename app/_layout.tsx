@@ -4,8 +4,9 @@ import { PortalHost } from "@rn-primitives/portal";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import { useColorScheme } from "nativewind";
 import React, { useEffect } from "react";
-import { StatusBar, useColorScheme } from "react-native";
+import { StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import "../styles/global.css";
@@ -13,7 +14,7 @@ import "../styles/global.css";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   const [loaded, error] = useFonts({
     "Fredoka-Bold": require("../assets/fonts/fredoka/Fredoka-Bold.ttf"),

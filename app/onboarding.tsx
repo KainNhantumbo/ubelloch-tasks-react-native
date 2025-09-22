@@ -70,7 +70,7 @@ export function CarouselContainer() {
               className='aspect-square h-[260px] w-[260px] object-cover'
             />
             <View className='p-8'>
-              <Text className='text-center font-fredoka text-3xl font-medium leading-relaxed'>
+              <Text className='text-center font-sans text-3xl font-medium leading-relaxed'>
                 {item.title}
               </Text>
               <Text className='text-md w-[280px] text-center font-sans leading-8'>
