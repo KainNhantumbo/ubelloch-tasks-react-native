@@ -13,21 +13,21 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded, error] = useFonts({
-    "Fredoka-Bold": require("@/assets/fonts/Fredoka-Bold.ttf"),
-    "Fredoka-Light": require("@/assets/fonts/Fredoka-Light.ttf"),
-    "Fredoka-Medium": require("@/assets/fonts/Fredoka-Medium.ttf"),
-    "Fredoka-Regular": require("@/assets/fonts/Fredoka-Regular.ttf"),
-    "Fredoka-SemiBold": require("@/assets/fonts/Fredoka-SemiBold.ttf"),
-    "AlbertSans-Regular": require("@/assets/fonts/albert-sans-latin-400-normal.ttf"),
-    "AlbertSans-Italic": require("@/assets/fonts/albert-sans-latin-400-italic.ttf"),
-    "AlbertSans-Medium": require("@/assets/fonts/albert-sans-latin-500-normal.ttf"),
-    "AlbertSans-MediumItalic": require("@/assets/fonts/albert-sans-latin-500-italic.ttf"),
-    "AlbertSans-SemiBold": require("@/assets/fonts/albert-sans-latin-600-normal.ttf"),
-    "AlbertSans-SemiBoldItalic": require("@/assets/fonts/albert-sans-latin-600-italic.ttf"),
-    "AlbertSans-Bold": require("@/assets/fonts/albert-sans-latin-700-normal.ttf"),
-    "AlbertSans-BoldItalic": require("@/assets/fonts/albert-sans-latin-700-italic.ttf"),
-    "AlbertSans-ExtraBold": require("@/assets/fonts/albert-sans-latin-800-normal.ttf"),
-    "AlbertSans-ExtraBoldItalic": require("@/assets/fonts/albert-sans-latin-800-italic.ttf")
+    "Fredoka-Bold": require("../assets/fonts/fredoka/Fredoka-Bold.ttf"),
+    "Fredoka-Light": require("../assets/fonts/fredoka/Fredoka-Light.ttf"),
+    "Fredoka-Medium": require("../assets/fonts/fredoka/Fredoka-Medium.ttf"),
+    "Fredoka-Regular": require("../assets/fonts/fredoka/Fredoka-Regular.ttf"),
+    "Fredoka-SemiBold": require("../assets/fonts/fredoka/Fredoka-SemiBold.ttf"),
+    "AlbertSans-Regular": require("../assets/fonts/albert/albert-sans-latin-400-normal.ttf"),
+    "AlbertSans-Italic": require("../assets/fonts/albert/albert-sans-latin-400-italic.ttf"),
+    "AlbertSans-Medium": require("../assets/fonts/albert/albert-sans-latin-500-normal.ttf"),
+    "AlbertSans-MediumItalic": require("../assets/fonts/albert/albert-sans-latin-500-italic.ttf"),
+    "AlbertSans-SemiBold": require("../assets/fonts/albert/albert-sans-latin-600-normal.ttf"),
+    "AlbertSans-SemiBoldItalic": require("../assets/fonts/albert/albert-sans-latin-600-italic.ttf"),
+    "AlbertSans-Bold": require("../assets/fonts/albert/albert-sans-latin-700-normal.ttf"),
+    "AlbertSans-BoldItalic": require("../assets/fonts/albert/albert-sans-latin-700-italic.ttf"),
+    "AlbertSans-ExtraBold": require("../assets/fonts/albert/albert-sans-latin-800-normal.ttf"),
+    "AlbertSans-ExtraBoldItalic": require("../assets/fonts/albert/albert-sans-latin-800-italic.ttf")
   });
 
   useEffect(() => {
