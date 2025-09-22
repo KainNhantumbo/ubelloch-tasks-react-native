@@ -1,4 +1,3 @@
-import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -12,6 +11,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+
   const [loaded, error] = useFonts({
     "Fredoka-Bold": require("../assets/fonts/fredoka/Fredoka-Bold.ttf"),
     "Fredoka-Light": require("../assets/fonts/fredoka/Fredoka-Light.ttf"),
@@ -30,6 +30,8 @@ export default function RootLayout() {
     "AlbertSans-ExtraBoldItalic": require("../assets/fonts/albert/albert-sans-latin-800-italic.ttf")
   });
 
+  console.log({ colorScheme });
+
   useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();
@@ -41,16 +43,14 @@ export default function RootLayout() {
   }
 
   return (
-    <GluestackUIProvider mode={colorScheme === "dark" ? "dark" : "light"}>
-      <GestureHandlerRootView>
-        <KeyboardProvider>
-          <Stack
-            screenOptions={{
-              headerShown: false
-            }}
-          />
-        </KeyboardProvider>
-      </GestureHandlerRootView>
-    </GluestackUIProvider>
+    <GestureHandlerRootView>
+      <KeyboardProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false
+          }}
+        />
+      </KeyboardProvider>
+    </GestureHandlerRootView>
   );
 }

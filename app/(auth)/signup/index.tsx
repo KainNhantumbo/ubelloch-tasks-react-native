@@ -1,4 +1,3 @@
-import { Text } from "@/components/ui/text";
 import { appBaseConfig } from "@/constants";
 import { signUpSchema, type SignUpFormData } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,7 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
 import { ArrowLeft, ChevronLastIcon, LockIcon, Mail, UserIcon } from "lucide-react-native";
 import { Controller, useForm } from "react-hook-form";
-import { StatusBar, TextInput, TouchableOpacity, View } from "react-native";
+import { StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { SafeAreaView } from "react-native-safe-area-context";
 
