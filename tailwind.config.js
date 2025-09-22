@@ -184,7 +184,33 @@ const config = {
         roboto: ["var(--font-roboto)"],
         code: ["var(--font-source-code-pro)"],
         inter: ["var(--font-inter)"],
-        "space-mono": ["var(--font-space-mono)"]
+        "space-mono": ["var(--font-space-mono)"],
+
+        // Fredoka font family
+        sans: ["AlbertSans-Regular", "system-ui"],
+        fredoka: {
+          bold: "Fredoka-Bold",
+          light: "Fredoka-Light",
+          medium: "Fredoka-Medium",
+          regular: "Fredoka-Regular",
+          semibold: "Fredoka-SemiBold"
+        },
+        // Albert Sans font family
+        albert: {
+          thin: "AlbertSans-Thin", // If you have thin variant
+          extralight: "AlbertSans-ExtraLight", // If you have extra light variant
+          light: "AlbertSans-Light", // If you have light variant
+          regular: "AlbertSans-Regular",
+          italic: "AlbertSans-Italic",
+          medium: "AlbertSans-Medium",
+          mediumItalic: "AlbertSans-MediumItalic",
+          semibold: "AlbertSans-SemiBold",
+          semiboldItalic: "AlbertSans-SemiBoldItalic",
+          bold: "AlbertSans-Bold",
+          boldItalic: "AlbertSans-BoldItalic",
+          extrabold: "AlbertSans-ExtraBold",
+          extraboldItalic: "AlbertSans-ExtraBoldItalic"
+        }
       },
       fontWeight: {
         extrablack: "950"
