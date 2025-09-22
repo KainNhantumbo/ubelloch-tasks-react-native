@@ -1,7 +1,8 @@
-/** @type {import('tailwindcss').Config} */
+const { hairlineWidth } = require("nativewind/theme");
 
+/** @type {import('tailwindcss').Config} */
 const config = {
-  darkMode: process.env.DARK_MODE ? process.env.DARK_MODE : "class",
+  darkMode: "class",
   // NOTE: Update this to include the paths to all files that contain Nativewind classes.
   content: [
     "./app/**/*.{html,js,jsx,ts,tsx,mdx}",
@@ -14,36 +15,76 @@ const config = {
   important: "html",
   theme: {
     extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))"
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))"
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))"
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))"
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))"
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))"
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))"
+        }
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)"
+      },
+      borderWidth: {
+        hairline: hairlineWidth()
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" }
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" }
+        }
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out"
+      },
       fontFamily: {
         jakarta: ["var(--font-plus-jakarta-sans)"],
         roboto: ["var(--font-roboto)"],
         inter: ["var(--font-inter)"],
-        // Fredoka font family
         sans: ["AlbertSans-Regular", "system-ui"],
-        fredoka: {
-          bold: "Fredoka-Bold",
-          light: "Fredoka-Light",
-          medium: "Fredoka-Medium",
-          regular: "Fredoka-Regular",
-          semibold: "Fredoka-SemiBold"
-        },
-        // Albert Sans font family
-        albert: {
-          regular: "AlbertSans-Regular",
-          italic: "AlbertSans-Italic",
-          medium: "AlbertSans-Medium",
-          mediumItalic: "AlbertSans-MediumItalic",
-          semibold: "AlbertSans-SemiBold",
-          semiboldItalic: "AlbertSans-SemiBoldItalic",
-          bold: "AlbertSans-Bold",
-          boldItalic: "AlbertSans-BoldItalic",
-          extrabold: "AlbertSans-ExtraBold",
-          extraboldItalic: "AlbertSans-ExtraBoldItalic"
-        }
+        display: ["AlbertSans-Regular", "system-ui"]
       }
     }
   },
-  plugins: []
+  future: {
+    hoverOnlyWhenSupported: true
+  },
+  plugins: [require("tailwindcss-animate")]
 };
 
 module.exports = config;

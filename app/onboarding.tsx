@@ -98,7 +98,9 @@ export default function Onboarding() {
 
         <View className='flex-1 items-center justify-center px-8'>
           <View className='mb-16'>
-            <Text className='font-sans text-5xl font-bold'>{appBaseConfig.title}</Text>
+            <Text className='bg-primary font-sans text-5xl font-bold'>
+              {appBaseConfig.title}
+            </Text>
           </View>
 
           <Link asChild href={"/login"}>

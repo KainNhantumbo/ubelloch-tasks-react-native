@@ -1,8 +1,11 @@
+import { NAV_THEME } from "@/lib/theme";
+import { ThemeProvider } from "@react-navigation/native";
+import { PortalHost } from "@rn-primitives/portal";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect } from "react";
-import { useColorScheme } from "react-native";
+import { StatusBar, useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import "../styles/global.css";
@@ -43,14 +46,18 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView>
-      <KeyboardProvider>
-        <Stack
-          screenOptions={{
-            headerShown: false
-          }}
-        />
-      </KeyboardProvider>
-    </GestureHandlerRootView>
+    <ThemeProvider value={NAV_THEME[colorScheme === "dark" ? "dark" : "light"]}>
+      <StatusBar barStyle={colorScheme === "dark" ? "light-content" : "dark-content"} />
+      <PortalHost />
+      <GestureHandlerRootView>
+        <KeyboardProvider>
+          <Stack
+            screenOptions={{
+              headerShown: false
+            }}
+          />
+        </KeyboardProvider>
+      </GestureHandlerRootView>
+    </ThemeProvider>
   );
 }
