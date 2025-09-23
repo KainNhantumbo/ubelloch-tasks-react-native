@@ -32,7 +32,7 @@ export default function VerifyEmailScreen() {
 
   return (
     <View className='flex-1'>
-      <StatusBar barStyle='light-content' />
+      <StatusBar barStyle='default' animated={true} backgroundColor={"#7e1b8c"} />
 
       <LinearGradient
         colors={["#7e1b8c", "#ff6f91"]}
