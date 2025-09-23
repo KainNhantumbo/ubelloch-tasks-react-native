@@ -1,10 +1,11 @@
+import { Text } from "@/components/ui/text";
 import { resetPasswordSchema, type ResetPasswordFormData } from "@/schemas/auth";
 import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
-import { StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { StatusBar, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function ResetPasswordScreen() {
   const router = useRouter();

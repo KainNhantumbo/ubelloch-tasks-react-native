@@ -1,9 +1,10 @@
+import { Text } from "@/components/ui/text";
 import { forgotPasswordSchema, type ForgotPasswordFormData } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
-import { StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { StatusBar, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function ForgotPasswordScreen() {
   const {

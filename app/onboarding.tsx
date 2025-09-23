@@ -1,9 +1,10 @@
+import { Text } from "@/components/ui/text";
 import { appBaseConfig } from "@/constants";
 import { useAssets } from "expo-asset";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
 import * as React from "react";
-import { Image, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { Image, StatusBar, TouchableOpacity, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import Carousel from "react-native-reanimated-carousel";
 import { SafeAreaView } from "react-native-safe-area-context";

@@ -1,3 +1,4 @@
+import { Text } from "@/components/ui/text";
 import { appBaseConfig } from "@/constants";
 import { loginSchema, type LoginFormData } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,7 +11,6 @@ import {
   Platform,
   ScrollView,
   StatusBar,
-  Text,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
