@@ -17,11 +17,15 @@ export default function RootLayout() {
   const { colorScheme } = useColorScheme();
 
   const [loaded, error] = useFonts({
-    "Fredoka-Bold": require("../assets/fonts/fredoka/Fredoka-Bold.ttf"),
-    "Fredoka-Light": require("../assets/fonts/fredoka/Fredoka-Light.ttf"),
-    "Fredoka-Medium": require("../assets/fonts/fredoka/Fredoka-Medium.ttf"),
-    "Fredoka-Regular": require("../assets/fonts/fredoka/Fredoka-Regular.ttf"),
-    "Fredoka-SemiBold": require("../assets/fonts/fredoka/Fredoka-SemiBold.ttf"),
+    "PlusJakartaSans-Bold": require("../assets/fonts/jakarta/PlusJakartaSans-Bold.ttf"),
+    "PlusJakartaSans-BoldItalic": require("../assets/fonts/jakarta/PlusJakartaSans-BoldItalic.ttf"),
+    "PlusJakartaSans-Medium": require("../assets/fonts/jakarta/PlusJakartaSans-Medium.ttf"),
+    "PlusJakartaSans-MediumItalic": require("../assets/fonts/jakarta/PlusJakartaSans-MediumItalic.ttf"),
+    "PlusJakartaSans-Regular": require("../assets/fonts/jakarta/PlusJakartaSans-Regular.ttf"),
+    "PlusJakartaSans-Italic": require("../assets/fonts/jakarta/PlusJakartaSans-Italic.ttf"),
+    "PlusJakartaSans-SemiBold": require("../assets/fonts/jakarta/PlusJakartaSans-SemiBold.ttf"),
+    "PlusJakartaSans-SemiBoldItalic": require("../assets/fonts/jakarta/PlusJakartaSans-SemiBoldItalic.ttf"),
+
     "AlbertSans-Regular": require("../assets/fonts/albert/albert-sans-latin-400-normal.ttf"),
     "AlbertSans-Italic": require("../assets/fonts/albert/albert-sans-latin-400-italic.ttf"),
     "AlbertSans-Medium": require("../assets/fonts/albert/albert-sans-latin-500-normal.ttf"),
@@ -33,8 +37,6 @@ export default function RootLayout() {
     "AlbertSans-ExtraBold": require("../assets/fonts/albert/albert-sans-latin-800-normal.ttf"),
     "AlbertSans-ExtraBoldItalic": require("../assets/fonts/albert/albert-sans-latin-800-italic.ttf")
   });
-
-  console.log({ colorScheme });
 
   useEffect(() => {
     if (loaded || error) {

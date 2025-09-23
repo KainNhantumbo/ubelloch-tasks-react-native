@@ -77,7 +77,7 @@ const config = {
         roboto: ["var(--font-roboto)"],
         inter: ["var(--font-inter)"],
         sans: ["AlbertSans-Regular", "system-ui"],
-        display: ["AlbertSans-Regular", "system-ui"]
+        display: ["PlusJakartaSans", "system-ui"]
       }
     }
   },

@@ -43,29 +43,7 @@
         }
       ],
       "expo-asset",
-      [
-        "expo-font",
-        {
-          "fonts": [
-            "./assets/fonts/Fredoka-Bold.ttf",
-            "./assets/fonts/Fredoka-Light.ttf",
-            "./assets/fonts/Fredoka-Medium.ttf",
-            "./assets/fonts/Fredoka-Regular.ttf",
-            "./assets/fonts/Fredoka-SemiBold.ttf",
-
-            "./assets/fonts/albert-sans-latin-400-normal.ttf",
-            "./assets/fonts/albert-sans-latin-400-italic.ttf",
-            "./assets/fonts/albert-sans-latin-500-normal.ttf",
-            "./assets/fonts/albert-sans-latin-500-italic.ttf",
-            "./assets/fonts/albert-sans-latin-600-normal.ttf",
-            "./assets/fonts/albert-sans-latin-600-italic.ttf",
-            "./assets/fonts/albert-sans-latin-700-normal.ttf",
-            "./assets/fonts/albert-sans-latin-700-italic.ttf",
-            "./assets/fonts/albert-sans-latin-800-normal.ttf",
-            "./assets/fonts/albert-sans-latin-800-italic.ttf"
-          ]
-        }
-      ]
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,
