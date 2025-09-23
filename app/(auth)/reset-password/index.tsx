@@ -2,15 +2,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/text";
 import { resetPasswordSchema, type ResetPasswordFormData } from "@/schemas/auth";
-import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
+import { ArrowLeft, ChevronLastIcon } from "lucide-react-native";
 import { Controller, useForm } from "react-hook-form";
 import { StatusBar, TouchableOpacity, View } from "react-native";
 
 export default function ResetPasswordScreen() {
   const router = useRouter();
+  const canGoBack = router.canGoBack();
+
+  function getBack() {
+    if (canGoBack) {
+      router.back();
+    }
+  }
+
   const {
     control,
     handleSubmit,
@@ -38,18 +46,18 @@ export default function ResetPasswordScreen() {
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}>
         <View className='animate-fade-in flex-1 px-8 pt-16'>
-          <View className='mb-8 flex-row items-center justify-between'>
+          <View className='flex flex-row items-center justify-between bg-transparent px-4 py-3'>
             <TouchableOpacity
-              onPress={() => router.back()}
-              className='p-2 transition-transform active:scale-95'>
-              <Ionicons name='arrow-back' size={24} color='white' />
-              <Text className='text-2xl text-white'>Back</Text>
+              onPress={getBack}
+              className='flex flex-row items-center gap-2'>
+              <ArrowLeft size={16} color='white' />
+              <Text className='text-base text-white'>Back</Text>
             </TouchableOpacity>
 
-            <Text className='text-xl font-semibold text-white'>Reset Password</Text>
             <Link asChild href={"/login"}>
-              <TouchableOpacity className='p-2'>
-                <Text className='text-base text-cyan-300'>Skip</Text>
+              <TouchableOpacity className='flex flex-row items-center gap-2'>
+                <Text className='text-base text-white'>Skip</Text>
+                <ChevronLastIcon size={18} color='white' />
               </TouchableOpacity>
             </Link>
           </View>

@@ -56,7 +56,6 @@ export default function LoginScreen() {
                 justifyContent: "center",
                 paddingHorizontal: 32
               }}>
-              {/* Header */}
               <View className='mb-12'>
                 <Text className='mb-2 text-center text-4xl font-bold tracking-wide text-white'>
                   {appBaseConfig.title}
@@ -66,7 +65,6 @@ export default function LoginScreen() {
                 </Text>
               </View>
 
-              {/* Card */}
               <View className='animate-slide-up mb-8 rounded-3xl bg-white/10 p-8 backdrop-blur-sm'>
                 <Text className='mb-8 text-center text-2xl font-semibold text-white'>
                   Sign In
