@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/text";
 import { verifyEmailSchema, type VerifyEmailFormData } from "@/schemas/auth";
 import { Ionicons } from "@expo/vector-icons";
@@ -69,9 +70,11 @@ export default function VerifyEmailScreen() {
 
             <View className='animate-slide-up mb-8 rounded-3xl bg-white/10 p-8 backdrop-blur-sm'>
               <View className='mb-8'>
-                <Text className='mb-4 text-center text-sm font-medium text-white/90'>
+                <Label
+                  htmlFor='code'
+                  className='mb-4 text-center text-sm font-medium text-white/90'>
                   Verification Code
-                </Text>
+                </Label>
                 <Controller
                   control={control}
                   name='code'
@@ -80,6 +83,7 @@ export default function VerifyEmailScreen() {
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      aria-labelledby='code'
                       placeholder='Enter 6-digit code'
                       placeholderTextColor='#ffffff80'
                       className={`rounded-xl bg-white/20 px-4 py-4 text-center text-2xl tracking-widest text-white ${errors.code ? "border border-red-400" : ""}`}

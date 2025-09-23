@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/text";
 import { forgotPasswordSchema, type ForgotPasswordFormData } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -60,9 +61,9 @@ export default function ForgotPasswordScreen() {
 
             <View className='animate-slide-up mb-8 rounded-3xl bg-white/10 p-8 backdrop-blur-sm'>
               <View className='mb-8'>
-                <Text className='mb-2 text-sm font-medium text-white/90'>
+                <Label className='mb-2 text-sm font-medium text-white/90'>
                   Email Address
-                </Text>
+                </Label>
                 <Controller
                   control={control}
                   name='email'

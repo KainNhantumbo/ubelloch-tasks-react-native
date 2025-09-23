@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/text";
 import { resetPasswordSchema, type ResetPasswordFormData } from "@/schemas/auth";
 import { Ionicons } from "@expo/vector-icons";
@@ -65,12 +66,13 @@ export default function ResetPasswordScreen() {
 
             <View className='animate-slide-up rounded-3xl bg-white/10 p-8 backdrop-blur-sm'>
               <View className='mb-4'>
-                <Text className='mb-2 text-sm font-medium text-white/90'>Reset Code</Text>
+                <Label className='mb-2 text-sm font-medium text-white/90'>Reset Code</Label>
                 <Controller
                   control={control}
                   name='code'
                   render={({ field: { onChange, onBlur, value } }) => (
                     <Input
+                      aria-labelledby='code'
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
@@ -87,7 +89,9 @@ export default function ResetPasswordScreen() {
               </View>
 
               <View className='mb-4'>
-                <Text className='mb-2 text-sm font-medium text-white/90'>New Password</Text>
+                <Label className='mb-2 text-sm font-medium text-white/90'>
+                  New Password
+                </Label>
                 <Controller
                   control={control}
                   name='password'
@@ -111,9 +115,9 @@ export default function ResetPasswordScreen() {
               </View>
 
               <View className='mb-8'>
-                <Text className='mb-2 text-sm font-medium text-white/90'>
+                <Label className='mb-2 text-sm font-medium text-white/90'>
                   Confirm Password
-                </Text>
+                </Label>
                 <Controller
                   control={control}
                   name='confirmPassword'

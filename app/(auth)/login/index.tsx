@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/text";
 import { appBaseConfig } from "@/constants";
 import { loginSchema, type LoginFormData } from "@/schemas/auth";
@@ -71,9 +72,8 @@ export default function LoginScreen() {
                   Sign In
                 </Text>
 
-                {/* Email */}
                 <View className='mb-6'>
-                  <Text className='mb-2 text-sm font-medium text-white/90'>Email</Text>
+                  <Label className='mb-2 text-sm font-medium text-white/90'>Email</Label>
                   <Controller
                     control={control}
                     name='email'
@@ -97,9 +97,8 @@ export default function LoginScreen() {
                   )}
                 </View>
 
-                {/* Password */}
                 <View className='mb-6'>
-                  <Text className='mb-2 text-sm font-medium text-white/90'>Password</Text>
+                  <Label className='mb-2 text-sm font-medium text-white/90'>Password</Label>
                   <Controller
                     control={control}
                     name='password'
@@ -122,7 +121,6 @@ export default function LoginScreen() {
                   )}
                 </View>
 
-                {/* Forgot Password */}
                 <Link asChild href={"/forgot-password"}>
                   <TouchableOpacity activeOpacity={0.7} className='mb-8'>
                     <Text className='text-right text-sm text-cyan-300'>
@@ -131,7 +129,6 @@ export default function LoginScreen() {
                   </TouchableOpacity>
                 </Link>
 
-                {/* Submit */}
                 <TouchableOpacity
                   onPress={handleSubmit(onSubmit)}
                   className='mb-4 rounded-xl bg-gray-800 py-4 transition-transform active:scale-95'
@@ -141,7 +138,6 @@ export default function LoginScreen() {
                   </Text>
                 </TouchableOpacity>
 
-                {/* Sign Up */}
                 <Link asChild href={"/signup"}>
                   <TouchableOpacity activeOpacity={0.7}>
                     <Text className='text-center text-white/80'>
@@ -151,7 +147,6 @@ export default function LoginScreen() {
                 </Link>
               </View>
 
-              {/* Skip */}
               <Link asChild href={"/(home)"}>
                 <TouchableOpacity className='py-3' activeOpacity={0.7}>
                   <Text className='text-center text-base text-white/60'>Skip for now</Text>

@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/text";
 import { appBaseConfig } from "@/constants";
 import { signUpSchema, type SignUpFormData } from "@/schemas/auth";
@@ -79,7 +80,11 @@ export default function SignUpScreen() {
                   <View>
                     <View className='flex flex-row gap-2'>
                       <UserIcon size={16} color='#ffffff90' />
-                      <Text className='mb-2 text-sm font-medium text-white/90'>Name</Text>
+                      <Label
+                        htmlFor='name'
+                        className='mb-2 text-sm font-medium text-white/90'>
+                        Name
+                      </Label>
                     </View>
                     <Controller
                       control={control}
@@ -89,6 +94,7 @@ export default function SignUpScreen() {
                           value={value}
                           onChangeText={onChange}
                           onBlur={onBlur}
+                          aria-labelledby='name'
                           placeholder='Enter your full name'
                           placeholderTextColor='#ffffff80'
                           className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.name ? "border border-red-400" : ""}`}
@@ -105,7 +111,11 @@ export default function SignUpScreen() {
                   <View>
                     <View className='flex flex-row gap-2'>
                       <Mail size={16} color='#ffffff90' />
-                      <Text className='mb-2 text-sm font-medium text-white/90'>Email</Text>
+                      <Label
+                        htmlFor='email'
+                        className='mb-2 text-sm font-medium text-white/90'>
+                        Email
+                      </Label>
                     </View>
                     <Controller
                       control={control}
@@ -115,6 +125,7 @@ export default function SignUpScreen() {
                           value={value}
                           onChangeText={onChange}
                           onBlur={onBlur}
+                          aria-labelledby='email'
                           placeholder='Enter your email'
                           placeholderTextColor='#ffffff80'
                           className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.email ? "border border-red-400" : ""}`}
@@ -133,9 +144,11 @@ export default function SignUpScreen() {
                   <View>
                     <View className='flex flex-row gap-2'>
                       <LockIcon size={16} color='#ffffff90' />
-                      <Text className='mb-2 text-sm font-medium text-white/90'>
+                      <Label
+                        htmlFor='password'
+                        className='mb-2 text-sm font-medium text-white/90'>
                         Password
-                      </Text>
+                      </Label>
                     </View>
                     <Controller
                       control={control}
@@ -145,6 +158,7 @@ export default function SignUpScreen() {
                           value={value}
                           onChangeText={onChange}
                           onBlur={onBlur}
+                          aria-labelledby='password'
                           placeholder='Create a password'
                           placeholderTextColor='#ffffff80'
                           className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.password ? "border border-red-400" : ""}`}
@@ -162,9 +176,11 @@ export default function SignUpScreen() {
                   <View>
                     <View className='flex flex-row gap-2'>
                       <LockIcon size={16} color='#ffffff90' />
-                      <Text className='mb-2 text-sm font-medium text-white/90'>
+                      <Label
+                        htmlFor='confirmPassword'
+                        className='mb-2 text-sm font-medium text-white/90'>
                         Confirm Password
-                      </Text>
+                      </Label>
                     </View>
                     <Controller
                       control={control}
@@ -174,6 +190,7 @@ export default function SignUpScreen() {
                           value={value}
                           onChangeText={onChange}
                           onBlur={onBlur}
+                          aria-labelledby='confirmPassword'
                           placeholder='Confirm your password'
                           placeholderTextColor='#ffffff80'
                           className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.confirmPassword ? "border border-red-400" : ""}`}
