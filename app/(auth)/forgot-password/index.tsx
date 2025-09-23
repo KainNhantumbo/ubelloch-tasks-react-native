@@ -1,10 +1,11 @@
+import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import { forgotPasswordSchema, type ForgotPasswordFormData } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
-import { StatusBar, TextInput, TouchableOpacity, View } from "react-native";
+import { StatusBar, TouchableOpacity, View } from "react-native";
 
 export default function ForgotPasswordScreen() {
   const {
@@ -66,7 +67,7 @@ export default function ForgotPasswordScreen() {
                   control={control}
                   name='email'
                   render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
+                    <Input
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}

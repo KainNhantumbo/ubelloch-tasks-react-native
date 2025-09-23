@@ -1,3 +1,4 @@
+import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import { appBaseConfig } from "@/constants";
 import { loginSchema, type LoginFormData } from "@/schemas/auth";
@@ -11,7 +12,6 @@ import {
   Platform,
   ScrollView,
   StatusBar,
-  TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View
@@ -78,7 +78,7 @@ export default function LoginScreen() {
                     control={control}
                     name='email'
                     render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
+                      <Input
                         value={value}
                         onChangeText={onChange}
                         onBlur={onBlur}
@@ -104,7 +104,7 @@ export default function LoginScreen() {
                     control={control}
                     name='password'
                     render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
+                      <Input
                         value={value}
                         onChangeText={onChange}
                         onBlur={onBlur}

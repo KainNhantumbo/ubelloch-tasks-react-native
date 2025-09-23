@@ -1,3 +1,4 @@
+import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import { appBaseConfig } from "@/constants";
 import { signUpSchema, type SignUpFormData } from "@/schemas/auth";
@@ -6,7 +7,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
 import { ArrowLeft, ChevronLastIcon, LockIcon, Mail, UserIcon } from "lucide-react-native";
 import { Controller, useForm } from "react-hook-form";
-import { StatusBar, TextInput, TouchableOpacity, View } from "react-native";
+import { StatusBar, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -84,7 +85,7 @@ export default function SignUpScreen() {
                       control={control}
                       name='name'
                       render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
+                        <Input
                           value={value}
                           onChangeText={onChange}
                           onBlur={onBlur}
@@ -110,7 +111,7 @@ export default function SignUpScreen() {
                       control={control}
                       name='email'
                       render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
+                        <Input
                           value={value}
                           onChangeText={onChange}
                           onBlur={onBlur}
@@ -140,7 +141,7 @@ export default function SignUpScreen() {
                       control={control}
                       name='password'
                       render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
+                        <Input
                           value={value}
                           onChangeText={onChange}
                           onBlur={onBlur}
@@ -169,7 +170,7 @@ export default function SignUpScreen() {
                       control={control}
                       name='confirmPassword'
                       render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
+                        <Input
                           value={value}
                           onChangeText={onChange}
                           onBlur={onBlur}
