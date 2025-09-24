@@ -1,5 +1,5 @@
 {
-  "name": "ubelloch-tasks",
+  "name": "momentum",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@expo/html-elements": "^0.13.7",
+    "@expo/metro-runtime": "~6.1.2",
     "@expo/vector-icons": "^15.0.2",
     "@hookform/resolvers": "^5.2.2",
     "@react-aria/utils": "^3.30.1",
