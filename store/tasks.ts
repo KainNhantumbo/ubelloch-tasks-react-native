@@ -1,5 +1,5 @@
 import { type TaskSchemaType, TaskSchema } from "@/database/validations";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { create } from "zustand";
 import { orm } from "../database/client";
 import { tasks } from "../database/schema";
@@ -14,6 +14,7 @@ type Actions = {
   addTask: (title: string) => Promise<void>;
   toggleTask: (id: number) => Promise<void>;
   deleteTask: (id: number) => Promise<void>;
+  markSynced: (ids: number[]) => Promise<void>;
 };
 
 export const useTasks = create<State & Actions>((set, get) => ({
@@ -27,7 +28,7 @@ export const useTasks = create<State & Actions>((set, get) => ({
   },
 
   addTask: async (title) => {
-    const parsed = TaskSchema.parse({ title, done: false });
+    const parsed = await TaskSchema.parseAsync({ title, done: false });
     await orm.insert(tasks).values(parsed).run();
     await get().fetchTasks();
   },
@@ -41,6 +42,11 @@ export const useTasks = create<State & Actions>((set, get) => ({
 
   deleteTask: async (id) => {
     await orm.delete(tasks).where(eq(tasks.id, id)).run();
+    await get().fetchTasks();
+  },
+
+  markSynced: async (ids) => {
+    await orm.update(tasks).set({ synced: true }).where(inArray(tasks.id, ids)).run();
     await get().fetchTasks();
   }
 }));
