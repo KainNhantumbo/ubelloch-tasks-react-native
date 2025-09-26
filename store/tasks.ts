@@ -14,6 +14,7 @@ type Actions = {
   addTask: (title: string) => Promise<void>;
   toggleTask: (id: number) => Promise<void>;
   deleteTask: (id: number) => Promise<void>;
+  updateTask: (id: number, data: TaskSchemaType) => Promise<void>;
   markSynced: (ids: number[]) => Promise<void>;
 };
 
@@ -29,24 +30,37 @@ export const useTasks = create<State & Actions>((set, get) => ({
 
   addTask: async (title) => {
     const parsed = await TaskSchema.parseAsync({ title, done: false });
-    await orm.insert(tasks).values(parsed).run();
+    await orm.insert(tasks).values(parsed);
     await get().fetchTasks();
   },
 
   toggleTask: async (id) => {
     const task = get().tasks.find((t) => t.id === id);
     if (!task) return;
-    await orm.update(tasks).set({ done: !task.done }).where(eq(tasks.id, id)).run();
+    await orm.update(tasks).set({ done: !task.done }).where(eq(tasks.id, id));
+    await get().fetchTasks();
+  },
+
+  updateTask: async (id, data) => {
+    const parsed = await TaskSchema.parseAsync({ ...data });
+    const task = get().tasks.find((t) => t.id === id);
+
+    if (!task) throw new Error("Task not found");
+    await orm
+      .update(tasks)
+      .set({ ...parsed, updatedAt: new Date() })
+      .where(eq(tasks.id, id));
+
     await get().fetchTasks();
   },
 
   deleteTask: async (id) => {
-    await orm.delete(tasks).where(eq(tasks.id, id)).run();
+    await orm.delete(tasks).where(eq(tasks.id, id));
     await get().fetchTasks();
   },
 
   markSynced: async (ids) => {
-    await orm.update(tasks).set({ synced: true }).where(inArray(tasks.id, ids)).run();
+    await orm.update(tasks).set({ synced: true }).where(inArray(tasks.id, ids));
     await get().fetchTasks();
   }
 }));
