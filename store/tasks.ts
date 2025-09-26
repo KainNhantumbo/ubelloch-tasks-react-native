@@ -1,7 +1,8 @@
+import { type TaskSchemaType, TaskSchema } from "@/database/validations";
 import { eq } from "drizzle-orm";
 import { create } from "zustand";
 import { orm } from "../database/client";
-import { tasks, TaskSchema, type TaskSchemaType } from "../database/schemas/tasks";
+import { tasks } from "../database/schema";
 
 type State = {
   tasks: TaskSchemaType[];
