@@ -34,6 +34,7 @@
     "expo-image": "~3.0.8",
     "expo-linear-gradient": "^15.0.7",
     "expo-linking": "~8.0.8",
+    "expo-network": "~8.0.7",
     "expo-router": "~6.0.6",
     "expo-splash-screen": "~31.0.10",
     "expo-sqlite": "~16.0.8",
@@ -64,6 +65,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
+    "drizzle-kit": "^0.31.4",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
     "eslint-plugin-react-hooks": "^5.2.0",
