@@ -84,13 +84,15 @@ export default function LoginScreen() {
                       placeholder='Enter your email'
                       placeholderTextColor='#ffffff80'
                       keyboardType='email-address'
-                      className={cn(errors.password ? "border border-red-400" : "")}
+                      className={cn(errors.password ? "border border-destructive" : "")}
                       autoCapitalize='none'
                     />
                   )}
                 />
                 {errors.email && (
-                  <Text className='mt-1 text-sm text-red-300'>{errors.email.message}</Text>
+                  <Text className='mt-1 text-sm text-destructive'>
+                    {errors.email.message}
+                  </Text>
                 )}
               </View>
 
@@ -105,13 +107,13 @@ export default function LoginScreen() {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       placeholder='Enter your password'
-                      className={cn(errors.password ? "border border-red-400" : "")}
+                      className={cn(errors.password ? "border border-destructive" : "")}
                       secureTextEntry
                     />
                   )}
                 />
                 {errors.password && (
-                  <Text className='mt-1 text-sm text-red-300'>
+                  <Text className='mt-1 text-sm text-destructive'>
                     {errors.password.message}
                   </Text>
                 )}
@@ -125,11 +127,7 @@ export default function LoginScreen() {
                 </Button>
               </Link>
 
-              <Button
-                size={"lg"}
-                variant={"default"}
-                onPress={handleSubmit(onSubmit)}
-                className=''>
+              <Button size={"lg"} variant={"default"} onPress={handleSubmit(onSubmit)}>
                 <Text className='text-center font-semibold text-primary-foreground'>
                   Sign In
                 </Text>
