@@ -10,8 +10,14 @@ import { Tabs } from "expo-router";
 // import { useWindowDimensions } from 'react-native';
 //
 // import { Tabs } from 'expo-router';
-import { CalendarDaysIcon, CogIcon, Home, Search } from "lucide-react-native";
-import { useColorScheme } from "react-native";
+import {
+  CalendarDaysIcon,
+  CogIcon,
+  FolderIcon,
+  LayoutDashboardIcon,
+  Search
+} from "lucide-react-native";
+import { StatusBar, useColorScheme } from "react-native";
 
 export default function HomeLayout() {
   const colorScheme = useColorScheme();
@@ -25,17 +31,23 @@ export default function HomeLayout() {
         tabBarInactiveTintColor: isDark ? "#666" : "#999",
         tabBarStyle: {
           backgroundColor: isDark ? "#000" : "#fff",
-          borderTopColor: isDark ? "#333" : "#e0e0e0"
+          borderTopColor: isDark ? "#333" : "#e0e0e0",
+          paddingHorizontal: 12
         },
         tabBarLabelStyle: {
           fontWeight: "bold"
         }
       }}>
+      <StatusBar
+        animated={true}
+        backgroundColor={isDark ? "#000" : "#fff"}
+        barStyle={isDark ? "light-content" : "dark-content"}
+      />
       <Tabs.Screen
         name='index'
         options={{
-          title: "Home",
-          tabBarIcon: ({ color, size }) => <Home size={size} color={color} />
+          title: "Board",
+          tabBarIcon: ({ color, size }) => <LayoutDashboardIcon size={size} color={color} />
         }}
       />
 
@@ -43,7 +55,7 @@ export default function HomeLayout() {
         name='folders/index'
         options={{
           title: "Folders",
-          tabBarIcon: ({ color, size }) => <Home size={size} color={color} />
+          tabBarIcon: ({ color, size }) => <FolderIcon size={size} color={color} />
         }}
       />
 

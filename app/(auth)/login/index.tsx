@@ -1,11 +1,14 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/text";
 import { appBaseConfig } from "@/constants";
+import { THEME } from "@/lib/theme";
+import { cn } from "@/lib/utils";
 import { loginSchema, type LoginFormData } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
+import { useColorScheme } from "nativewind";
 import { Controller, useForm } from "react-hook-form";
 import {
   Keyboard,
@@ -19,6 +22,7 @@ import {
 } from "react-native";
 
 export default function LoginScreen() {
+  const { colorScheme } = useColorScheme();
   const {
     control,
     handleSubmit,
@@ -38,121 +42,117 @@ export default function LoginScreen() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View className='flex-1'>
-        <StatusBar barStyle='default' animated={true} backgroundColor={"#7e1b8c"} />
+        <StatusBar
+          animated={true}
+          barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
+          backgroundColor={
+            colorScheme === "dark" ? THEME.dark.background : THEME.light.background
+          }
+        />
 
-        <LinearGradient
-          colors={["#7e1b8c", "#ff6f91"]}
+        <KeyboardAvoidingView
           style={{ flex: 1 }}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 1 }}>
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}>
-            <ScrollView
-              keyboardShouldPersistTaps='handled'
-              contentContainerStyle={{
-                flexGrow: 1,
-                justifyContent: "center",
-                paddingHorizontal: 32
-              }}>
-              <View className='mb-12'>
-                <Text className='mb-2 text-center text-4xl font-bold tracking-wide text-white'>
-                  {appBaseConfig.title}
-                </Text>
-                <Text className='text-center text-lg text-white/80'>
-                  Welcome back to your ideas
-                </Text>
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}>
+          <ScrollView
+            keyboardShouldPersistTaps='handled'
+            contentContainerStyle={{
+              flexGrow: 1,
+              justifyContent: "center",
+              paddingHorizontal: 32
+            }}>
+            <View className='mb-12'>
+              <Text className='mb-2 text-center font-display font-extrabold' variant={"h1"}>
+                {appBaseConfig.title}
+              </Text>
+              <Text className='text-center font-display text-lg'>
+                Welcome back to your ideas
+              </Text>
+            </View>
+
+            <View className='animate-slide-up'>
+              <View className='mb-6'>
+                <Label className='mb-2 text-sm font-medium'>Email</Label>
+                <Controller
+                  control={control}
+                  name='email'
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <Input
+                      value={value}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      placeholder='Enter your email'
+                      placeholderTextColor='#ffffff80'
+                      keyboardType='email-address'
+                      className={cn(errors.password ? "border border-red-400" : "")}
+                      autoCapitalize='none'
+                    />
+                  )}
+                />
+                {errors.email && (
+                  <Text className='mt-1 text-sm text-red-300'>{errors.email.message}</Text>
+                )}
               </View>
 
-              <View className='animate-slide-up mb-8 rounded-3xl bg-white/10 p-8 backdrop-blur-sm'>
-                <Text className='mb-8 text-center text-2xl font-semibold text-white'>
+              <View className='mb-6'>
+                <Label className='mb-2 text-sm font-medium'>Password</Label>
+                <Controller
+                  control={control}
+                  name='password'
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <Input
+                      value={value}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      placeholder='Enter your password'
+                      className={cn(errors.password ? "border border-red-400" : "")}
+                      secureTextEntry
+                    />
+                  )}
+                />
+                {errors.password && (
+                  <Text className='mt-1 text-sm text-red-300'>
+                    {errors.password.message}
+                  </Text>
+                )}
+              </View>
+
+              <Link asChild href={"/forgot-password"}>
+                <Button variant={"link"} className='mb-8 self-end'>
+                  <Text variant={"small"} className='text-sm'>
+                    Forgot Password?
+                  </Text>
+                </Button>
+              </Link>
+
+              <Button
+                size={"lg"}
+                variant={"default"}
+                onPress={handleSubmit(onSubmit)}
+                className=''>
+                <Text className='text-center font-semibold text-primary-foreground'>
                   Sign In
                 </Text>
+              </Button>
 
-                <View className='mb-6'>
-                  <Label className='mb-2 text-sm font-medium text-white/90'>Email</Label>
-                  <Controller
-                    control={control}
-                    name='email'
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <Input
-                        value={value}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        placeholder='Enter your email'
-                        placeholderTextColor='#ffffff80'
-                        className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.email ? "border border-red-400" : ""}`}
-                        keyboardType='email-address'
-                        autoCapitalize='none'
-                      />
-                    )}
-                  />
-                  {errors.email && (
-                    <Text className='mt-1 text-sm text-red-300'>
-                      {errors.email.message}
-                    </Text>
-                  )}
-                </View>
-
-                <View className='mb-6'>
-                  <Label className='mb-2 text-sm font-medium text-white/90'>Password</Label>
-                  <Controller
-                    control={control}
-                    name='password'
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <Input
-                        value={value}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        placeholder='Enter your password'
-                        placeholderTextColor='#ffffff80'
-                        className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.password ? "border border-red-400" : ""}`}
-                        secureTextEntry
-                      />
-                    )}
-                  />
-                  {errors.password && (
-                    <Text className='mt-1 text-sm text-red-300'>
-                      {errors.password.message}
-                    </Text>
-                  )}
-                </View>
-
-                <Link asChild href={"/forgot-password"}>
-                  <TouchableOpacity activeOpacity={0.7} className='mb-8'>
-                    <Text className='text-right text-sm text-cyan-300'>
-                      Forgot Password?
-                    </Text>
-                  </TouchableOpacity>
-                </Link>
-
-                <TouchableOpacity
-                  onPress={handleSubmit(onSubmit)}
-                  className='mb-4 rounded-xl bg-gray-800 py-4 transition-transform active:scale-95'
-                  activeOpacity={0.8}>
-                  <Text className='text-center text-lg font-semibold text-white'>
-                    Sign In
+              <Link asChild href={"/signup"} className='mt-4'>
+                <TouchableOpacity activeOpacity={0.7}>
+                  <Text className='text-center'>
+                    Don't have an account? <Text className='text-blue-400'>Sign Up</Text>
                   </Text>
                 </TouchableOpacity>
-
-                <Link asChild href={"/signup"}>
-                  <TouchableOpacity activeOpacity={0.7}>
-                    <Text className='text-center text-white/80'>
-                      Don't have an account? <Text className='text-cyan-300'>Sign Up</Text>
-                    </Text>
-                  </TouchableOpacity>
-                </Link>
-              </View>
-
-              <Link asChild href={"/(home)"}>
-                <TouchableOpacity className='py-3' activeOpacity={0.7}>
-                  <Text className='text-center text-base text-white/60'>Skip for now</Text>
-                </TouchableOpacity>
               </Link>
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </LinearGradient>
+            </View>
+
+            <Link asChild href={"/(home)"}>
+              <TouchableOpacity className='py-3' activeOpacity={0.7}>
+                <Text className='text-center text-base' variant={"muted"}>
+                  Skip for now
+                </Text>
+              </TouchableOpacity>
+            </Link>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     </TouchableWithoutFeedback>
   );
