@@ -1,5 +1,6 @@
 import { drizzle } from "drizzle-orm/expo-sqlite";
-import { db } from "./connection";
+import * as SQLite from "expo-sqlite";
 import * as schema from "./schema";
 
-export const orm = drizzle(db, { schema });
+const expo = SQLite.openDatabaseSync("momentum-data.db", { enableChangeListener: true });
+export const orm = drizzle(expo, { schema });

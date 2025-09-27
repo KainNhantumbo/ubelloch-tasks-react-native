@@ -1,15 +1,14 @@
 import { Text } from "@/components/ui/text";
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import { Button, FlatList, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useTasks } from "../../store/tasks";
 
 export default function HomeScreen() {
   const { tasks, fetchTasks, addTask, toggleTask, deleteTask } = useTasks();
+  console.log(use(fetchTasks()));
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <View className='flex-1 p-4'>

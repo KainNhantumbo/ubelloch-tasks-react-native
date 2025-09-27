@@ -2,7 +2,7 @@ import { type TaskSchemaType, TaskSchema } from "@/database/validations";
 import { eq, inArray } from "drizzle-orm";
 import { create } from "zustand";
 import { orm } from "../database/client";
-import { tasks } from "../database/schema";
+import * as schema from "../database/schema";
 
 type State = {
   tasks: TaskSchemaType[];
@@ -23,21 +23,37 @@ export const useTasks = create<State & Actions>((set, get) => ({
   loading: false,
 
   fetchTasks: async () => {
-    set({ loading: true });
-    const result = await orm.select().from(tasks).all();
-    set({ tasks: result, loading: false });
+    try {
+      set({ loading: true });
+      const result = await orm.select().from(schema.tasks);
+      set({ tasks: result, loading: false });
+    } catch (error) {
+      console.error(error);
+      set({ loading: false });
+    }
   },
 
   addTask: async (title) => {
-    const parsed = await TaskSchema.parseAsync({ title, done: false });
-    await orm.insert(tasks).values(parsed);
-    await get().fetchTasks();
+    try {
+      const parsed = await TaskSchema.parseAsync({
+        title,
+        done: false
+      });
+
+      await orm
+        .insert(schema.tasks)
+        .values({ ...parsed, createdAt: new Date(), updatedAt: new Date() });
+
+      await get().fetchTasks();
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   toggleTask: async (id) => {
     const task = get().tasks.find((t) => t.id === id);
     if (!task) return;
-    await orm.update(tasks).set({ done: !task.done }).where(eq(tasks.id, id));
+    await orm.update(schema.tasks).set({ done: !task.done }).where(eq(schema.tasks.id, id));
     await get().fetchTasks();
   },
 
@@ -47,20 +63,23 @@ export const useTasks = create<State & Actions>((set, get) => ({
 
     if (!task) throw new Error("Task not found");
     await orm
-      .update(tasks)
+      .update(schema.tasks)
       .set({ ...parsed, updatedAt: new Date() })
-      .where(eq(tasks.id, id));
+      .where(eq(schema.tasks.id, id));
 
     await get().fetchTasks();
   },
 
   deleteTask: async (id) => {
-    await orm.delete(tasks).where(eq(tasks.id, id));
+    await orm.delete(schema.tasks).where(eq(schema.tasks.id, id));
     await get().fetchTasks();
   },
 
   markSynced: async (ids) => {
-    await orm.update(tasks).set({ synced: true }).where(inArray(tasks.id, ids));
+    await orm
+      .update(schema.tasks)
+      .set({ synced: true })
+      .where(inArray(schema.tasks.id, ids));
     await get().fetchTasks();
   }
 }));

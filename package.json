@@ -10,6 +10,7 @@
     "web": "expo start --web",
     "update": "npx expo install --fix",
     "prebuild": "npx expo prebuild",
+    "db:generate": "npx drizzle-kit generate",
     "prebuild:eas": "npx eas build --platform android --profile development",
     "prebuild:clear": "npx expo prebuild --clean",
     "start:clear": "expo start --reset-cache --dev-client",

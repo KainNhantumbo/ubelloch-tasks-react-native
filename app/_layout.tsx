@@ -1,3 +1,4 @@
+import { Text } from "@/components/ui/text";
 import { NAV_THEME } from "@/lib/theme";
 import { ThemeProvider } from "@react-navigation/native";
 import { PortalHost } from "@rn-primitives/portal";
@@ -5,7 +6,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useColorScheme } from "nativewind";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -54,11 +55,13 @@ export default function RootLayout() {
       <PortalHost />
       <GestureHandlerRootView>
         <KeyboardProvider>
-          <Stack
-            screenOptions={{
-              headerShown: false
-            }}
-          />
+          <Suspense fallback={<Text>Loading...</Text>}>
+            <Stack
+              screenOptions={{
+                headerShown: false
+              }}
+            />
+          </Suspense>
         </KeyboardProvider>
       </GestureHandlerRootView>
     </ThemeProvider>
