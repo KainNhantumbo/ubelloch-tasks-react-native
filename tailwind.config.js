@@ -76,8 +76,8 @@ const config = {
         jakarta: ["var(--font-plus-jakarta-sans)"],
         roboto: ["var(--font-roboto)"],
         inter: ["var(--font-inter)"],
-        sans: ["AlbertSans-Regular", "system-ui"],
-        display: ["PlusJakartaSans-Regular", "system-ui"]
+        display: ["AlbertSans-Regular", "system-ui"],
+        sans: ["PlusJakartaSans-Regular", "system-ui"]
       }
     }
   },
