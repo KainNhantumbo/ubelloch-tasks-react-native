@@ -1,4 +1,5 @@
 import { Text } from "@/components/ui/text";
+import MigrationContext from "@/context/migrations-context";
 import { NAV_THEME } from "@/lib/theme";
 import { ThemeProvider } from "@react-navigation/native";
 import { PortalHost } from "@rn-primitives/portal";
@@ -50,20 +51,22 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={NAV_THEME[colorScheme === "dark" ? "dark" : "light"]}>
-      <StatusBar barStyle={colorScheme === "dark" ? "light-content" : "dark-content"} />
-      <PortalHost />
-      <GestureHandlerRootView>
-        <KeyboardProvider>
-          <Suspense fallback={<Text>Loading...</Text>}>
-            <Stack
-              screenOptions={{
-                headerShown: false
-              }}
-            />
-          </Suspense>
-        </KeyboardProvider>
-      </GestureHandlerRootView>
-    </ThemeProvider>
+    <MigrationContext>
+      <ThemeProvider value={NAV_THEME[colorScheme === "dark" ? "dark" : "light"]}>
+        <StatusBar barStyle={colorScheme === "dark" ? "light-content" : "dark-content"} />
+        <PortalHost />
+        <GestureHandlerRootView>
+          <KeyboardProvider>
+            <Suspense fallback={<Text>Loading...</Text>}>
+              <Stack
+                screenOptions={{
+                  headerShown: false
+                }}
+              />
+            </Suspense>
+          </KeyboardProvider>
+        </GestureHandlerRootView>
+      </ThemeProvider>
+    </MigrationContext>
   );
 }
