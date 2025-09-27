@@ -1,6 +1,6 @@
 import { Text } from "@/components/ui/text";
 import { useEffect } from "react";
-import { Button, FlatList, ScrollView, View } from "react-native";
+import { Button, FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTasks } from "../../store/tasks";
 
@@ -16,7 +16,7 @@ export default function HomeScreen() {
     <SafeAreaView className='flex-1'>
       <Button title='Add Task' onPress={() => addTask("New Task")} />
 
-      <ScrollView>
+      <View>
         <FlatList
           data={tasks}
           keyExtractor={(item) => item.id?.toString() ?? ""}
@@ -31,7 +31,7 @@ export default function HomeScreen() {
             </View>
           )}
         />
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }

@@ -10,7 +10,7 @@ import { Tabs } from "expo-router";
 // import { useWindowDimensions } from 'react-native';
 //
 // import { Tabs } from 'expo-router';
-import { Clock, Heart, Home, MoreHorizontal, Search } from "lucide-react-native";
+import { CalendarDaysIcon, CogIcon, Home, Search } from "lucide-react-native";
 import { useColorScheme } from "react-native";
 
 export default function HomeLayout() {
@@ -21,56 +21,53 @@ export default function HomeLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        tabBarActiveTintColor: "#007AFF",
+        tabBarInactiveTintColor: isDark ? "#666" : "#999",
         tabBarStyle: {
           backgroundColor: isDark ? "#000" : "#fff",
           borderTopColor: isDark ? "#333" : "#e0e0e0"
         },
-        tabBarActiveTintColor: "#007AFF",
-        tabBarInactiveTintColor: isDark ? "#666" : "#999"
+        tabBarLabelStyle: {
+          fontWeight: "bold"
+        }
       }}>
       <Tabs.Screen
         name='index'
         options={{
           title: "Home",
-          tabBarIcon: ({ color, size, focused }) => (
-            <Home size={size} color={color} fill={focused ? color : "none"} />
-          )
+          tabBarIcon: ({ color, size }) => <Home size={size} color={color} />
         }}
       />
+
       <Tabs.Screen
-        name='search'
+        name='folders/index'
+        options={{
+          title: "Folders",
+          tabBarIcon: ({ color, size }) => <Home size={size} color={color} />
+        }}
+      />
+
+      <Tabs.Screen
+        name='search/index'
         options={{
           title: "Search",
-          tabBarIcon: ({ color, size, focused }) => (
-            <Search size={size} color={color} fill={focused ? color : "none"} />
-          )
+          tabBarIcon: ({ color, size }) => <Search size={size} color={color} />
         }}
       />
+
       <Tabs.Screen
-        name='more'
+        name='calendar/index'
         options={{
-          title: "More",
-          tabBarIcon: ({ color, size, focused }) => (
-            <MoreHorizontal size={size} color={color} />
-          )
+          title: "Calendar",
+          tabBarIcon: ({ color, size }) => <CalendarDaysIcon size={size} color={color} />
         }}
       />
+
       <Tabs.Screen
-        name='reminders'
+        name='settings/index'
         options={{
-          title: "Reminders",
-          tabBarIcon: ({ color, size, focused }) => (
-            <Clock size={size} color={color} fill={focused ? color : "none"} />
-          )
-        }}
-      />
-      <Tabs.Screen
-        name='projects'
-        options={{
-          title: "Projects",
-          tabBarIcon: ({ color, size, focused }) => (
-            <Heart size={size} color={color} fill={focused ? color : "none"} />
-          )
+          title: "Settings",
+          tabBarIcon: ({ color, size, focused }) => <CogIcon size={size} color={color} />
         }}
       />
     </Tabs>
