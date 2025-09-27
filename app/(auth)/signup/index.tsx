@@ -11,8 +11,15 @@ import { Link, useRouter } from "expo-router";
 import { ArrowLeft, ChevronLastIcon, LockIcon, Mail, UserIcon } from "lucide-react-native";
 import { useColorScheme } from "nativewind";
 import { Controller, useForm } from "react-hook-form";
-import { StatusBar, TouchableOpacity, View } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StatusBar,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SignUpScreen() {
@@ -41,6 +48,7 @@ export default function SignUpScreen() {
   });
 
   const onSubmit = (data: SignUpFormData) => {
+    Keyboard.dismiss();
     console.log("Sign up pressed", data);
   };
 
@@ -76,10 +84,13 @@ export default function SignUpScreen() {
         </Link>
       </View>
 
-      <KeyboardAwareScrollView>
+      <KeyboardAvoidingView
+        style={{ flex: 1, marginTop: 30 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 25}>
         <View className='animate-fade-in mt-6 flex-1'>
           <View className='flex-1 justify-center'>
-            <View className='mb-8'>
+            <View className='mb-4'>
               <Text className='mb-2 text-center font-display font-extrabold' variant={"h1"}>
                 Create Account
               </Text>
@@ -88,7 +99,12 @@ export default function SignUpScreen() {
               </Text>
             </View>
 
-            <View className='animate-slide-up px-4'>
+            <ScrollView
+              contentContainerStyle={{ flexGrow: 1 }}
+              keyboardShouldPersistTaps='handled'
+              showsVerticalScrollIndicator={false}
+              contentContainerClassName='relative'
+              className='animate-slide-up px-4'>
               <View className='flex gap-4'>
                 <View className='flex flex-col gap-1'>
                   <View className='flex flex-row items-center gap-2'>
@@ -179,7 +195,7 @@ export default function SignUpScreen() {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         aria-labelledby='password'
-                        placeholder='Create a password'
+                        placeholder='* * * * * * * *'
                         className={cn(errors.password ? "border border-destructive" : "")}
                         secureTextEntry
                       />
@@ -214,7 +230,7 @@ export default function SignUpScreen() {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         aria-labelledby='confirmPassword'
-                        placeholder='Confirm your password'
+                        placeholder='* * * * * * * *'
                         className={cn(errors.password ? "border border-destructive" : "")}
                         secureTextEntry
                       />
@@ -237,10 +253,10 @@ export default function SignUpScreen() {
                   Create Account
                 </Text>
               </Button>
-            </View>
+            </ScrollView>
           </View>
         </View>
-      </KeyboardAwareScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
