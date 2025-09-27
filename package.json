@@ -10,6 +10,7 @@
     "web": "expo start --web",
     "update": "npx expo install --fix",
     "prebuild": "npx expo prebuild",
+    "prebuild:eas": "npx eas build --platform android --profile development",
     "prebuild:clear": "npx expo prebuild --clean",
     "start:clear": "expo start --reset-cache --dev-client",
     "lint": "npx prettier --write \"**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,json}\" && eslint . && tsc --noEmit -p ./tsconfig.json"
@@ -72,6 +73,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
+    "babel-plugin-inline-import": "^3.0.0",
     "drizzle-kit": "^0.31.4",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
