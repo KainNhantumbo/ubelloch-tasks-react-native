@@ -1,4 +1,3 @@
-// src/store/useFoldersStore.ts
 import { orm as db } from "@/database/client";
 import { folders } from "@/database/schema";
 import { FolderSchema, type FolderSchemaType } from "@/database/validations";
