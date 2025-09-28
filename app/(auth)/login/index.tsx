@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { Text } from "@/components/ui/text";
 import { appBaseConfig } from "@/constants";
 import { THEME } from "@/lib/theme";
@@ -142,12 +143,14 @@ export default function LoginScreen() {
               </Link>
             </View>
 
+            <Separator className='my-4' />
+
             <Link asChild href={"/(home)"}>
-              <TouchableOpacity className='py-3' activeOpacity={0.7}>
-                <Text className='text-center text-base' variant={"muted"}>
+              <Button variant={"link"}>
+                <Text className='w-fit text-center' variant={"muted"}>
                   Skip for now
                 </Text>
-              </TouchableOpacity>
+              </Button>
             </Link>
           </ScrollView>
         </KeyboardAvoidingView>
