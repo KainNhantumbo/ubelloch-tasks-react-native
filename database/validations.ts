@@ -51,3 +51,5 @@ export const NoteSchema = z.object({
 
 export type NoteSchemaType = z.infer<typeof NoteSchema>;
 export type FolderSchemaType = z.infer<typeof FolderSchema>;
+export type TagSchemaType = z.infer<typeof TagSchema>;
+export type AttachmentSchemaType = z.infer<typeof AttachmentSchema>;
