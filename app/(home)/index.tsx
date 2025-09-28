@@ -2,7 +2,7 @@ import { Text } from "@/components/ui/text";
 import { useEffect } from "react";
 import { Button, FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTasks } from "../../store/tasks";
+import { useTasks } from "../../store/notes";
 
 export default function HomeScreen() {
   const { tasks, fetchTasks, addTask, toggleTask, deleteTask } = useTasks();
