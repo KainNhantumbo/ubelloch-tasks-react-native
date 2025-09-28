@@ -3,13 +3,13 @@ import { eq, inArray } from "drizzle-orm";
 import { create } from "zustand";
 import { orm as db } from "../database/client";
 import * as schema from "../database/schema";
-import { type Note } from "../database/validations";
+import { type NoteSchemaType } from "../database/validations";
 
 interface NotesState {
   notes: NoteListItem[];
   fetchNotes: () => Promise<void>;
-  addNote: (note: Omit<Note, "id" | "createdAt" | "updatedAt">) => Promise<void>;
-  updateNote: (id: number, updates: Partial<Note>) => Promise<void>;
+  addNote: (note: Omit<NoteSchemaType, "id" | "createdAt" | "updatedAt">) => Promise<void>;
+  updateNote: (id: number, updates: Partial<NoteSchemaType>) => Promise<void>;
   deleteNote: (id: number) => Promise<void>;
   markSynced: (ids: number[]) => Promise<void>;
 }

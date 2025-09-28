@@ -49,4 +49,5 @@ export const NoteSchema = z.object({
   priority: NotePriorityEnum.default("NONE")
 });
 
-export type Note = z.infer<typeof NoteSchema>;
+export type NoteSchemaType = z.infer<typeof NoteSchema>;
+export type FolderSchemaType = z.infer<typeof FolderSchema>;
