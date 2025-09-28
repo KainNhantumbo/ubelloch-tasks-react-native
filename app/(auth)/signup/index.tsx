@@ -17,7 +17,6 @@ import {
   Platform,
   ScrollView,
   StatusBar,
-  TouchableOpacity,
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -62,17 +61,24 @@ export default function SignUpScreen() {
         }
       />
 
-      <View className='flex flex-row items-center justify-between bg-transparent px-4 py-3'>
-        <TouchableOpacity onPress={getBack} className='flex flex-row items-center gap-2'>
+      <View className='flex flex-row items-center justify-between bg-transparent px-2 py-3'>
+        <Button
+          variant={"ghost"}
+          size={"sm"}
+          onPress={getBack}
+          className='flex flex-row items-center gap-2 px-1'>
           <ArrowLeft
             size={18}
             color={colorScheme === "light" ? THEME.light.foreground : THEME.dark.foreground}
           />
           <Text className='text-base'>Back</Text>
-        </TouchableOpacity>
+        </Button>
 
         <Link asChild href={"/login"}>
-          <TouchableOpacity className='flex flex-row items-center gap-2'>
+          <Button
+            variant={"ghost"}
+            size={"sm"}
+            className='flex flex-row items-center gap-2'>
             <Text className='text-base'>Skip</Text>
             <ChevronLastIcon
               size={18}
@@ -80,7 +86,7 @@ export default function SignUpScreen() {
                 colorScheme === "light" ? THEME.light.foreground : THEME.dark.foreground
               }
             />
-          </TouchableOpacity>
+          </Button>
         </Link>
       </View>
 
