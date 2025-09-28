@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { Text } from "@/components/ui/text";
 import { THEME } from "@/lib/theme";
 import { cn } from "@/lib/utils";
@@ -16,7 +17,6 @@ import {
   Platform,
   ScrollView,
   StatusBar,
-  TouchableOpacity,
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -92,11 +92,11 @@ export default function ForgotPasswordScreen() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 25}>
         <View className='flex-1 justify-center'>
-          <View className='mb-12'>
-            <Text className='mb-4 text-center text-3xl font-bold text-white'>
+          <View className='mb-4'>
+            <Text className='mb-2 text-center font-display font-extrabold' variant={"h1"}>
               Reset Password
             </Text>
-            <Text className='text-center text-base leading-6 text-white/80'>
+            <Text className='max-w-sm px-8 text-center font-display text-lg'>
               Enter your email address and we'll send you a link to reset your password.
             </Text>
           </View>
@@ -139,21 +139,26 @@ export default function ForgotPasswordScreen() {
               )}
             </View>
 
-            <TouchableOpacity
-              onPress={handleSubmit(onSubmit)}
-              className='rounded-xl bg-gray-800 py-4 transition-transform active:scale-95'
-              activeOpacity={0.8}>
-              <Text className='text-center text-lg font-semibold text-white'>
+            <Button
+              className='mt-6'
+              size={"lg"}
+              variant={"default"}
+              onPress={handleSubmit(onSubmit)}>
+              <Text className='text-center font-semibold text-primary-foreground'>
                 Send Reset Link
               </Text>
-            </TouchableOpacity>
-          </ScrollView>
-
-          <Link asChild href={"/login"}>
-            <Button activeOpacity={0.7}>
-              <Text className='text-center'>Remember your password? Sign In</Text>
             </Button>
-          </Link>
+
+            <Separator className='my-4' />
+
+            <Link asChild href={"/login"}>
+              <Button variant={"link"}>
+                <Text className='w-fit text-center' variant={"muted"}>
+                  Remember your password? Sign In.
+                </Text>
+              </Button>
+            </Link>
+          </ScrollView>
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
