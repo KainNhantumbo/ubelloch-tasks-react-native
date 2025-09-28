@@ -1,3 +1,4 @@
+import { type Note as NoteListItem } from "@/@types/note";
 import { eq, inArray } from "drizzle-orm";
 import { create } from "zustand";
 import { orm as db } from "../database/client";
@@ -5,7 +6,7 @@ import * as schema from "../database/schema";
 import { type Note } from "../database/validations";
 
 interface NotesState {
-  notes: unknown[];
+  notes: NoteListItem[];
   fetchNotes: () => Promise<void>;
   addNote: (note: Omit<Note, "id" | "createdAt" | "updatedAt">) => Promise<void>;
   updateNote: (id: number, updates: Partial<Note>) => Promise<void>;
@@ -18,7 +19,7 @@ export const useNotesStore = create<NotesState>((set, get) => ({
 
   fetchNotes: async () => {
     const allNotes = await db.select().from(schema.notes);
-    set({ notes: allNotes });
+    set({ notes: allNotes as unknown as NoteListItem[] });
   },
 
   addNote: async (data) => {
