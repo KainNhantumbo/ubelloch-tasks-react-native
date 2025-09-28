@@ -1,17 +1,29 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Text } from "@/components/ui/text";
+import { THEME } from "@/lib/theme";
+import { cn } from "@/lib/utils";
 import { resetPasswordSchema, type ResetPasswordFormData } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LinearGradient } from "expo-linear-gradient";
-import { Link, useRouter } from "expo-router";
-import { ArrowLeft, ChevronLastIcon } from "lucide-react-native";
+import { useRouter } from "expo-router";
+import { ArrowLeft, BinaryIcon, LockIcon } from "lucide-react-native";
+import { useColorScheme } from "nativewind";
 import { Controller, useForm } from "react-hook-form";
-import { StatusBar, TouchableOpacity, View } from "react-native";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StatusBar,
+  View
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ResetPasswordScreen() {
   const router = useRouter();
   const canGoBack = router.canGoBack();
+  const { colorScheme } = useColorScheme();
 
   function getBack() {
     if (canGoBack) {
@@ -33,48 +45,67 @@ export default function ResetPasswordScreen() {
   });
 
   const onSubmit = (data: ResetPasswordFormData) => {
+    Keyboard.dismiss();
     console.log("Reset password pressed", data);
   };
 
   return (
-    <View className='flex-1'>
-      <StatusBar barStyle='default' animated={true} backgroundColor={"#7e1b8c"} />
+    <SafeAreaView className='flex-1'>
+      <StatusBar
+        animated={true}
+        barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
+        backgroundColor={
+          colorScheme === "dark" ? THEME.dark.background : THEME.light.background
+        }
+      />
 
-      <LinearGradient
-        colors={["#7e1b8c", "#ff6f91"]}
-        style={{ flex: 1 }}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}>
-        <View className='animate-fade-in flex-1 px-8 pt-16'>
-          <View className='flex flex-row items-center justify-between bg-transparent px-4 py-3'>
-            <TouchableOpacity
-              onPress={getBack}
-              className='flex flex-row items-center gap-2'>
-              <ArrowLeft size={16} color='white' />
-              <Text className='text-base text-white'>Back</Text>
-            </TouchableOpacity>
+      <View className='flex flex-row items-center justify-between bg-transparent px-2 py-3'>
+        <Button
+          variant={"ghost"}
+          size={"sm"}
+          onPress={getBack}
+          className='flex flex-row items-center gap-2 px-1'>
+          <ArrowLeft
+            size={18}
+            color={colorScheme === "light" ? THEME.light.foreground : THEME.dark.foreground}
+          />
+          <Text className='text-base'>Back</Text>
+        </Button>
+      </View>
 
-            <Link asChild href={"/login"}>
-              <TouchableOpacity className='flex flex-row items-center gap-2'>
-                <Text className='text-base text-white'>Skip</Text>
-                <ChevronLastIcon size={18} color='white' />
-              </TouchableOpacity>
-            </Link>
+      <KeyboardAvoidingView
+        style={{ flex: 1, marginTop: 30 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 25}>
+        <View className='flex-1 justify-center'>
+          <View className='mb-4'>
+            <Text className='mb-2 text-center font-display font-extrabold' variant={"h1"}>
+              New Password
+            </Text>
+            <Text className='max-w-sm px-8 text-center font-display text-lg'>
+              Enter the code from your email and create a new password.
+            </Text>
           </View>
 
-          <View className='flex-1 justify-center'>
-            <View className='mb-8'>
-              <Text className='mb-4 text-center text-3xl font-bold text-white'>
-                New Password
-              </Text>
-              <Text className='text-center text-base text-white/80'>
-                Enter the code from your email and create a new password.
-              </Text>
-            </View>
-
-            <View className='animate-slide-up rounded-3xl bg-white/10 p-8 backdrop-blur-sm'>
-              <View className='mb-4'>
-                <Label className='mb-2 text-sm font-medium text-white/90'>Reset Code</Label>
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            keyboardShouldPersistTaps='handled'
+            showsVerticalScrollIndicator={false}
+            contentContainerClassName='relative'
+            className='animate-slide-up px-4'>
+            <View className='flex gap-4'>
+              <View className='flex flex-col gap-1'>
+                <View className='flex flex-row items-center gap-2'>
+                  <BinaryIcon
+                    size={16}
+                    color={
+                      colorScheme === "light"
+                        ? THEME.light.foreground
+                        : THEME.dark.foreground
+                    }
+                  />
+                  <Label htmlFor='code'>Reset Code</Label>
+                </View>
                 <Controller
                   control={control}
                   name='code'
@@ -85,21 +116,30 @@ export default function ResetPasswordScreen() {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       placeholder='Enter reset code'
-                      placeholderTextColor='#ffffff80'
-                      className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.code ? "border border-red-400" : ""}`}
+                      className={cn(errors.code ? "border border-destructive" : "")}
                       keyboardType='number-pad'
                     />
                   )}
                 />
                 {errors.code && (
-                  <Text className='mt-1 text-sm text-red-300'>{errors.code.message}</Text>
+                  <Text className='mt-1 text-sm text-destructive'>
+                    {errors.code.message}
+                  </Text>
                 )}
               </View>
 
-              <View className='mb-4'>
-                <Label className='mb-2 text-sm font-medium text-white/90'>
-                  New Password
-                </Label>
+              <View className='flex flex-col gap-1'>
+                <View className='flex flex-row items-center gap-2'>
+                  <LockIcon
+                    size={16}
+                    color={
+                      colorScheme === "light"
+                        ? THEME.light.foreground
+                        : THEME.dark.foreground
+                    }
+                  />
+                  <Label htmlFor='password'>New Password</Label>
+                </View>
                 <Controller
                   control={control}
                   name='password'
@@ -108,24 +148,32 @@ export default function ResetPasswordScreen() {
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
-                      placeholder='Create new password'
-                      placeholderTextColor='#ffffff80'
-                      className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.password ? "border border-red-400" : ""}`}
+                      aria-labelledby='password'
+                      placeholder='* * * * * * * *'
+                      className={cn(errors.password ? "border border-destructive" : "")}
                       secureTextEntry
                     />
                   )}
                 />
                 {errors.password && (
-                  <Text className='mt-1 text-sm text-red-300'>
+                  <Text className='mt-1 text-sm text-destructive'>
                     {errors.password.message}
                   </Text>
                 )}
               </View>
-
-              <View className='mb-8'>
-                <Label className='mb-2 text-sm font-medium text-white/90'>
-                  Confirm Password
-                </Label>
+              <View className='flex flex-col gap-1'>
+                <View className='flex flex-row items-center gap-2'>
+                  <LockIcon
+                    size={16}
+                    className='stroke-foreground text-foreground'
+                    color={
+                      colorScheme === "light"
+                        ? THEME.light.foreground
+                        : THEME.dark.foreground
+                    }
+                  />
+                  <Label htmlFor='confirmPassword'>Confirm Password</Label>
+                </View>
                 <Controller
                   control={control}
                   name='confirmPassword'
@@ -134,32 +182,35 @@ export default function ResetPasswordScreen() {
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
-                      placeholder='Confirm new password'
-                      placeholderTextColor='#ffffff80'
-                      className={`rounded-xl bg-white/20 px-4 py-4 text-base text-white ${errors.confirmPassword ? "border border-red-400" : ""}`}
+                      placeholder='* * * * * * * *'
+                      aria-labelledby='confirmPassword'
+                      className={cn(
+                        errors.confirmPassword ? "border border-destructive" : ""
+                      )}
                       secureTextEntry
                     />
                   )}
                 />
                 {errors.confirmPassword && (
-                  <Text className='mt-1 text-sm text-red-300'>
+                  <Text className='mt-1 text-sm text-destructive'>
                     {errors.confirmPassword.message}
                   </Text>
                 )}
               </View>
 
-              <TouchableOpacity
-                onPress={handleSubmit(onSubmit)}
-                className='rounded-xl bg-gray-800 py-4 transition-transform active:scale-95'
-                activeOpacity={0.8}>
-                <Text className='text-center text-lg font-semibold text-white'>
+              <Button
+                className='mt-6'
+                size={"lg"}
+                variant={"default"}
+                onPress={handleSubmit(onSubmit)}>
+                <Text className='text-center font-semibold text-primary-foreground'>
                   Reset Password
                 </Text>
-              </TouchableOpacity>
+              </Button>
             </View>
-          </View>
+          </ScrollView>
         </View>
-      </LinearGradient>
-    </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
