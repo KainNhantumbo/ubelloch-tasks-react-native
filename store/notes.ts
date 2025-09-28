@@ -1,85 +1,56 @@
-import { type TaskSchemaType, TaskSchema } from "@/database/validations";
 import { eq, inArray } from "drizzle-orm";
 import { create } from "zustand";
-import { orm } from "../database/client";
+import { orm as db } from "../database/client";
 import * as schema from "../database/schema";
+import { type Note } from "../database/validations";
 
-type State = {
-  tasks: TaskSchemaType[];
-  loading: boolean;
-};
-
-type Actions = {
-  fetchTasks: () => Promise<void>;
-  addTask: (title: string) => Promise<void>;
-  toggleTask: (id: number) => Promise<void>;
-  deleteTask: (id: number) => Promise<void>;
-  updateTask: (id: number, data: TaskSchemaType) => Promise<void>;
+interface NotesState {
+  notes: unknown[];
+  fetchNotes: () => Promise<void>;
+  addNote: (note: Omit<Note, "id" | "createdAt" | "updatedAt">) => Promise<void>;
+  updateNote: (id: number, updates: Partial<Note>) => Promise<void>;
+  deleteNote: (id: number) => Promise<void>;
   markSynced: (ids: number[]) => Promise<void>;
-};
+}
 
-export const useTasks = create<State & Actions>((set, get) => ({
-  tasks: [],
-  loading: false,
+export const useNotesStore = create<NotesState>((set, get) => ({
+  notes: [],
 
-  fetchTasks: async () => {
-    try {
-      set({ loading: true });
-      const result = await orm.select().from(schema.tasks);
-      set({ tasks: result, loading: false });
-    } catch (error) {
-      console.error(error);
-      set({ loading: false });
-    }
+  fetchNotes: async () => {
+    const allNotes = await db.select().from(schema.notes);
+    set({ notes: allNotes });
   },
 
-  addTask: async (title) => {
-    try {
-      const parsed = await TaskSchema.parseAsync({
-        title,
-        done: false
-      });
-
-      await orm
-        .insert(schema.tasks)
-        .values({ ...parsed, createdAt: new Date(), updatedAt: new Date() });
-
-      await get().fetchTasks();
-    } catch (error) {
-      console.error(error);
-    }
+  addNote: async (data) => {
+    await db.insert(schema.notes).values({
+      ...data,
+      isSynced: false
+    });
+    await get().fetchNotes();
   },
 
-  toggleTask: async (id) => {
-    const task = get().tasks.find((t) => t.id === id);
-    if (!task) return;
-    await orm.update(schema.tasks).set({ done: !task.done }).where(eq(schema.tasks.id, id));
-    await get().fetchTasks();
+  updateNote: async (id, data) => {
+    await db
+      .update(schema.notes)
+      .set({
+        ...data,
+        updatedAt: new Date(),
+        isSynced: false
+      })
+      .where(eq(schema.notes.id, id));
+    await get().fetchNotes();
   },
 
-  updateTask: async (id, data) => {
-    const parsed = await TaskSchema.parseAsync({ ...data });
-    const task = get().tasks.find((t) => t.id === id);
-
-    if (!task) throw new Error("Task not found");
-    await orm
-      .update(schema.tasks)
-      .set({ ...parsed, updatedAt: new Date() })
-      .where(eq(schema.tasks.id, id));
-
-    await get().fetchTasks();
-  },
-
-  deleteTask: async (id) => {
-    await orm.delete(schema.tasks).where(eq(schema.tasks.id, id));
-    await get().fetchTasks();
+  deleteNote: async (id) => {
+    await db.delete(schema.notes).where(eq(schema.notes.id, id));
+    await get().fetchNotes();
   },
 
   markSynced: async (ids) => {
-    await orm
-      .update(schema.tasks)
-      .set({ synced: true })
-      .where(inArray(schema.tasks.id, ids));
-    await get().fetchTasks();
+    await db
+      .update(schema.notes)
+      .set({ isSynced: true })
+      .where(inArray(schema.notes.id, ids));
+    await get().fetchNotes();
   }
 }));
