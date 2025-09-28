@@ -12,7 +12,10 @@ export const folders = sqliteTable("folders", {
 export const tags = sqliteTable("tags", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull().unique(),
-  color: text("color").notNull()
+  color: text("color").notNull(),
+  noteId: integer("note_id")
+    .references(() => notes.id, { onDelete: "cascade" })
+    .notNull()
 });
 
 //  NOTES

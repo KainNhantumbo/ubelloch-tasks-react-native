@@ -1,14 +1,14 @@
 import { orm as db } from "@/database/client";
 import { attachments } from "@/database/schema";
 import { AttachmentSchema, type AttachmentSchemaType } from "@/database/validations";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { create } from "zustand";
 
 interface AttachmentsState {
   attachments: AttachmentSchemaType[];
   fetchAttachments: () => Promise<void>;
   addAttachment: (data: Omit<AttachmentSchemaType, "id">) => Promise<void>;
-  deleteAttachment: (id: number) => Promise<void>;
+  deleteAttachment: (id: number, noteId: number) => Promise<void>;
 }
 
 export const useAttachmentsStore = create<AttachmentsState>((set, get) => ({
@@ -25,8 +25,10 @@ export const useAttachmentsStore = create<AttachmentsState>((set, get) => ({
     await get().fetchAttachments();
   },
 
-  deleteAttachment: async (id) => {
-    await db.delete(attachments).where(eq(attachments.id, id));
+  deleteAttachment: async (id, noteId) => {
+    await db
+      .delete(attachments)
+      .where(and(eq(attachments.id, id), eq(attachments.noteId, noteId)));
     await get().fetchAttachments();
   }
 }));

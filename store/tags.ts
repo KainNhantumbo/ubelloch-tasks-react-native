@@ -2,7 +2,7 @@
 import { orm as db } from "@/database/client";
 import { tags } from "@/database/schema";
 import { TagSchema, type TagSchemaType } from "@/database/validations";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { create } from "zustand";
 
 interface TagsState {
@@ -10,7 +10,7 @@ interface TagsState {
   fetchTags: () => Promise<void>;
   addTag: (data: Omit<TagSchemaType, "id">) => Promise<void>;
   updateTag: (id: number, updates: Partial<TagSchemaType>) => Promise<void>;
-  deleteTag: (id: number) => Promise<void>;
+  deleteTag: (id: number, noteId: number) => Promise<void>;
 }
 
 export const useTagsStore = create<TagsState>((set, get) => ({
@@ -33,8 +33,8 @@ export const useTagsStore = create<TagsState>((set, get) => ({
     await get().fetchTags();
   },
 
-  deleteTag: async (id) => {
-    await db.delete(tags).where(eq(tags.id, id));
+  deleteTag: async (id, noteId) => {
+    await db.delete(tags).where(and(eq(tags.id, id), eq(tags.noteId, noteId)));
     await get().fetchTags();
   }
 }));

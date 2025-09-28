@@ -1,7 +1,7 @@
 import { orm as db } from "@/database/client";
 import { reminders } from "@/database/schema";
 import { ReminderSchema, type ReminderSchemaType } from "@/database/validations";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { create } from "zustand";
 
 interface RemindersState {
@@ -9,7 +9,7 @@ interface RemindersState {
   fetchReminders: () => Promise<void>;
   addReminder: (data: Omit<ReminderSchemaType, "id">) => Promise<void>;
   updateReminder: (id: number, updates: Partial<ReminderSchemaType>) => Promise<void>;
-  deleteReminder: (id: number) => Promise<void>;
+  deleteReminder: (id: number, noteId: number) => Promise<void>;
   getReminderByNoteId: (noteId: number) => Promise<ReminderSchemaType | null>;
 }
 
@@ -33,8 +33,10 @@ export const useRemindersStore = create<RemindersState>((set, get) => ({
     await get().fetchReminders();
   },
 
-  deleteReminder: async (id) => {
-    await db.delete(reminders).where(eq(reminders.id, id));
+  deleteReminder: async (id, noteId) => {
+    await db
+      .delete(reminders)
+      .where(and(eq(reminders.id, id), eq(reminders.noteId, noteId)));
     await get().fetchReminders();
   },
 
