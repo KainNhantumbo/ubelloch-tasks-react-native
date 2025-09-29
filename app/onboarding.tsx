@@ -1,3 +1,11 @@
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetView
+} from "@gorhom/bottom-sheet";
+import { useCallback, useRef, useState } from "react";
+import { BackHandler, ScrollView, StatusBar, TouchableOpacity, View } from "react-native";
+
 import { CarouselContainer } from "@/components/onboarding-carousel";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
@@ -8,7 +16,6 @@ import { Link } from "expo-router";
 import { SproutIcon } from "lucide-react-native";
 import { useColorScheme } from "nativewind";
 import * as React from "react";
-import { StatusBar, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Onboarding() {
@@ -49,27 +56,99 @@ export default function Onboarding() {
                 </Button>
               </Link>
             </View>
-            <View className='flex flex-row items-center'>
-              <Link asChild href={"/signup"} className='flex-1'>
-                <Button variant='link' size='sm' className='w-full'>
-                  <Text className='text-sm font-semibold'>Terms of Use</Text>
-                </Button>
-              </Link>
-              <SproutIcon
-                size={18}
-                color={
-                  colorScheme === "light" ? THEME.light.foreground : THEME.dark.foreground
-                }
-              />
-              <Link asChild href={"/signup"} className='flex-1'>
-                <Button variant='link' size='sm' className='w-full'>
-                  <Text className='text-sm font-semibold'>Privacy Policy</Text>
-                </Button>
-              </Link>
-            </View>
           </View>
+          <PoliciesSheetContainer />
         </View>
       </LinearGradient>
     </SafeAreaView>
+  );
+}
+
+export function PoliciesSheetContainer() {
+  const { colorScheme } = useColorScheme();
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const [contentType, setContentType] = useState<"terms" | "privacy" | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openSheet = useCallback((type: "terms" | "privacy") => {
+    setContentType(type);
+    bottomSheetModalRef.current?.present();
+    setIsOpen(true);
+  }, []);
+
+  const closeSheet = useCallback(() => {
+    bottomSheetModalRef.current?.dismiss();
+    setIsOpen(false);
+    setContentType(null);
+  }, []);
+
+  // Handle Android back button
+  React.useEffect(() => {
+    const backAction = () => {
+      if (isOpen) {
+        closeSheet();
+        return true;
+      }
+      return false;
+    };
+
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+    return () => backHandler.remove();
+  }, [isOpen, closeSheet]);
+
+  function Triggers() {
+    return (
+      <View className='mt-4 flex flex-row items-center'>
+        <Button
+          variant='link'
+          size='sm'
+          className='flex-1'
+          onPress={() => openSheet("terms")}>
+          <Text className='text-sm font-semibold'>Terms of Use</Text>
+        </Button>
+
+        <SproutIcon
+          size={18}
+          color={colorScheme === "light" ? THEME.light.foreground : THEME.dark.foreground}
+        />
+
+        <Button
+          variant='link'
+          size='sm'
+          className='flex-1'
+          onPress={() => openSheet("privacy")}>
+          <Text className='text-sm font-semibold'>Privacy Policy</Text>
+        </Button>
+      </View>
+    );
+  }
+
+  return (
+    <BottomSheetModalProvider>
+      <Triggers />
+
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        enablePanDownToClose
+        onDismiss={closeSheet}>
+        <BottomSheetView className='px-5 py-6'>
+          <ScrollView>
+            <Text className='mb-3 text-xl font-bold'>
+              {contentType === "terms" ? "Terms of Use" : "Privacy Policy"}
+            </Text>
+            <Text className='text-base leading-6'>
+              {contentType === "terms"
+                ? "Here are the terms of use... (insert full text here)"
+                : "Here is the privacy policy... (insert full text here)"}
+            </Text>
+          </ScrollView>
+          <TouchableOpacity
+            className='mt-5 self-center rounded-lg bg-pink-600 px-5 py-2'
+            onPress={closeSheet}>
+            <Text className='font-semibold text-white'>Close</Text>
+          </TouchableOpacity>
+        </BottomSheetView>
+      </BottomSheetModal>
+    </BottomSheetModalProvider>
   );
 }
