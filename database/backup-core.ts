@@ -79,3 +79,29 @@ export async function backupWithPrompt() {
     throw err;
   }
 }
+
+export async function restoreWithPrompt() {
+  try {
+    // Let user pick a backup file
+    const result = await DocumentPicker.getDocumentAsync({
+      type: "application/json",
+      copyToCacheDirectory: true
+    });
+
+    if (result.canceled || !result.assets || !result.assets[0]) {
+      console.log("Restore canceled");
+      return;
+    }
+
+    const fileUri = result.assets[0].uri;
+    const fileContent = await FileSystem.readAsStringAsync(fileUri);
+
+    const backupData = JSON.parse(fileContent);
+    await restoreDatabase(backupData);
+
+    console.log("Restore completed from:", fileUri);
+  } catch (err) {
+    console.error("Restore failed:", err);
+    throw err;
+  }
+}
