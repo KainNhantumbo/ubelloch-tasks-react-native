@@ -31,6 +31,7 @@ export const notes = sqliteTable("notes", {
     .notNull(),
   isSynced: integer("is_synced", { mode: "boolean" }).default(false).notNull(),
   isTrashed: integer("is_trashed", { mode: "boolean" }).default(false).notNull(),
+  isPinned: integer("is_pinned", { mode: "boolean" }).default(false).notNull(),
   isArchived: integer("is_archived", { mode: "boolean" }).default(false).notNull(),
   folderId: integer("folder_id").references(() => folders.id, {
     onDelete: "set null"

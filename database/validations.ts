@@ -44,6 +44,7 @@ export const NoteSchema = z.object({
   createdAt: z.union([z.coerce.date(), z.coerce.date()]).optional(),
   updatedAt: z.union([z.coerce.date(), z.coerce.date()]).optional(),
   isSynced: z.boolean().default(false),
+  isPinned: z.boolean().default(false),
   isTrashed: z.boolean().default(false),
   isArchived: z.boolean().default(false),
   folderId: z.number().nullable().optional(),
