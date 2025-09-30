@@ -1,4 +1,6 @@
 import { DATABASE_NAME } from "@/constants";
+import * as DocumentPicker from "expo-document-picker";
+import * as FileSystem from "expo-file-system";
 import * as SQLite from "expo-sqlite";
 
 export class DatabaseBackup {
@@ -50,4 +52,30 @@ export async function restoreDatabase(backup: Record<string, any[]>) {
   }
 
   await rawDb.execAsync("PRAGMA foreign_keys = ON;");
+}
+
+export async function backupWithPrompt() {
+  try {
+    const dump = await backupDatabase();
+
+    const timestamp = new Date()
+      .toISOString()
+      .replace(/[:.]/g, "-")
+      .replace("T", "_")
+      .split("Z")[0];
+    const filename = `backup_${timestamp}.json`;
+
+    const backupPath = FileSystem.Directory + filename;
+    new FileSystem.File().write(JSON.stringify(dump));
+
+    await DocumentPicker.getDocumentAsync({
+      type: "application/json",
+      copyToCacheDirectory: true
+    });
+
+    return backupPath;
+  } catch (err) {
+    console.error("Backup failed:", err);
+    throw err;
+  }
 }
