@@ -15,6 +15,7 @@ export interface AppPreferences {
     email: string;
     name: string;
     avatar: string;
+    hasCompletedOnboarding: boolean;
   };
   auth: {
     token: string;
