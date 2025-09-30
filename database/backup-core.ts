@@ -4,104 +4,99 @@ import * as FileSystem from "expo-file-system";
 import * as SQLite from "expo-sqlite";
 
 export class DatabaseBackup {
-  private db: unknown;
+  private db;
 
-  constructor(db: unknown) {
-    this.db = db;
-  }
-}
-
-export async function backupDatabase(): Promise<any> {
-  const rawDb = SQLite.openDatabaseSync(DATABASE_NAME);
-
-  const tablesQuery = await rawDb.getAllAsync<{ name: string }>(
-    "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';"
-  );
-
-  const backup: Record<string, any[]> = {};
-
-  for (const { name } of tablesQuery) {
-    const rows = await rawDb.getAllAsync(`SELECT * FROM ${name}`);
-    backup[name] = rows;
+  constructor() {
+    this.db = SQLite.openDatabaseSync(DATABASE_NAME);
   }
 
-  return backup;
-}
+  async backup() {
+    const tablesQuery = await this.db.getAllAsync<{ name: string }>(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';"
+    );
 
-export async function restoreDatabase(backup: Record<string, any[]>) {
-  const rawDb = SQLite.openDatabaseSync(DATABASE_NAME);
+    const dump: Record<string, unknown[]> = {};
 
-  await rawDb.execAsync("PRAGMA foreign_keys = OFF;");
+    for (const { name } of tablesQuery) {
+      const rows = await this.db.getAllAsync(`SELECT * FROM ${name}`);
+      dump[name] = rows;
+    }
 
-  for (const tableName of Object.keys(backup)) {
-    await rawDb.execAsync(`DELETE FROM ${tableName};`);
+    return dump;
+  }
 
-    const rows = backup[tableName];
-    if (!rows || rows.length === 0) continue;
+  async restore(dump: Record<string, any[]>) {
+    await this.db.execAsync("PRAGMA foreign_keys = OFF;");
 
-    const columns = Object.keys(rows[0]);
-    const placeholders = columns.map(() => "?").join(",");
+    for (const tableName of Object.keys(dump)) {
+      await this.db.execAsync(`DELETE FROM ${tableName};`);
 
-    for (const row of rows) {
-      const values = columns.map((col) => row[col]);
-      await rawDb.runAsync(
-        `INSERT INTO ${tableName} (${columns.join(",")}) VALUES (${placeholders})`,
-        values
-      );
+      const rows = dump[tableName];
+      if (!rows || rows.length === 0) continue;
+
+      const columns = Object.keys(rows[0]);
+      const placeholders = columns.map(() => "?").join(",");
+
+      for (const row of rows) {
+        const values = columns.map((col) => row[col]);
+        await this.db.runAsync(
+          `INSERT INTO ${tableName} (${columns.join(",")}) VALUES (${placeholders})`,
+          values
+        );
+      }
+    }
+
+    await this.db.execAsync("PRAGMA foreign_keys = ON;");
+  }
+
+  async promptBackup() {
+    try {
+      const dump = await this.backup();
+
+      const timestamp = new Date()
+        .toISOString()
+        .replace(/[:.]/g, "-")
+        .replace("T", "_")
+        .split("Z")[0];
+      const filename = `backup_${timestamp}.json`;
+
+      const backupPath = FileSystem.Directory + filename;
+      new FileSystem.File(backupPath).write(JSON.stringify(dump));
+
+      await DocumentPicker.getDocumentAsync({
+        type: "application/json",
+        copyToCacheDirectory: true
+      });
+
+      return backupPath;
+    } catch (err) {
+      console.error("Backup failed:", err);
+      throw err;
     }
   }
 
-  await rawDb.execAsync("PRAGMA foreign_keys = ON;");
-}
+  async promptRestore() {
+    try {
+      const data = await DocumentPicker.getDocumentAsync({
+        type: "application/json",
+        copyToCacheDirectory: true
+      });
 
-export async function backupWithPrompt() {
-  try {
-    const dump = await backupDatabase();
+      if (data.canceled || !data.assets || !data.assets[0]) {
+        console.error("Restore canceled");
+        return;
+      }
 
-    const timestamp = new Date()
-      .toISOString()
-      .replace(/[:.]/g, "-")
-      .replace("T", "_")
-      .split("Z")[0];
-    const filename = `backup_${timestamp}.json`;
+      const [{ uri: fileUri }] = data.assets;
+      const fileContent = await new FileSystem.File(fileUri).text();
 
-    const backupPath = FileSystem.Directory + filename;
-    new FileSystem.File().write(JSON.stringify(dump));
+      const backupData = JSON.parse(fileContent);
+      await this.restore(backupData);
 
-    await DocumentPicker.getDocumentAsync({
-      type: "application/json",
-      copyToCacheDirectory: true
-    });
-
-    return backupPath;
-  } catch (err) {
-    console.error("Backup failed:", err);
-    throw err;
-  }
-}
-
-export async function restoreWithPrompt() {
-  try {
-    // Let user pick a backup file
-    const result = await DocumentPicker.getDocumentAsync({
-      type: "application/json",
-      copyToCacheDirectory: true
-    });
-
-    if (result.canceled || !result.assets || !result.assets[0]) {
-      console.log("Restore canceled");
-      return;
+      console.info("Restore completed from:", fileUri);
+    } catch (err) {
+      console.error("Restore failed:", err);
+      throw err;
     }
-
-    const fileUri = result.assets[0].uri;
-    const fileContent = await FileSystem.readAsStringAsync(fileUri);
-
-    const backupData = JSON.parse(fileContent);
-    await restoreDatabase(backupData);
-
-    console.log("Restore completed from:", fileUri);
-  } catch (err) {
-    console.error("Restore failed:", err);
-    throw err;
   }
 }
