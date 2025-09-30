@@ -4,7 +4,7 @@ import {
   BottomSheetView
 } from "@gorhom/bottom-sheet";
 import { useCallback, useRef, useState } from "react";
-import { BackHandler, ScrollView, StatusBar, TouchableOpacity, View } from "react-native";
+import { BackHandler, ScrollView, StatusBar, View } from "react-native";
 
 import { CarouselContainer } from "@/components/onboarding-carousel";
 import { Button } from "@/components/ui/button";
@@ -131,22 +131,20 @@ export function PoliciesSheetContainer() {
         ref={bottomSheetModalRef}
         enablePanDownToClose
         onDismiss={closeSheet}>
-        <BottomSheetView className='px-5 py-6'>
+        <BottomSheetView
+          className='bg-background px-5 py-6'
+          style={{
+            backgroundColor: THEME.dark.background
+          }}>
           <ScrollView>
-            <Text className='mb-3 text-xl font-bold'>
-              {contentType === "terms" ? "Terms of Use" : "Privacy Policy"}
-            </Text>
+            <Text className='mb-3 text-xl font-bold'>Privacy Policy</Text>
             <Text className='text-base leading-6'>
-              {contentType === "terms"
-                ? "Here are the terms of use... (insert full text here)"
-                : "Here is the privacy policy... (insert full text here)"}
+              Here are the terms of use... (insert full text here)
             </Text>
           </ScrollView>
-          <TouchableOpacity
-            className='mt-5 self-center rounded-lg bg-pink-600 px-5 py-2'
-            onPress={closeSheet}>
-            <Text className='font-semibold text-white'>Close</Text>
-          </TouchableOpacity>
+          <Button onPress={closeSheet} variant={"outline"}>
+            <Text className='font-semibold'>Close</Text>
+          </Button>
         </BottomSheetView>
       </BottomSheetModal>
     </BottomSheetModalProvider>
