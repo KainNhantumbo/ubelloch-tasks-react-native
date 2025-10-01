@@ -7,3 +7,5 @@ export const appBaseConfig = {
 
 export const NOTE_PRIORITIES: NotePriority[] = ["NONE", "LOW", "MEDIUM", "HIGH", "URGENT"];
 export const ATTACHMENT_TYPES: AttachmentType[] = ["IMAGE", "VIDEO", "AUDIO", "DOCUMENT"];
+
+export const DATABASE_NAME = "momentum-data.db";
