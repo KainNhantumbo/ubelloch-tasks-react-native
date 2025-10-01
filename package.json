@@ -17,6 +17,7 @@
     "lint": "npx prettier --write \"**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,json}\" && eslint . && tsc --noEmit -p ./tsconfig.json"
   },
   "dependencies": {
+    "@expensify/react-native-live-markdown": "^0.1.306",
     "@expo/html-elements": "^0.13.7",
     "@expo/metro-runtime": "~6.1.2",
     "@expo/vector-icons": "^15.0.2",
@@ -36,6 +37,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.44.5",
+    "expensify-common": "^2.0.160",
     "expo": "~54.0.10",
     "expo-asset": "~12.0.9",
     "expo-constants": "~18.0.8",
@@ -55,6 +57,7 @@
     "expo-symbols": "~1.0.7",
     "expo-system-ui": "~6.0.7",
     "expo-web-browser": "~15.0.7",
+    "html-entities": "2.5.3",
     "lucide-react-native": "^0.544.0",
     "nativewind": "^4.2.0",
     "react": "19.1.0",
