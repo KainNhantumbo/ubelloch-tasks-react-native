@@ -57,7 +57,27 @@ export default function Onboarding() {
               </Link>
             </View>
           </View>
-          <PoliciesSheetContainer />
+
+          <View className='mt-4 flex flex-row items-center'>
+            <Link href={"/terms-of-service"}>
+              <Button variant='link' size='sm' className='flex-1'>
+                <Text className='text-sm font-semibold'>Terms of Use</Text>
+              </Button>
+            </Link>
+
+            <SproutIcon
+              size={18}
+              color={
+                colorScheme === "light" ? THEME.light.foreground : THEME.dark.foreground
+              }
+            />
+
+            <Link href={"/privacy-policy"}>
+              <Button variant='link' size='sm' className='flex-1'>
+                <Text className='text-sm font-semibold'>Privacy Policy</Text>
+              </Button>
+            </Link>
+          </View>
         </View>
       </LinearGradient>
     </SafeAreaView>
