@@ -58,9 +58,9 @@ export default function Onboarding() {
             </View>
           </View>
 
-          <View className='mt-4 flex flex-row items-center'>
-            <Link href={"/terms-of-service"}>
-              <Button variant='link' size='sm' className='flex-1'>
+          <View className='mt-6 flex flex-row items-center'>
+            <Link href={"/(docs)/terms-of-service"} asChild>
+              <Button variant='link' className='flex-1'>
                 <Text className='text-sm font-semibold'>Terms of Use</Text>
               </Button>
             </Link>
@@ -72,8 +72,8 @@ export default function Onboarding() {
               }
             />
 
-            <Link href={"/privacy-policy"}>
-              <Button variant='link' size='sm' className='flex-1'>
+            <Link href={"/(docs)/privacy-policy"} asChild>
+              <Button variant='link' className='flex-1'>
                 <Text className='text-sm font-semibold'>Privacy Policy</Text>
               </Button>
             </Link>
