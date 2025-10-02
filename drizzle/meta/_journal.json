@@ -15,6 +15,13 @@
       "when": 1758972754831,
       "tag": "0001_plain_thor_girl",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1759423417298,
+      "tag": "0002_peaceful_solo",
+      "breakpoints": true
     }
   ]
 }
