@@ -44,13 +44,13 @@ export default function Onboarding() {
             </Link>
 
             <View className='flex w-full flex-row gap-2'>
-              <Link asChild href={"/login"} className='flex-1'>
+              <Link asChild href={"/login"} className='flex-1' replace>
                 <Button variant='outline' size='default' className='w-full'>
                   <Text className='font-bold uppercase'>Login</Text>
                 </Button>
               </Link>
 
-              <Link asChild href={"/signup"} className='flex-1'>
+              <Link asChild href={"/signup"} className='flex-1' replace>
                 <Button variant='outline' size='default' className='w-full'>
                   <Text className='font-bold uppercase'>Sign Up</Text>
                 </Button>
