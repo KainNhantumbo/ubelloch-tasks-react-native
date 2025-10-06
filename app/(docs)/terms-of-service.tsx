@@ -1,20 +1,13 @@
 import { Text } from "@/components/ui/text";
 import { THEME } from "@/lib/theme";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { ScrollView, StatusBar, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function TermsOfUse() {
-  const router = useRouter();
-  const canGoBack = router.canGoBack();
   const { colorScheme } = useColorScheme();
 
-  function getBack() {
-    if (canGoBack) {
-      router.back();
-    }
-  }
   return (
     <SafeAreaView className='flex-1'>
       <StatusBar
