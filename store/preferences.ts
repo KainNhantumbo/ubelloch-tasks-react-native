@@ -31,6 +31,7 @@ interface PreferencesState {
   preferences: AppPreferences;
   setPreferences: (prefs: Partial<AppPreferences>) => void;
   resetPreferences: () => void;
+  hydrated: boolean;
 }
 
 const CURRENT_VERSION = 1;
@@ -39,7 +40,7 @@ export const useAppPreferencesStore = create<PreferencesState>()(
   persist(
     (set, get) => ({
       preferences: initialState,
-
+      hydrated: false,
       setPreferences: (prefs) => {
         set((state) => ({
           preferences: {
@@ -80,6 +81,11 @@ export const useAppPreferencesStore = create<PreferencesState>()(
         console.log(`[AppPreferences] Migrated from v${version} → v${CURRENT_VERSION}`);
 
         return merged;
+      },
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state.hydrated = true;
+        }
       }
     }
   )
