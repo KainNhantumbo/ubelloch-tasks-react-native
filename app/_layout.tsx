@@ -1,5 +1,6 @@
 import { Text } from "@/components/ui/text";
 import MigrationContext from "@/context/migrations-context";
+import { useStorageHydration } from "@/hooks/use-storage-hydration";
 import { NAV_THEME } from "@/lib/theme";
 import { ThemeProvider } from "@react-navigation/native";
 import { PortalHost } from "@rn-primitives/portal";
@@ -17,6 +18,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const { colorScheme } = useColorScheme();
+  const { isHydrated } = useStorageHydration();
 
   const [loaded, error] = useFonts({
     "PlusJakartaSans-Bold": require("../assets/fonts/jakarta/PlusJakartaSans-Bold.ttf"),
@@ -41,12 +43,12 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (loaded || error) {
+    if (loaded || error || isHydrated) {
       SplashScreen.hideAsync();
     }
-  }, [loaded, error]);
+  }, [loaded, error, isHydrated]);
 
-  if (!loaded && !error) {
+  if (!loaded && !error && !isHydrated) {
     return null;
   }
 

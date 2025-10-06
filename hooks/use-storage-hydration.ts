@@ -9,5 +9,5 @@ export function useStorageHydration() {
     if (hydrated) setReady(true);
   }, [hydrated]);
 
-  return ready;
+  return { isHydrated: ready };
 }
