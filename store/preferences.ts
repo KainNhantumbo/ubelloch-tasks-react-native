@@ -33,6 +33,8 @@ interface PreferencesState {
   resetPreferences: () => void;
 }
 
+const CURRENT_VERSION = 1;
+
 export const useAppPreferencesStore = create<PreferencesState>()(
   persist(
     (set, get) => ({
@@ -57,7 +59,28 @@ export const useAppPreferencesStore = create<PreferencesState>()(
     }),
     {
       name: "app-preferences",
-      storage: createJSONStorage(() => AsyncStorage)
+      storage: createJSONStorage(() => AsyncStorage),
+      migrate: (persistedState, version) => {
+        if (!persistedState) return { preferences: initialState };
+
+        const oldPrefs = (persistedState as any).preferences || {};
+
+        // Always merge with defaults to keep new fields
+        const merged = {
+          preferences: {
+            ...initialState,
+            ...oldPrefs,
+            ui: { ...initialState.ui, ...oldPrefs.ui },
+            editor: { ...initialState.editor, ...oldPrefs.editor },
+            user: { ...initialState.user, ...oldPrefs.user },
+            auth: { ...initialState.auth, ...oldPrefs.auth }
+          }
+        };
+
+        console.log(`[AppPreferences] Migrated from v${version} → v${CURRENT_VERSION}`);
+
+        return merged;
+      }
     }
   )
 );
