@@ -1,6 +1,8 @@
+export type ColorScheme = "light" | "dark";
+
 export interface AppPreferences {
   ui: {
-    theme: string;
+    theme: ColorScheme;
     enableDarkMode: boolean;
     enableNotifications: boolean;
     language: string;

@@ -5,7 +5,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 const initialState: AppPreferences = {
   ui: {
-    theme: "system",
+    theme: "light",
     enableDarkMode: false,
     enableNotifications: true,
     language: "en"
