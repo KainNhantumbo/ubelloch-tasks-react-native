@@ -1,5 +1,5 @@
 import { ATTACHMENT_TYPES, NOTE_PRIORITIES } from "@/constants";
-import { z } from "zod";
+import * as z from "zod";
 
 //  ENUMS
 export const NotePriorityEnum = z.enum(NOTE_PRIORITIES);

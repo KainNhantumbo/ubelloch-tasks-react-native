@@ -1,6 +1,14 @@
 export type NotePriority = "NONE" | "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 export type AttachmentType = "IMAGE" | "VIDEO" | "AUDIO" | "DOCUMENT";
 
+export enum NotePriorityEnum {
+  NONE = "None",
+  LOW = "Low",
+  MEDIUM = "Medium",
+  HIGH = "High",
+  URGENT = "Urgent"
+}
+
 export interface Reminder {
   id: number;
   dueDate: Date | string;

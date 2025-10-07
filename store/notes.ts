@@ -8,7 +8,9 @@ import { type NoteSchemaType } from "../database/validations";
 interface NotesState {
   notes: NoteListItem[];
   fetchNotes: () => Promise<void>;
-  addNote: (note: Omit<NoteSchemaType, "id" | "createdAt" | "updatedAt">) => Promise<void>;
+  createNote: (
+    note: Omit<NoteSchemaType, "id" | "createdAt" | "updatedAt">
+  ) => Promise<void>;
   updateNote: (id: number, updates: Partial<NoteSchemaType>) => Promise<void>;
   deleteNote: (id: number) => Promise<void>;
   markSynced: (ids: number[]) => Promise<void>;
@@ -22,7 +24,7 @@ export const useNotesStore = create<NotesState>((set, get) => ({
     set({ notes: allNotes as unknown as NoteListItem[] });
   },
 
-  addNote: async (data) => {
+  createNote: async (data) => {
     await db.insert(schema.notes).values({
       ...data,
       isSynced: false

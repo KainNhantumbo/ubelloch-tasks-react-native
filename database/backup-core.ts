@@ -61,7 +61,7 @@ export class DatabaseBackup {
       const filename = `backup_${timestamp}.json`;
 
       const backupPath = FileSystem.Directory + filename;
-      new FileSystem.File(backupPath).write(JSON.stringify(dump));
+      new FileSystem.File(backupPath).write(JSON.stringify(dump), { encoding: "base64" });
 
       await DocumentPicker.getDocumentAsync({
         type: "application/json",

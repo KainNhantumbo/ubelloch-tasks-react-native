@@ -87,11 +87,9 @@ export default function Onboarding() {
 export function PoliciesSheetContainer() {
   const { colorScheme } = useColorScheme();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const [contentType, setContentType] = useState<"terms" | "privacy" | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const openSheet = useCallback((type: "terms" | "privacy") => {
-    setContentType(type);
+  const openSheet = useCallback(() => {
     bottomSheetModalRef.current?.present();
     setIsOpen(true);
   }, []);
@@ -99,7 +97,6 @@ export function PoliciesSheetContainer() {
   const closeSheet = useCallback(() => {
     bottomSheetModalRef.current?.dismiss();
     setIsOpen(false);
-    setContentType(null);
   }, []);
 
   // Handle Android back button
@@ -119,11 +116,7 @@ export function PoliciesSheetContainer() {
   function Triggers() {
     return (
       <View className='mt-4 flex flex-row items-center'>
-        <Button
-          variant='link'
-          size='sm'
-          className='flex-1'
-          onPress={() => openSheet("terms")}>
+        <Button variant='link' size='sm' className='flex-1' onPress={() => openSheet()}>
           <Text className='text-sm font-semibold'>Terms of Use</Text>
         </Button>
 
@@ -132,11 +125,7 @@ export function PoliciesSheetContainer() {
           color={colorScheme === "light" ? THEME.light.foreground : THEME.dark.foreground}
         />
 
-        <Button
-          variant='link'
-          size='sm'
-          className='flex-1'
-          onPress={() => openSheet("privacy")}>
+        <Button variant='link' size='sm' className='flex-1' onPress={() => openSheet()}>
           <Text className='text-sm font-semibold'>Privacy Policy</Text>
         </Button>
       </View>
