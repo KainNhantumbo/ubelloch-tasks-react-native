@@ -1,4 +1,5 @@
 import { CreateButton } from "@/components/create-button";
+import { FlashList } from "@shopify/flash-list";
 import { useNavigation } from "expo-router";
 import { View } from "react-native";
 import Animated, {
@@ -27,15 +28,24 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView className='flex-1'>
-      <View>
-        <Animated.FlatList
-          data={notes}
-          onScroll={onScroll}
-          keyExtractor={(item) => item.id?.toString() ?? ""}
-          renderItem={({ item }) => (
-            <View className='flex-row justify-between border-b p-2'></View>
-          )}
-        />
+      <View className='flex-1'>
+        <Animated.View style={{ flex: 1 }}>
+          <FlashList
+            data={notes}
+            onScroll={onScroll}
+            renderItem={({ item }) => (
+              <View className='flex-row justify-between border-b border-gray-200 p-3 dark:border-gray-700'></View>
+            )}
+            keyExtractor={(item) => item.id?.toString() ?? ""}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={
+              <View className='flex-1 items-center justify-center py-10'>
+                {/*"no notes" UI comes here */}
+              </View>
+            }
+          />
+        </Animated.View>
+
         <CreateButton
           visible={fabVisible}
           onPress={() => navigation.navigate("NoteForm" as never)}
