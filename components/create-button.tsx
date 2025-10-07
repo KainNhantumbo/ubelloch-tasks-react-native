@@ -19,14 +19,14 @@ interface FloatingButtonProps {
   visible?: SharedValue<number>;
 }
 
-export const FloatingButton = ({
+export const CreateButton = ({
   onPress,
   onNewFolder,
   onNewTag,
   visible
 }: FloatingButtonProps) => {
   const [pressed, setPressed] = useState(false);
-  const { preferences } = useAppPreferencesStore();
+  const preferences = useAppPreferencesStore((state) => state.preferences);
 
   const isDark = preferences.ui.enableDarkMode || preferences.ui.theme === "dark";
   const expanded = useSharedValue(0);
