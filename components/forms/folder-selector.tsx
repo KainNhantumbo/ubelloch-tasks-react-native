@@ -1,22 +1,23 @@
 import { SheetContainer } from "@/components/sheet-container";
 import { temp_colors as colors } from "@/constants"; // optional color palette
-import { FolderSchemaType } from "@/database/validations";
 import { useFoldersStore } from "@/store/folders";
 import { Check, Plus } from "lucide-react-native";
 import React, { useState } from "react";
 import { FlatList, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-interface FolderPickerProps {
-  selectedFolder: FolderSchemaType | null;
-  onSelect: (folder: FolderSchemaType | null) => void;
+interface Props {
+  selectedFolderId?: number | null;
+  onSelect: (folderId?: number | null) => void;
 }
 
-export function FolderPicker({ selectedFolder, onSelect }: FolderPickerProps) {
+export function FolderSelector({ selectedFolderId, onSelect }: Props) {
   const { folders, createFolder } = useFoldersStore();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [creatingNew, setCreatingNew] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
   const [selectedColor, setSelectedColor] = useState("#3B82F6");
+
+  const selectedFolder = folders.find((f) => f.id === selectedFolderId) ?? null;
 
   const handleCreate = async () => {
     if (!newFolderName.trim()) return;
@@ -28,7 +29,7 @@ export function FolderPicker({ selectedFolder, onSelect }: FolderPickerProps) {
     });
 
     if (folder) {
-      onSelect(folder);
+      onSelect(folder?.id ?? null);
     }
 
     setNewFolderName("");
@@ -67,7 +68,7 @@ export function FolderPicker({ selectedFolder, onSelect }: FolderPickerProps) {
                         : "border-gray-300 dark:border-gray-600"
                     }`}
                     onPress={() => {
-                      onSelect(item);
+                      onSelect(item.id ?? null);
                       setIsSheetOpen(false);
                     }}>
                     <View className='flex-row items-center gap-3'>

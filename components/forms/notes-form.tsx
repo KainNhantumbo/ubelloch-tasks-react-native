@@ -6,6 +6,7 @@ import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import * as z from "zod";
+import { FolderSelector } from "./folder-selector";
 import { PrioritySelector } from "./priority-selector";
 
 export function NoteForm() {
@@ -84,6 +85,15 @@ export function NoteForm() {
           name='priority'
           render={({ field: { value, onChange } }) => (
             <PrioritySelector value={value ?? "NONE"} onChange={onChange} />
+          )}
+        />
+
+        <Text className='mt-4 text-lg font-medium'>Folder Selector</Text>
+        <Controller
+          control={control}
+          name='folderId'
+          render={({ field: { value, onChange } }) => (
+            <FolderSelector selectedFolderId={value} onSelect={onChange} />
           )}
         />
 
