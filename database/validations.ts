@@ -16,7 +16,6 @@ export const FolderSchema = z.object({
 
 //  TAG
 export const TagSchema = z.object({
-  id: z.number().optional(),
   name: z.string().min(1, "Tag name is required"),
   color: z.string().regex(/^#([0-9A-F]{3}){1,2}$/i, "Must be a valid hex color"),
   noteId: z.number()
