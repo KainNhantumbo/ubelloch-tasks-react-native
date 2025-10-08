@@ -22,6 +22,13 @@
       "when": 1759423417298,
       "tag": "0002_peaceful_solo",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1759954695738,
+      "tag": "0003_bizarre_war_machine",
+      "breakpoints": true
     }
   ]
 }

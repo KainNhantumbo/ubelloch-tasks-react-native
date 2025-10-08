@@ -1,0 +1,2 @@
+ALTER TABLE `folders` ADD `created_at` integer DEFAULT (strftime('%s','now') * 1000) NOT NULL;--> statement-breakpoint
+ALTER TABLE `folders` ADD `updated_at` integer DEFAULT (strftime('%s','now') * 1000) NOT NULL;
