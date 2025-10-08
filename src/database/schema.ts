@@ -20,7 +20,7 @@ export const tags = sqliteTable("tags", {
   name: text("name").notNull().unique(),
   color: text("color").notNull(),
   noteId: integer("note_id")
-    .references(() => notes.id, { onDelete: "cascade" })
+    .references(() => notes.id, { onDelete: "restrict" })
     .notNull()
 });
 

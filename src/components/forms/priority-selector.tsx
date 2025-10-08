@@ -3,7 +3,7 @@ import { NOTE_PRIORITIES } from "@/constants";
 import React, { useMemo, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
-import { NotePriority } from "../../@types/note";
+import { NotePriority } from "../../types/note";
 
 const PRIORITY_COLORS: Record<NotePriority, string> = {
   NONE: "#9CA3AF",

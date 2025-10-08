@@ -1,4 +1,4 @@
-import { AttachmentType, NotePriority } from "@/@types/note";
+import { AttachmentType, NotePriority } from "@/types/note";
 
 export const appBaseConfig = {
   title: "Momentum",

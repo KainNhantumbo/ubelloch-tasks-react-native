@@ -1,4 +1,3 @@
-// src/store/useTagsStore.ts
 import { orm as db } from "@/database/client";
 import { noteTags, tags } from "@/database/schema";
 import { TagSchema, type TagSchemaType } from "@/database/validations";
@@ -8,7 +7,7 @@ import { create } from "zustand";
 export type TagDatType = TagSchemaType & { id: number };
 
 interface TagsState {
-  tags: Array<TagDatType>;
+  tags: TagDatType[];
   fetchTags: () => Promise<void>;
   createTag: (data: TagSchemaType) => Promise<TagDatType | undefined>;
   updateTag: (id: number, updates: Partial<TagDatType>) => Promise<void>;

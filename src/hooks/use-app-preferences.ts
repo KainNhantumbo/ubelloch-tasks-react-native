@@ -1,3 +1,4 @@
+import { ColorScheme } from "@/types/preferences";
 import { useAppPreferencesStore } from "../store/preferences";
 
 export function useThemePreference() {
@@ -6,7 +7,7 @@ export function useThemePreference() {
     setPreferences: state.setPreferences
   }));
 
-  const setTheme = (theme: string) => setPreferences({ ui: { ...ui, theme } });
+  const setTheme = (theme: ColorScheme) => setPreferences({ ui: { ...ui, theme } });
 
   const toggleDarkMode = () =>
     setPreferences({ ui: { ...ui, enableDarkMode: !ui.enableDarkMode } });

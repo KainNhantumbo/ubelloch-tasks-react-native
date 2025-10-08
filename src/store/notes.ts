@@ -1,9 +1,9 @@
-import { type Note as NoteListItem } from "@/@types/note";
+import { orm as db } from "@/database/client";
+import * as schema from "@/database/schema";
+import { type NoteSchemaType } from "@/database/validations";
+import { type Note as NoteListItem } from "@/types/note";
 import { eq, inArray } from "drizzle-orm";
 import { create } from "zustand";
-import { orm as db } from "../database/client";
-import * as schema from "../database/schema";
-import { type NoteSchemaType } from "../database/validations";
 
 interface NotesState {
   notes: NoteListItem[];

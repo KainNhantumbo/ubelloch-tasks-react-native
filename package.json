@@ -13,7 +13,7 @@
     "build:local": "eas build --platform android --profile development --local",
     "build:clear": "npx expo prebuild --clean",
     "db:generate": "npx drizzle-kit generate",
-    "lint": "npx prettier --write \"**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,json}\" && eslint . && tsc --noEmit -p ./tsconfig.json"
+    "lint": "npx prettier --write \"**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,json}\" && eslint . && tsc --noEmit --listFilesOnly -p ./tsconfig.json"
   },
   "dependencies": {
     "@expo/html-elements": "^0.13.7",

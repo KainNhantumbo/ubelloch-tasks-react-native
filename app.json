@@ -4,7 +4,7 @@
     "slug": "ubelloch-momentum",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/app/images/icon.png",
+    "icon": "./src/assets/app/images/icon.png",
     "scheme": "momentum",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -15,9 +15,9 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#210945",
-        "foregroundImage": "./assets/app/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/app/images/android-icon-background.png",
-        "monochromeImage": "./assets/app/images/android-icon-monochrome.png"
+        "foregroundImage": "./src/assets/app/images/android-icon-foreground.png",
+        "backgroundImage": "./src/assets/app/images/android-icon-background.png",
+        "monochromeImage": "./src/assets/app/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -25,7 +25,7 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/app/images/favicon.png",
+      "favicon": "./src/assets/app/images/favicon.png",
       "bundler": "metro"
     },
     "plugins": [
@@ -33,12 +33,12 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/app/images/splash-icon.png",
+          "image": "./src/assets/app/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "cover",
           "backgroundColor": "#210945",
           "dark": {
-            "image": "./assets/app/images/splash-icon.png",
+            "image": "./src/assets/app/images/splash-icon.png",
             "backgroundColor": "#210945"
           }
         }

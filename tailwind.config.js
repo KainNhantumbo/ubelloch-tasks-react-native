@@ -5,9 +5,9 @@ const config = {
   darkMode: "class",
   // NOTE: Update this to include the paths to all files that contain Nativewind classes.
   content: [
-    "./app/**/*.{html,js,jsx,ts,tsx,mdx}",
-    "./components/**/*.{html,js,jsx,ts,tsx,mdx}",
-    "./utils/**/*.{html,js,jsx,ts,tsx,mdx}",
+    "./src/app/**/*.{html,js,jsx,ts,tsx,mdx}",
+    "./src/components/**/*.{html,js,jsx,ts,tsx,mdx}",
+    "./src/utils/**/*.{html,js,jsx,ts,tsx,mdx}",
     "./*.{html,js,jsx,ts,tsx,mdx}",
     "./src/**/*.{html,js,jsx,ts,tsx,mdx}"
   ],

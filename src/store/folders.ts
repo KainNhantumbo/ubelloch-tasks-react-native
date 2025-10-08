@@ -1,10 +1,6 @@
 import { orm as db } from "@/database/client";
-import { folders, notes } from "@/database/schema";
-import {
-  FolderSchema,
-  NoteSchemaType,
-  type FolderSchemaType
-} from "@/database/validations";
+import { folders, notes, tags } from "@/database/schema";
+import { FolderSchema, type FolderSchemaType } from "@/database/validations";
 import { eq } from "drizzle-orm";
 import { create } from "zustand";
 
@@ -14,7 +10,7 @@ interface FoldersState {
   createFolder: (data: Omit<FolderSchemaType, "id">) => Promise<FolderSchemaType | null>;
   updateFolder: (id: number, updates: Partial<FolderSchemaType>) => Promise<void>;
   deleteFolder: (id: number) => Promise<void>;
-  getNotesByFolderId: (folderId: number) => Promise<NoteSchemaType[]>;
+  getNotesByFolderId: (folderId: number) => Promise<unknown>;
   getFolderById?: (id: number) => FolderSchemaType | undefined | null;
 }
 
@@ -55,7 +51,11 @@ export const useFoldersStore = create<FoldersState>((set, get) => ({
   },
 
   getNotesByFolderId: async (folderId) => {
-    const data = await db.select().from(notes).where(eq(notes.folderId, folderId));
-    return data as NoteSchemaType[];
+    const data = await db
+      .select()
+      .from(notes)
+      .where(eq(notes.folderId, folderId))
+      .innerJoin(tags, eq(notes.id, tags.noteId));
+    return data;
   }
 }));
