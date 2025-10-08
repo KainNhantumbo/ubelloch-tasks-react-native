@@ -5,13 +5,15 @@ import { TagSchema, type TagSchemaType } from "@/database/validations";
 import { and, eq } from "drizzle-orm";
 import { create } from "zustand";
 
+export type TagDatType = TagSchemaType & { id: number };
+
 interface TagsState {
-  tags: TagSchemaType[];
+  tags: Array<TagDatType>;
   fetchTags: () => Promise<void>;
-  addTag: (data: Omit<TagSchemaType, "id">) => Promise<void>;
-  updateTag: (id: number, updates: Partial<TagSchemaType>) => Promise<void>;
+  createTag: (data: TagSchemaType) => Promise<TagDatType | undefined>;
+  updateTag: (id: number, updates: Partial<TagDatType>) => Promise<void>;
   deleteTag: (id: number, noteId: number) => Promise<void>;
-  getTagsByNoteId: (noteId: number) => Promise<TagSchemaType[]>;
+  getTagsByNoteId: (noteId: number) => Promise<TagDatType[]>;
 }
 
 export const useTagsStore = create<TagsState>((set, get) => ({
@@ -22,10 +24,13 @@ export const useTagsStore = create<TagsState>((set, get) => ({
     set({ tags: all });
   },
 
-  addTag: async (data) => {
+  createTag: async (data) => {
     const parsed = await TagSchema.parseAsync(data);
-    await db.insert(tags).values(parsed);
+    const insertedTagId = (await db.insert(tags).values(parsed)).lastInsertRowId;
+    const tag = db.select().from(tags).where(eq(tags.id, insertedTagId)).get();
     await get().fetchTags();
+
+    return tag;
   },
 
   updateTag: async (id, updates) => {
