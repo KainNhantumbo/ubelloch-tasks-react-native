@@ -8,6 +8,7 @@ import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import * as z from "zod";
 import { FolderSelector } from "./folder-selector";
 import { PrioritySelector } from "./priority-selector";
+import { TagSelector } from "./tag-selector";
 
 export function NoteForm() {
   const router = useRouter();
@@ -30,7 +31,8 @@ export function NoteForm() {
       isSynced: false,
       isPinned: false,
       isTrashed: false,
-      isArchived: false
+      isArchived: false,
+      tags: []
     }
   });
 
@@ -97,7 +99,20 @@ export function NoteForm() {
           )}
         />
 
-        {/* TODO: FolderPicker, TagSelector, ReminderPicker */}
+        <Text className='mt-4 text-lg font-medium'>Tag Selector</Text>
+        <Controller
+          control={control}
+          name='tags'
+          render={({ field: { value, onChange } }) => (
+            <TagSelector
+              currentlyEditingNoteId={1}
+              selectedTagIds={value}
+              onChange={onChange}
+            />
+          )}
+        />
+
+        {/* TODO:  ReminderPicker */}
 
         <Pressable
           disabled={isSubmitting}

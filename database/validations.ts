@@ -39,7 +39,6 @@ export const ReminderSchema = z.object({
 
 //  NOTE
 export const NoteSchema = z.object({
-  id: z.number().optional(),
   title: z.string().min(1, "Note title is required"),
   content: z.string().default(""),
   createdAt: z.union([z.coerce.date(), z.coerce.date()]).optional(),
@@ -49,7 +48,8 @@ export const NoteSchema = z.object({
   isTrashed: z.boolean().default(false),
   isArchived: z.boolean().default(false),
   folderId: z.number().nullable().optional(),
-  priority: NotePriorityEnum.default("NONE")
+  priority: NotePriorityEnum.default("NONE"),
+  tags: z.array(z.number())
 });
 
 export type NoteSchemaType = z.infer<typeof NoteSchema>;

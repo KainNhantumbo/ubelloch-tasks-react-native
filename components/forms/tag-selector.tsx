@@ -1,21 +1,17 @@
-import React, { useState } from "react";
-import { Text, TouchableOpacity, View, FlatList, TextInput } from "react-native";
 import { SheetContainer } from "@/components/sheet-container";
-import { useTagsStore } from "@/store/tags";
-import { Plus, Check } from "lucide-react-native";
 import { temp_colors as colors } from "@/constants";
+import { useTagsStore } from "@/store/tags";
+import { Check, Plus } from "lucide-react-native";
+import React, { useState } from "react";
+import { FlatList, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-interface TagSelectorProps {
+interface Props {
   currentlyEditingNoteId: number;
   selectedTagIds: number[];
   onChange: (tagIds: number[]) => void;
 }
 
-export function TagSelector({
-  selectedTagIds,
-  currentlyEditingNoteId,
-  onChange
-}: TagSelectorProps) {
+export function TagSelector({ selectedTagIds, currentlyEditingNoteId, onChange }: Props) {
   const { tags, createTag } = useTagsStore();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [creatingNew, setCreatingNew] = useState(false);
