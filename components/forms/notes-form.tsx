@@ -6,6 +6,7 @@ import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import * as z from "zod";
+import { PrioritySelector } from "./priority-selector";
 
 export function NoteForm() {
   const router = useRouter();
@@ -77,20 +78,12 @@ export function NoteForm() {
           )}
         />
 
-        {/* Priority Selector */}
         <Text className='mt-4 text-lg font-medium'>Priority</Text>
-        {/* Placeholder — will add component next */}
         <Controller
           control={control}
           name='priority'
           render={({ field: { value, onChange } }) => (
-            <Pressable
-              onPress={() =>
-                onChange(value === "NONE" ? "MEDIUM" : value === "MEDIUM" ? "HIGH" : "NONE")
-              }
-              className='rounded-md border bg-gray-100 p-2'>
-              <Text>Priority: {value}</Text>
-            </Pressable>
+            <PrioritySelector value={value ?? "NONE"} onChange={onChange} />
           )}
         />
 
