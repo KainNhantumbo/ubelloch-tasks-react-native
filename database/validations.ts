@@ -9,7 +9,9 @@ export const AttachmentTypeEnum = z.enum(ATTACHMENT_TYPES);
 export const FolderSchema = z.object({
   id: z.number().optional(),
   name: z.string().min(1, "Folder name is required"),
-  color: z.string().regex(/^#([0-9A-F]{3}){1,2}$/i, "Must be a valid hex color")
+  color: z.string().regex(/^#([0-9A-F]{3}){1,2}$/i, "Must be a valid hex color"),
+  createdAt: z.union([z.coerce.date(), z.coerce.date()]).optional(),
+  updatedAt: z.union([z.coerce.date(), z.coerce.date()]).optional()
 });
 
 //  TAG
