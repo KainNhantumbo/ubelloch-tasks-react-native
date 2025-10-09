@@ -1,4 +1,5 @@
 import { NoteSchema } from "@/database/validations";
+import { useKeyboardManager } from "@/hooks/use-keyboard-manager";
 import { useNotesStore } from "@/store/notes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -8,14 +9,18 @@ import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import * as z from "zod";
 import { FolderSelector } from "./_components/folder-selector";
 import { PrioritySelector } from "./_components/priority-selector";
+import { ReminderSelector } from "./_components/reminder-picker";
 import { TagSelector } from "./_components/tag-selector";
 
 export function NoteForm() {
   const router = useRouter();
-  const params = useLocalSearchParams();
+  const params = useLocalSearchParams<{ noteId: string }>();
   const { createNote, updateNote } = useNotesStore();
   const { noteId } = params;
   const canGoBack = router.canGoBack();
+  const { registerInputFocus } = useKeyboardManager();
+  const titleInputRef = React.useRef<TextInput>(null);
+  const contentInputRef = React.useRef<TextInput>(null);
 
   const {
     control,
@@ -60,6 +65,12 @@ export function NoteForm() {
               onChangeText={onChange}
               placeholder='Enter title'
               className='rounded-md border border-gray-300 p-2'
+              ref={(r) => {
+                titleInputRef.current = r;
+              }}
+              onFocus={() => {
+                registerInputFocus(() => titleInputRef.current?.focus());
+              }}
             />
           )}
         />
@@ -77,6 +88,12 @@ export function NoteForm() {
               numberOfLines={6}
               textAlignVertical='top'
               className='rounded-md border border-gray-300 p-2'
+              ref={(r) => {
+                contentInputRef.current = r;
+              }}
+              onFocus={() => {
+                registerInputFocus(() => contentInputRef.current?.focus());
+              }}
             />
           )}
         />
@@ -112,7 +129,8 @@ export function NoteForm() {
           )}
         />
 
-        {/* TODO:  ReminderPicker */}
+        <Text className='mt-4 text-lg font-medium'>Reminder</Text>
+        <ReminderSelector noteId={+noteId} />
 
         <Pressable
           disabled={isSubmitting}

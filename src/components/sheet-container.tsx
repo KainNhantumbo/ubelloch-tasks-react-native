@@ -1,3 +1,4 @@
+import { useKeyboardManager } from "@/hooks/use-keyboard-manager";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -16,15 +17,18 @@ export interface SheetProps {
 
 export function SheetContainer(props: SheetProps) {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const { handleBeforeSheetOpen, handleAfterSheetClose } = useKeyboardManager();
 
   const openSheet = useCallback(() => {
     bottomSheetModalRef.current?.present();
+    handleBeforeSheetOpen();
     props.setIsSheetOpen(true);
   }, []);
 
   const closeSheet = useCallback(() => {
     bottomSheetModalRef.current?.dismiss();
     props.setIsSheetOpen(false);
+    handleAfterSheetClose();
   }, []);
 
   React.useEffect(() => {

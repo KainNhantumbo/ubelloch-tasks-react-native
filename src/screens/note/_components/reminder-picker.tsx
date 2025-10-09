@@ -60,7 +60,6 @@ export function ReminderSelector({ noteId }: Props) {
       else setTempDate(new Date());
       setStep("initial");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSheetOpen, currentReminder]);
 
   const combineDateAndTime = (datePart: Date, timePart: Date) => {
