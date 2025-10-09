@@ -4,11 +4,59 @@
 
 ## 🐾 Project Stack
 
-<!-- stll being backed -->
-
 ## 🌳 Project structure
 
-<!-- stll being backed -->
+```bash
+├── src
+│   ├── app
+│   │   ├── (auth)
+│   │   ├── (docs)
+│   │   ├── (home)
+│   │   ├── index.tsx
+│   │   ├── _layout.tsx
+│   │   └── onboarding.tsx
+│   ├── assets
+│   │   ├── app
+│   │   ├── fonts
+│   │   └── onboarding
+│   ├── components
+│   │   └── ui
+│   ├── context
+│   ├── database
+│   │   ├── backup-core.ts
+│   │   ├── client.ts
+│   │   ├── schema.ts
+│   │   └── validations.ts
+│   ├── drizzle
+│   │   └── meta
+│   ├── hooks
+│   ├── lib
+│   ├── schemas
+│   ├── screens
+│   │   └── note
+│   ├── store
+│   ├── styles
+│   ├── types
+│   │   ├── note.ts
+│   │   ├── preferences.ts
+│   │   └── user.ts
+│   └── constants.ts
+├── app.json
+├── babel.config.js
+├── components.json
+├── drizzle.config.ts
+├── eas.json
+├── eslint.config.js
+├── expo-env.d.ts
+├── LICENSE
+├── metro.config.js
+├── nativewind-env.d.ts
+├── package.json
+├── package-lock.json
+├── README.md
+├── tailwind.config.js
+└── tsconfig.json
+```
 
 ## ☘️ Find me!
 
