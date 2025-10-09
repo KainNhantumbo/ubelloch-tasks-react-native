@@ -6,9 +6,9 @@ import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import * as z from "zod";
-import { FolderSelector } from "./folder-selector";
-import { PrioritySelector } from "./priority-selector";
-import { TagSelector } from "./tag-selector";
+import { FolderSelector } from "./_components/folder-selector";
+import { PrioritySelector } from "./_components/priority-selector";
+import { TagSelector } from "./_components/tag-selector";
 
 export function NoteForm() {
   const router = useRouter();
