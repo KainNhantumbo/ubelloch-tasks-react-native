@@ -1,15 +1,14 @@
-import { Text } from "@/components/ui/text";
 import { NoteForm } from "@/screens/note";
 import { useLocalSearchParams } from "expo-router";
+import { ScreenContainer } from "react-native-screens";
 
 export default function NotePage() {
-  const params = useLocalSearchParams();
+  const params = useLocalSearchParams<{ noteId: string }>();
   const { noteId } = params;
 
-  // TODO: HANDLE INVALID NOTE ID LATER
-  if (noteId && isNaN(Number(noteId))) {
-    return <Text>Invalid note ID</Text>;
-  }
-
-  return <NoteForm />;
+  return (
+    <ScreenContainer>
+      <NoteForm currentNoteId={noteId} />
+    </ScreenContainer>
+  );
 }

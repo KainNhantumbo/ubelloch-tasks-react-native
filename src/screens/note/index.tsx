@@ -2,7 +2,7 @@ import { NoteSchema } from "@/database/validations";
 import { useKeyboardManager } from "@/hooks/use-keyboard-manager";
 import { useNotesStore } from "@/store/notes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
@@ -12,15 +12,19 @@ import { PrioritySelector } from "./_components/priority-selector";
 import { ReminderSelector } from "./_components/reminder-picker";
 import { TagSelector } from "./_components/tag-selector";
 
-export function NoteForm() {
+interface Props {
+  currentNoteId: string;
+}
+
+export function NoteForm({ currentNoteId }: Props) {
+  const noteId = currentNoteId;
   const router = useRouter();
-  const params = useLocalSearchParams<{ noteId: string }>();
   const { createNote, updateNote } = useNotesStore();
-  const { noteId } = params;
-  const canGoBack = router.canGoBack();
   const { registerInputFocus } = useKeyboardManager();
   const titleInputRef = React.useRef<TextInput>(null);
   const contentInputRef = React.useRef<TextInput>(null);
+
+  const canGoBack = router.canGoBack();
 
   const {
     control,
