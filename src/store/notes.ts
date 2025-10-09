@@ -14,6 +14,7 @@ export type NoteDataType = NoteSchemaType & {
 interface NotesState {
   notes: NoteDataType[];
   fetchNotes: () => Promise<NoteDataType[]>;
+  getNoteById: (id: number) => NoteDataType | undefined;
   createNote: (note: Omit<NoteSchemaType, "createdAt" | "updatedAt">) => Promise<void>;
   updateNote: (id: number, updates: Partial<NoteSchemaType>) => Promise<void>;
   deleteNote: (id: number) => Promise<void>;
@@ -22,6 +23,11 @@ interface NotesState {
 
 export const useNotesStore = create<NotesState>((set, get) => ({
   notes: [],
+
+  getNoteById: (id) => {
+    const notes = get().notes;
+    return notes.find((n) => n.id === id);
+  },
 
   fetchNotes: async () => {
     const allNotes = (await db.select().from(schema.notes)) as NoteDataType[];

@@ -4,13 +4,17 @@ import { ReminderSchema, type ReminderSchemaType } from "@/database/validations"
 import { and, eq } from "drizzle-orm";
 import { create } from "zustand";
 
+export type ReminderDataType = ReminderSchemaType & {
+  id: number;
+};
+
 interface RemindersState {
-  reminders: ReminderSchemaType[];
+  reminders: ReminderDataType[];
   fetchReminders: () => Promise<void>;
-  addReminder: (data: Omit<ReminderSchemaType, "id">) => Promise<void>;
+  createReminder: (data: ReminderSchemaType) => Promise<void>;
   updateReminder: (id: number, updates: Partial<ReminderSchemaType>) => Promise<void>;
   deleteReminder: (id: number, noteId: number) => Promise<void>;
-  getReminderByNoteId: (noteId: number) => Promise<ReminderSchemaType | null>;
+  getReminderByNoteId: (noteId: number) => Promise<ReminderDataType | null>;
 }
 
 export const useRemindersStore = create<RemindersState>((set, get) => ({
@@ -21,7 +25,7 @@ export const useRemindersStore = create<RemindersState>((set, get) => ({
     set({ reminders: all });
   },
 
-  addReminder: async (data) => {
+  createReminder: async (data) => {
     const parsed = await ReminderSchema.parseAsync(data);
     await db.insert(reminders).values(parsed);
     await get().fetchReminders();

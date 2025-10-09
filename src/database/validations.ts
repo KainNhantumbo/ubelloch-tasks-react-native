@@ -48,6 +48,7 @@ export const NoteSchema = z.object({
   isTrashed: z.boolean().default(false),
   isArchived: z.boolean().default(false),
   folderId: z.number().nullable().optional(),
+  reminderId: z.number().nullable().optional(),
   priority: NotePriorityEnum.default("NONE"),
   tags: z.array(z.number())
 });
