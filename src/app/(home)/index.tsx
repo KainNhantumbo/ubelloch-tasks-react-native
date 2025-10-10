@@ -8,6 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNotesStore } from "../../store/notes";
+import { Text } from "@/components/ui/text";
 
 export default function HomeScreen() {
   const { notes } = useNotesStore();
@@ -40,7 +41,7 @@ export default function HomeScreen() {
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={
               <View className='flex-1 items-center justify-center py-10'>
-                {/*"no notes" UI comes here */}
+                <Text>No notes to display here</Text>
               </View>
             }
           />

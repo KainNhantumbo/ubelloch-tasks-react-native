@@ -4,7 +4,7 @@ import { ReminderSchema, type ReminderSchemaType } from "@/database/validations"
 import { and, eq } from "drizzle-orm";
 import { create } from "zustand";
 
-export type ReminderDataType = ReminderSchemaType & {
+export type ReminderDataType = Omit<ReminderSchemaType, "id"> & {
   id: number;
 };
 
@@ -14,7 +14,7 @@ interface RemindersState {
   createReminder: (data: ReminderSchemaType) => Promise<void>;
   updateReminder: (id: number, updates: Partial<ReminderSchemaType>) => Promise<void>;
   deleteReminder: (id: number, noteId: number) => Promise<void>;
-  getReminderByNoteId: (noteId: number) => Promise<ReminderDataType | null>;
+  getReminderByNoteId: (noteId: number) => ReminderSchemaType | undefined;
 }
 
 export const useRemindersStore = create<RemindersState>((set, get) => ({
@@ -44,8 +44,8 @@ export const useRemindersStore = create<RemindersState>((set, get) => ({
     await get().fetchReminders();
   },
 
-  getReminderByNoteId: async (noteId) => {
-    const [result] = await db.select().from(reminders).where(eq(reminders.noteId, noteId));
-    return result ? result : null;
+  getReminderByNoteId: (noteId) => {
+    const result = db.select().from(reminders).where(eq(reminders.noteId, noteId)).get();
+    return result;
   }
 }));

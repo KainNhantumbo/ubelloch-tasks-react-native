@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "fb764b0c-2e40-4ebf-806e-c76f14654047",
-  "prevId": "b48d3a75-3024-4696-989b-629ea63e6a63",
+  "id": "b936123b-271d-4032-a778-3e3211b02e9a",
+  "prevId": "fb764b0c-2e40-4ebf-806e-c76f14654047",
   "tables": {
     "attachments": {
       "name": "attachments",
@@ -280,7 +280,7 @@
           "name": "note_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         }
       },

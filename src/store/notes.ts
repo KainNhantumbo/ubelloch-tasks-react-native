@@ -45,8 +45,7 @@ export const useNotesStore = create<NotesState>((set, get) => ({
         createdAt: new Date(),
         updatedAt: new Date(),
         folderId: null,
-        isSynced: false,
-        reminderId: null
+        isSynced: false
       })
       .returning({ id: schema.notes.id });
 

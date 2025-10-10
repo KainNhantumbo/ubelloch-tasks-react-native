@@ -54,7 +54,6 @@ export function NoteForm({ currentNoteId }: Props) {
       folderId: currentNote.folderId ?? null,
       tags: Array.isArray(currentNote.tags) ? currentNote.tags : []
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentNoteId, currentNote]);
 
   const buildUpdatePayload = (values: NoteSchemaType) => {

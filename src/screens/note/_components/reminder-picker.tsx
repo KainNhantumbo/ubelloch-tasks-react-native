@@ -45,7 +45,7 @@ export function ReminderSelector({ currentNoteId }: Props) {
   const getReminderByNoteId = useRemindersStore((s) => s.getReminderByNoteId);
 
   const updateNote = useNotesStore((s) => s.updateNote);
-  const getNoteById = useNotesStore((s) => s.getNoteById);
+  // const getNoteById = useNotesStore((s) => s.getNoteById);
 
   const currentReminder = reminders.find((r) => r.noteId === currentNoteId) ?? null;
 

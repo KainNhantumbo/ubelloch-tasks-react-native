@@ -15,7 +15,7 @@
     "build:clear": "npx expo prebuild --clean",
     "db:generate": "npx drizzle-kit generate",
     "tree": "tree -L 3 -I \"node_modules|android|ios|vscode|.git|.idea|dist|build\"  --dirsfirst",
-    "lint": "npx prettier --write \"**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,json}\" && eslint . && tsc --noEmit --listFilesOnly -p ./tsconfig.json",
+    "lint": "npx prettier --write \"**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,json}\" && eslint . --fix && tsc --noEmit -p ./tsconfig.json",
     "ios": "expo run:ios"
   },
   "dependencies": {
