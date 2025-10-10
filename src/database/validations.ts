@@ -10,8 +10,8 @@ export const FolderSchema = z.object({
   id: z.number().optional(),
   name: z.string().min(1, "Folder name is required"),
   color: z.string().regex(/^#([0-9A-F]{3}){1,2}$/i, "Must be a valid hex color"),
-  createdAt: z.union([z.coerce.date(), z.coerce.date()]).optional(),
-  updatedAt: z.union([z.coerce.date(), z.coerce.date()]).optional()
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional()
 });
 
 //  TAG
@@ -40,9 +40,9 @@ export const ReminderSchema = z.object({
 //  NOTE
 export const NoteSchema = z.object({
   title: z.string().min(1, "Note title is required"),
-  content: z.string().default(""),
-  createdAt: z.union([z.coerce.date(), z.coerce.date()]).optional(),
-  updatedAt: z.union([z.coerce.date(), z.coerce.date()]).optional(),
+  content: z.string().default("").nonoptional({ error: "Note content must be set" }),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   isSynced: z.boolean().default(false),
   isPinned: z.boolean().default(false),
   isTrashed: z.boolean().default(false),

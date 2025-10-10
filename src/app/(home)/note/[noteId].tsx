@@ -8,7 +8,7 @@ export default function NotePage() {
 
   return (
     <ScreenContainer>
-      <NoteForm currentNoteId={noteId} />
+      <NoteForm currentNoteId={+noteId} />
     </ScreenContainer>
   );
 }

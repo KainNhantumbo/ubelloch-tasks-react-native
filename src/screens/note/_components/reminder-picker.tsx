@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
-  noteId: number;
+  currentNoteId: number;
 };
 
 type Step = "initial" | "date" | "time";
@@ -37,7 +37,7 @@ function formatReminderDisplay(timestampMs: Date | number) {
   return `${format(date, "EEE, MMM d")} at ${timeStr}`;
 }
 
-export function ReminderSelector({ noteId }: Props) {
+export function ReminderSelector({ currentNoteId }: Props) {
   const reminders = useRemindersStore((s) => s.reminders);
   const createReminder = useRemindersStore((s) => s.createReminder);
   const updateReminder = useRemindersStore((s) => s.updateReminder);
@@ -47,7 +47,7 @@ export function ReminderSelector({ noteId }: Props) {
   const updateNote = useNotesStore((s) => s.updateNote);
   const getNoteById = useNotesStore((s) => s.getNoteById);
 
-  const currentReminder = reminders.find((r) => r.noteId === noteId) ?? null;
+  const currentReminder = reminders.find((r) => r.noteId === currentNoteId) ?? null;
 
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
@@ -74,19 +74,19 @@ export function ReminderSelector({ noteId }: Props) {
         await updateReminder(currentReminder.id, {
           dueDate: new Date(finalTimestampMs),
           isCompleted: false,
-          noteId
+          noteId: currentNoteId
         });
       } else {
         await createReminder({
           dueDate: new Date(finalTimestampMs),
           isCompleted: false,
-          noteId
+          noteId: currentNoteId
         });
       }
 
-      const reminder = await getReminderByNoteId(noteId);
+      const reminder = await getReminderByNoteId(currentNoteId);
       if (reminder) {
-        await updateNote(noteId, { reminderId: reminder.id });
+        await updateNote(currentNoteId, { reminderId: reminder.id });
       }
 
       setIsSheetOpen(false);
@@ -99,8 +99,8 @@ export function ReminderSelector({ noteId }: Props) {
   const handleDelete = async () => {
     if (!currentReminder) return;
     try {
-      await deleteReminder(currentReminder.id, noteId);
-      await updateNote(noteId, { reminderId: null });
+      await deleteReminder(currentReminder.id, currentNoteId);
+      await updateNote(currentNoteId, { reminderId: null });
     } catch (err) {
       console.error("Failed to delete reminder", err);
     }
