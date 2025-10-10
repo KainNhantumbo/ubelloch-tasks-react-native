@@ -42,6 +42,9 @@ export const notes = sqliteTable("notes", {
   folderId: integer("folder_id").references(() => folders.id, {
     onDelete: "set null"
   }),
+  reminderId: integer("reminder_id").references(() => reminders.id, {
+    onDelete: "set null"
+  }),
   priority: text("priority").default("NONE").notNull()
 });
 
@@ -49,10 +52,7 @@ export const notes = sqliteTable("notes", {
 export const reminders = sqliteTable("reminders", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   dueDate: integer("due_date", { mode: "timestamp_ms" }).notNull(),
-  isCompleted: integer("is_completed", { mode: "boolean" }).default(false).notNull(),
-  noteId: integer("note_id")
-    .references(() => notes.id, { onDelete: "cascade" })
-    .notNull()
+  isCompleted: integer("is_completed", { mode: "boolean" }).default(false).notNull()
 });
 
 //  ATTACHMENTS

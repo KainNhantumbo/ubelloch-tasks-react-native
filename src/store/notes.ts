@@ -19,6 +19,7 @@ interface NotesState {
   updateNote: (id: number, updates: Partial<NoteSchemaType>) => Promise<void>;
   deleteNote: (id: number) => Promise<void>;
   markSynced: (ids: number[]) => Promise<void>;
+  createEmptyNote: () => Promise<number>;
 }
 
 export const useNotesStore = create<NotesState>((set, get) => ({
@@ -33,6 +34,24 @@ export const useNotesStore = create<NotesState>((set, get) => ({
     const allNotes = (await db.select().from(schema.notes)) as NoteDataType[];
     set({ notes: allNotes });
     return allNotes;
+  },
+
+  createEmptyNote: async () => {
+    const [inserted] = await db
+      .insert(schema.notes)
+      .values({
+        title: "",
+        content: "",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        folderId: null,
+        isSynced: false,
+        reminderId: null
+      })
+      .returning({ id: schema.notes.id });
+
+    await get().fetchNotes();
+    return inserted.id;
   },
 
   createNote: async (data) => {

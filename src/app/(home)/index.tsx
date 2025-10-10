@@ -1,6 +1,6 @@
 import { CreateButton } from "@/components/create-button";
 import { FlashList } from "@shopify/flash-list";
-import { useNavigation } from "expo-router";
+import { useRouter } from "expo-router";
 import { View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
@@ -11,7 +11,7 @@ import { useNotesStore } from "../../store/notes";
 
 export default function HomeScreen() {
   const { notes } = useNotesStore();
-  const navigation = useNavigation();
+  const router = useRouter();
   const fabVisible = useSharedValue(1);
   const lastOffset = useSharedValue(0);
 
@@ -48,7 +48,10 @@ export default function HomeScreen() {
 
         <CreateButton
           visible={fabVisible}
-          onPress={() => navigation.navigate("NoteForm" as never)}
+          onPress={async () => {
+            const id = await useNotesStore.getState().createEmptyNote();
+            router.push(`/note/${id}`);
+          }}
           onNewFolder={() => console.log("📁 Create new folder")}
           onNewTag={() => console.log("🏷️ Create new tag")}
         />
