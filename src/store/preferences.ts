@@ -6,9 +6,8 @@ import { createJSONStorage, persist } from "zustand/middleware";
 const initialState: AppPreferences = {
   ui: {
     theme: "light",
-    enableDarkMode: false,
-    enableNotifications: true,
-    language: "en"
+    mode: "strict",
+    palette: "BLANK"
   },
   editor: {
     fontSize: 14,
@@ -24,7 +23,9 @@ const initialState: AppPreferences = {
   },
   auth: {
     token: ""
-  }
+  },
+  enableNotifications: true,
+  language: "EN"
 };
 
 interface PreferencesState {
