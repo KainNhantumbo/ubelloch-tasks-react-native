@@ -1,3 +1,4 @@
+import ScreenContainer from "@/components/screen-container";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,25 +7,17 @@ import { Text } from "@/components/ui/text";
 import { THEME } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 import { forgotPasswordSchema, type ForgotPasswordFormData } from "@/schemas/auth";
+import { useAppPreferencesStore } from "@/store/preferences";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useRouter } from "expo-router";
 import { ArrowLeft, ChevronLastIcon, MailIcon } from "lucide-react-native";
-import { useColorScheme } from "nativewind";
 import { Controller, useForm } from "react-hook-form";
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StatusBar,
-  View
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 
 export default function ForgotPasswordScreen() {
   const router = useRouter();
   const canGoBack = router.canGoBack();
-  const { colorScheme } = useColorScheme();
+  const colorScheme = useAppPreferencesStore((state) => state.preferences.ui.theme);
 
   function getBack() {
     if (canGoBack) {
@@ -49,15 +42,7 @@ export default function ForgotPasswordScreen() {
   };
 
   return (
-    <SafeAreaView className='flex-1'>
-      <StatusBar
-        animated={true}
-        barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
-        backgroundColor={
-          colorScheme === "dark" ? THEME.dark.background : THEME.light.background
-        }
-      />
-
+    <ScreenContainer>
       <View className='flex flex-row items-center justify-between bg-transparent px-2 py-3'>
         <Button
           variant={"ghost"}
@@ -161,6 +146,6 @@ export default function ForgotPasswordScreen() {
           </ScrollView>
         </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </ScreenContainer>
   );
 }
