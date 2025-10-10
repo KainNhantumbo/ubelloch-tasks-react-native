@@ -7,6 +7,8 @@ import compareObjects from "fast-deep-equal";
 import * as React from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { ScrollView, Text, TextInput, View } from "react-native";
+import NoteContentEditor, { NoteContentEditorRef } from "./_components/editor";
+import { FormattingToolbar } from "./_components/editor/editor-toolbar";
 import { FolderSelector } from "./_components/folder-selector";
 import { PrioritySelector } from "./_components/priority-selector";
 import { ReminderSelector } from "./_components/reminder-picker";
@@ -19,6 +21,7 @@ interface Props {
 export function NoteForm({ currentNoteId }: Props) {
   const { updateNote, getNoteById, deleteNote } = useNotesStore();
   const { registerInputFocus } = useKeyboardManager();
+  const contentEditorRef = React.useRef<NoteContentEditorRef>(null);
 
   const titleInputRef = React.useRef<TextInput | null>(null);
   const contentInputRef = React.useRef<TextInput | null>(null);
@@ -117,6 +120,10 @@ export function NoteForm({ currentNoteId }: Props) {
 
   useFocusEffect(handleNoteChange);
 
+  React.useEffect(() => {
+    registerInputFocus(() => contentEditorRef.current?.focus());
+  }, [registerInputFocus]);
+
   if (!currentNote) {
     return (
       <View className='flex-1 items-center justify-center p-4'>
@@ -145,6 +152,24 @@ export function NoteForm({ currentNoteId }: Props) {
                 registerInputFocus(() => titleInputRef.current?.focus());
               }}
             />
+          )}
+        />
+
+        {/* Content editor */}
+        <Controller
+          control={control}
+          name='content'
+          render={({ field: { value, onChange } }) => (
+            <>
+              <NoteContentEditor
+                html={value ?? ""}
+                onChange={onChange}
+                ref={contentEditorRef}
+                placeholder='Write your note...'
+                testID='note-content-editor'
+              />
+              <FormattingToolbar editorRef={contentEditorRef} />
+            </>
           )}
         />
 

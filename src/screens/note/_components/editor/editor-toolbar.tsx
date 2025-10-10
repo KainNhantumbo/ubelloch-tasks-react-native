@@ -15,7 +15,7 @@ import { Animated, Keyboard, Pressable, Text, View } from "react-native";
 import type { NoteContentEditorRef } from "./index";
 
 type Props = {
-  editorRef: React.RefObject<NoteContentEditorRef>;
+  editorRef: React.RefObject<NoteContentEditorRef | null>;
 };
 
 export function FormattingToolbar({ editorRef }: Props) {
