@@ -1,23 +1,11 @@
+import ScreenContainer from "@/components/screen-container";
 import { Text } from "@/components/ui/text";
-import { THEME } from "@/lib/theme";
 import { Stack } from "expo-router";
-import { useColorScheme } from "nativewind";
-import { ScrollView, StatusBar, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView, View } from "react-native";
 
 export default function TermsOfUse() {
-  const { colorScheme } = useColorScheme();
-
   return (
-    <SafeAreaView className='flex-1'>
-      <StatusBar
-        animated={true}
-        barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
-        backgroundColor={
-          colorScheme === "dark" ? THEME.dark.background : THEME.light.background
-        }
-      />
-
+    <ScreenContainer>
       <Stack.Screen
         options={{
           headerShown: true,
@@ -89,6 +77,6 @@ export default function TermsOfUse() {
           </Text>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </ScreenContainer>
   );
 }
