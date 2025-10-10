@@ -1,29 +1,26 @@
+import ScreenContainer from "@/components/screen-container";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Text } from "@/components/ui/text";
 import { appBaseConfig } from "@/constants";
-import { THEME } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 import { loginSchema, type LoginFormData } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "expo-router";
-import { useColorScheme } from "nativewind";
 import { Controller, useForm } from "react-hook-form";
 import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  StatusBar,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View
 } from "react-native";
 
 export default function LoginScreen() {
-  const { colorScheme } = useColorScheme();
   const {
     control,
     handleSubmit,
@@ -42,15 +39,7 @@ export default function LoginScreen() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View className='flex-1'>
-        <StatusBar
-          animated={true}
-          barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
-          backgroundColor={
-            colorScheme === "dark" ? THEME.dark.background : THEME.light.background
-          }
-        />
-
+      <ScreenContainer>
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -154,7 +143,7 @@ export default function LoginScreen() {
             </Link>
           </ScrollView>
         </KeyboardAvoidingView>
-      </View>
+      </ScreenContainer>
     </TouchableWithoutFeedback>
   );
 }
