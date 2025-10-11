@@ -1,13 +1,12 @@
 import { Text } from "@/components/ui/text";
 import MigrationContext from "@/context/migrations-context";
+import { ThemeProvider } from "@/context/theme-context";
 import { useStorageHydration } from "@/hooks/use-storage-hydration";
-import { NAV_THEME } from "@/lib/theme";
-import { ThemeProvider } from "@react-navigation/native";
+import { useAppPreferencesStore } from "@/store/preferences";
 import { PortalHost } from "@rn-primitives/portal";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useColorScheme } from "nativewind";
 import React, { Suspense, useEffect } from "react";
 import { StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -17,7 +16,7 @@ import "../styles/global.css";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const { colorScheme } = useColorScheme();
+  const colorScheme = useAppPreferencesStore((s) => s.preferences.ui.theme);
   const { isHydrated } = useStorageHydration();
 
   const [loaded, error] = useFonts({
@@ -54,7 +53,7 @@ export default function RootLayout() {
 
   return (
     <MigrationContext>
-      <ThemeProvider value={NAV_THEME[colorScheme === "dark" ? "dark" : "light"]}>
+      <ThemeProvider>
         <StatusBar barStyle={colorScheme === "dark" ? "light-content" : "dark-content"} />
         <PortalHost />
         <GestureHandlerRootView>
