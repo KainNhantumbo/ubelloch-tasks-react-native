@@ -1,4 +1,4 @@
-import { PaletteColorScheme } from "@/types/preferences";
+import { PaletteColorScheme } from "@/types/theme";
 import { clsx, type ClassValue } from "clsx";
 import { Appearance } from "react-native";
 import { twMerge } from "tailwind-merge";

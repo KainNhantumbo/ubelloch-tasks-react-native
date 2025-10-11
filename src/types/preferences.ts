@@ -1,18 +1,6 @@
-export type ColorScheme = "light" | "dark";
+import { ColorScheme, Mode, PaletteColorScheme } from "./theme";
+
 export type LanguageOpts = "EN" | "PT";
-
-export enum PaletteColorScheme {
-  BLANK = "Blank",
-  MONOKAI = "Monokai",
-  SOLARIZED_DARK = "Solarized Dark",
-  SOLARIZED_LIGHT = "Solarized Light",
-  DRACULA = "Dracula",
-  NORD = "Nord",
-  GRUVBOX = "Gruvbox"
-}
-
-// strict type is for light/dark mode, system is to infer and match device current theme
-export type Mode = "strict" | "system";
 
 export interface AppPreferences {
   ui: {

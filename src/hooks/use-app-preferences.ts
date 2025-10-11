@@ -1,4 +1,5 @@
-import type { ColorScheme, LanguageOpts } from "@/types/preferences";
+import type { LanguageOpts } from "@/types/preferences";
+import { ColorScheme } from "@/types/theme";
 import { useAppPreferencesStore } from "../store/preferences";
 
 export function useThemePreference() {

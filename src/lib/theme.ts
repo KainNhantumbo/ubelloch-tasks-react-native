@@ -25,7 +25,13 @@ export const THEME = {
     chart2: "hsl(173 58% 39%)",
     chart3: "hsl(197 37% 24%)",
     chart4: "hsl(43 74% 66%)",
-    chart5: "hsl(27 87% 67%)"
+    chart5: "hsl(27 87% 67%)",
+    accent_1: "hsl(12 76% 61%)",
+    accent_2: "hsl(173 58% 39%)",
+    accent_3: "hsl(197 37% 24%)",
+    accent_4: "hsl(43 74% 66%)",
+    accent_5: "hsl(43 74% 66%)",
+    accent_6: "hsl(27 87% 67%)"
   },
   dark: {
     background: "hsl(0 0% 3.9%)",
@@ -51,7 +57,13 @@ export const THEME = {
     chart2: "hsl(160 60% 45%)",
     chart3: "hsl(30 80% 55%)",
     chart4: "hsl(280 65% 60%)",
-    chart5: "hsl(340 75% 55%)"
+    chart5: "hsl(340 75% 55%)",
+    accent_1: "hsl(12 76% 61%)",
+    accent_2: "hsl(173 58% 39%)",
+    accent_3: "hsl(197 37% 24%)",
+    accent_4: "hsl(43 74% 66%)",
+    accent_5: "hsl(43 74% 66%)",
+    accent_6: "hsl(27 87% 67%)"
   }
 };
 
