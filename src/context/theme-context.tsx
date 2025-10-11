@@ -1,48 +1,66 @@
-import { NAV_THEME } from "@/lib/theme";
-import { getEffectiveTheme } from "@/lib/utils";
+import { NAV_THEME, THEME } from "@/lib/theme";
 import { useAppPreferencesStore } from "@/store/preferences";
-import { ThemeProvider as ThemeInitializer } from "@react-navigation/native";
-import * as React from "react";
-import { Appearance, AppState } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { Appearance } from "react-native";
+
+type ResolvedTheme = "light" | "dark";
+
+interface AppThemeContextValue {
+  theme: ResolvedTheme;
+  colors: typeof THEME.light;
+}
+
+const AppThemeContext = createContext<AppThemeContextValue | null>(null);
+
+export function useAppTheme() {
+  const ctx = useContext(AppThemeContext);
+  if (!ctx) throw new Error("useAppTheme must be used inside ThemeProvider");
+  return ctx;
+}
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const { preferences, hydrated, setPreferences } = useAppPreferencesStore();
+  const { preferences, hydrated } = useAppPreferencesStore();
 
-  const [resolvedTheme, setResolvedTheme] = React.useState<"light" | "dark">(
-    getEffectiveTheme(preferences.ui.mode, preferences.ui.theme)
+  const [resolved, setResolved] = useState<ResolvedTheme>(() =>
+    preferences.ui.mode === "system"
+      ? Appearance.getColorScheme() === "dark"
+        ? "dark"
+        : "light"
+      : preferences.ui.theme
   );
 
-  React.useEffect(() => {
-    if (hydrated) {
-      setResolvedTheme(getEffectiveTheme(preferences.ui.mode, preferences.ui.theme));
+  useEffect(() => {
+    if (preferences.ui.mode !== "system") return;
+    const sub = Appearance.addChangeListener(({ colorScheme }) => {
+      setResolved(colorScheme === "dark" ? "dark" : "light");
+    });
+    return () => sub.remove();
+  }, [preferences.ui.mode]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (preferences.ui.mode === "strict") {
+      setResolved(preferences.ui.theme);
+    } else {
+      const current = Appearance.getColorScheme();
+      setResolved(current === "dark" ? "dark" : "light");
     }
   }, [hydrated, preferences.ui.mode, preferences.ui.theme]);
 
-  React.useEffect(() => {
-    if (preferences.ui.mode !== "system") return;
+  const colorTokens = THEME[resolved];
 
-    const sub = Appearance.addChangeListener(({ colorScheme }) => {
-      setResolvedTheme(colorScheme === "dark" ? "dark" : "light");
-    });
+  const contextValue = useMemo(
+    () => ({
+      theme: resolved,
+      colors: colorTokens
+    }),
+    [resolved, colorTokens]
+  );
 
-    return () => sub.remove();
-  }, [preferences.ui.mode]);
-
-  React.useEffect(() => {
-    setPreferences({ ui: { ...preferences.ui, theme: resolvedTheme } });
-  }, [resolvedTheme]);
-
-  React.useEffect(() => {
-    if (preferences.ui.mode !== "system") return;
-
-    const sub = AppState.addEventListener("change", (state) => {
-      if (state === "active") {
-        setResolvedTheme(Appearance.getColorScheme() === "dark" ? "dark" : "light");
-      }
-    });
-
-    return () => sub.remove();
-  }, [preferences.ui.mode]);
-
-  return <ThemeInitializer value={NAV_THEME[resolvedTheme]}>{children}</ThemeInitializer>;
+  return (
+    <AppThemeContext.Provider value={contextValue}>
+      <NavigationContainer theme={NAV_THEME[resolved]}>{children}</NavigationContainer>
+    </AppThemeContext.Provider>
+  );
 }
