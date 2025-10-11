@@ -48,7 +48,18 @@ const config = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))"
-        }
+        },
+        "accent-1": "hsl(var(--accent-1))",
+        "accent-2": "hsl(var(--accent-2))",
+        "accent-3": "hsl(var(--accent-3))",
+        "accent-4": "hsl(var(--accent-4))",
+        "accent-5": "hsl(var(--accent-5))",
+        "accent-6": "hsl(var(--accent-6))",
+        "chart-1": "hsl(var(--chart-1))",
+        "chart-2": "hsl(var(--chart-2))",
+        "chart-3": "hsl(var(--chart-3))",
+        "chart-4": "hsl(var(--chart-4))",
+        "chart-5": "hsl(var(--chart-5))"
       },
       borderRadius: {
         lg: "var(--radius)",
