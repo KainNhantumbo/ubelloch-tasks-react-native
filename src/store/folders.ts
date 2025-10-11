@@ -1,5 +1,5 @@
 import { orm as db } from "@/database/client";
-import { folders, notes, tags } from "@/database/schema";
+import { folders, notes } from "@/database/schema";
 import { FolderSchema, type FolderSchemaType } from "@/database/validations";
 import { eq } from "drizzle-orm";
 import { create } from "zustand";
@@ -51,11 +51,8 @@ export const useFoldersStore = create<FoldersState>((set, get) => ({
   },
 
   getNotesByFolderId: async (folderId) => {
-    const data = await db
-      .select()
-      .from(notes)
-      .where(eq(notes.folderId, folderId))
-      .innerJoin(tags, eq(notes.id, tags.noteId));
+    const data = await db.select().from(notes).where(eq(notes.folderId, folderId));
+    // .innerJoin(tags, eq(notes.id, tags.id));
     return data;
   }
 }));

@@ -117,7 +117,7 @@ const NoteContentEditor = React.forwardRef<NoteContentEditorRef, Props>(
       try {
         editorRef.current?.blur?.();
       } catch (e) {
-        /* ignore */
+        console.error(e);
       }
     };
 
@@ -142,6 +142,8 @@ const NoteContentEditor = React.forwardRef<NoteContentEditorRef, Props>(
     );
   }
 );
+
+NoteContentEditor.displayName = "NoteContentEditor";
 
 export default NoteContentEditor;
 

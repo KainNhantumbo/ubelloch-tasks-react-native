@@ -1,7 +1,7 @@
 import { orm as db } from "@/database/client";
 import { noteTags, tags } from "@/database/schema";
 import { TagSchema, type TagSchemaType } from "@/database/validations";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { create } from "zustand";
 
 export type TagDatType = TagSchemaType & { id: number };
@@ -11,7 +11,7 @@ interface TagsState {
   fetchTags: () => Promise<void>;
   createTag: (data: TagSchemaType) => Promise<TagDatType | undefined>;
   updateTag: (id: number, updates: Partial<TagDatType>) => Promise<void>;
-  deleteTag: (id: number, noteId: number) => Promise<void>;
+  deleteTag: (id: number) => Promise<void>;
   getTagsByNoteId: (noteId: number) => Promise<TagDatType[]>;
 }
 
@@ -38,8 +38,8 @@ export const useTagsStore = create<TagsState>((set, get) => ({
     await get().fetchTags();
   },
 
-  deleteTag: async (id, noteId) => {
-    await db.delete(tags).where(and(eq(tags.id, id), eq(tags.noteId, noteId)));
+  deleteTag: async (id) => {
+    await db.delete(tags).where(eq(tags.id, id));
     await get().fetchTags();
   },
 

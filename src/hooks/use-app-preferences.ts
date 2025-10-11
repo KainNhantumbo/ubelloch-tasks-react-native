@@ -1,26 +1,23 @@
-import { ColorScheme } from "@/types/preferences";
+import type { ColorScheme, LanguageOpts } from "@/types/preferences";
 import { useAppPreferencesStore } from "../store/preferences";
 
 export function useThemePreference() {
-  const { ui, setPreferences } = useAppPreferencesStore((state) => ({
+  const { ui, setPreferences, enableNotifications } = useAppPreferencesStore((state) => ({
     ui: state.preferences.ui,
-    setPreferences: state.setPreferences
+    setPreferences: state.setPreferences,
+    enableNotifications: state.preferences.enableNotifications
   }));
 
   const setTheme = (theme: ColorScheme) => setPreferences({ ui: { ...ui, theme } });
 
-  const toggleDarkMode = () =>
-    setPreferences({ ui: { ...ui, enableDarkMode: !ui.enableDarkMode } });
-
-  const setLanguage = (language: string) => setPreferences({ ui: { ...ui, language } });
+  const setLanguage = (language: LanguageOpts) => setPreferences({ language });
 
   const toggleNotifications = () =>
-    setPreferences({ ui: { ...ui, enableNotifications: !ui.enableNotifications } });
+    setPreferences({ enableNotifications: !enableNotifications });
 
   return {
     ui,
     setTheme,
-    toggleDarkMode,
     setLanguage,
     toggleNotifications
   };

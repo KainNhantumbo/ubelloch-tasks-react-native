@@ -1,4 +1,5 @@
 export type ColorScheme = "light" | "dark";
+export type LanguageOpts = "EN" | "PT";
 
 export enum PaletteColorScheme {
   BLANK = "Blank",
@@ -35,5 +36,5 @@ export interface AppPreferences {
     token: string;
   };
   enableNotifications: boolean;
-  language: "PT" | "EN";
+  language: LanguageOpts;
 }

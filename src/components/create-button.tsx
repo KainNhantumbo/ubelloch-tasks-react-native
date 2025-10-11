@@ -28,7 +28,7 @@ export const CreateButton = ({
   const [pressed, setPressed] = useState(false);
   const preferences = useAppPreferencesStore((state) => state.preferences);
 
-  const isDark = preferences.ui.enableDarkMode || preferences.ui.theme === "dark";
+  const isDark = preferences.ui.theme === "dark";
   const expanded = useSharedValue(0);
 
   const toggleExpanded = () => {

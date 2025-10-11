@@ -31,8 +31,8 @@ export function TagSelector({ selectedTagIds, currentlyEditingNoteId, onChange }
 
     const tag = await createTag({
       name: newTagName,
-      color: selectedColor,
-      noteId: currentlyEditingNoteId
+      color: selectedColor
+      // noteId: currentlyEditingNoteId
     });
     if (!tag) return;
 

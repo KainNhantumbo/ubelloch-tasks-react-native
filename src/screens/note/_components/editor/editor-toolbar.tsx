@@ -1,4 +1,3 @@
-import { useKeyboardManager } from "@/hooks/use-keyboard-manager";
 import { THEME } from "@/lib/theme";
 import { useAppPreferencesStore } from "@/store/preferences";
 import {
@@ -21,9 +20,9 @@ type Props = {
 export function FormattingToolbar({ editorRef }: Props) {
   const theme = useAppPreferencesStore((s) => s.preferences.ui.theme);
   const isDark = theme === "dark";
-  const { registerInputFocus } = useKeyboardManager?.() ?? {
-    registerToolbarKeyboard: () => {}
-  };
+  // const { registerInputFocus } = useKeyboardManager?.() ?? {
+  //   registerToolbarKeyboard: () => {}
+  // };
 
   const [keyboardHeight, setKeyboardHeight] = React.useState(0);
   const anim = React.useRef(new Animated.Value(0)).current;
