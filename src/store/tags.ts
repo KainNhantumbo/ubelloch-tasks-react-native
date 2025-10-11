@@ -9,7 +9,7 @@ export type TagDatType = TagSchemaType & { id: number };
 interface TagsState {
   tags: TagDatType[];
   fetchTags: () => Promise<void>;
-  createTag: (data: TagSchemaType) => Promise<TagDatType | undefined>;
+  createTag: (data: TagSchemaType, noteId: number) => Promise<TagDatType | undefined>;
   updateTag: (id: number, updates: Partial<TagDatType>) => Promise<void>;
   deleteTag: (id: number) => Promise<void>;
   getTagsByNoteId: (noteId: number) => Promise<TagDatType[]>;
@@ -23,12 +23,14 @@ export const useTagsStore = create<TagsState>((set, get) => ({
     set({ tags: all });
   },
 
-  createTag: async (data) => {
+  createTag: async (data, noteId) => {
     const parsed = await TagSchema.parseAsync(data);
     const insertedTagId = (await db.insert(tags).values(parsed)).lastInsertRowId;
+
+    // Associate the new tag with the note
+    await db.insert(noteTags).values({ noteId, tagId: insertedTagId });
     const tag = db.select().from(tags).where(eq(tags.id, insertedTagId)).get();
     await get().fetchTags();
-
     return tag;
   },
 
@@ -39,6 +41,7 @@ export const useTagsStore = create<TagsState>((set, get) => ({
   },
 
   deleteTag: async (id) => {
+    await db.delete(noteTags).where(eq(noteTags.tagId, id));
     await db.delete(tags).where(eq(tags.id, id));
     await get().fetchTags();
   },
